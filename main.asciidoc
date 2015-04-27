@@ -24,7 +24,7 @@ As of ibrid model community network nodes can belong to two categories: _superno
 
 === The Previous approach: qMp
 
-QMP <<ref:2, [2]>> do facilitate the creation of roaming enabled mesh networks, it is based on OpenWRT and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ <<ref:0, [Reference Needed]>> for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration <<ref:0, [Reference Needed]>>. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
+QMP <<ref:2, [2]>> do facilitate the creation of roaming enabled mesh networks, it is based on OpenWRT and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ <<ref:99>> for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration <<ref:99>>. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
 
 
 == Libre-Mesh
@@ -49,6 +49,8 @@ It's a program which works as a dynamic router in an Internet type network (that
 
 1. [[ref:1]] Guifi.net Ibrid Model http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
 2. [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
+
+99. [[ref:99]] Reference Needed
 
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error

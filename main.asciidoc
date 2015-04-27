@@ -1,0 +1,60 @@
+Interoperability between Libre-Mesh and Guifi.net
+=================================================
+:author: Gioacchino Mazzurco
+:email: gio·@·eigenlab.org
+
+The biggest community network of the world is Guifi.net and it spreads across Catalonia and beyond. +
+IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually differents parts of our networks uses differents routing protocols. +
+In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
+The scope of this work is to investigate mainly used routing protocols in particular BGP, Bmx6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh implementing seamless interoperability it and Guifi.net. +
+The new feature must be usable and stable so at the end of the project we can deploy it in our production setups such as Barcelona Botanical Garden, our offices in Aureasocial and others clients. +
+Testing of the new features in real environment and protocols parameters adjusting for the optimal functioning is part of this work too.
+
+
+== Guifi.net
+
+Our networks uses differents routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more. +
+Over time lot of guifi.net nodes have been builded following the <<ibridmodel, Ibrid Model>>
+
+[[ibridmodel]]
+=== Ibrid model
+
+As of ibrid model community network nodes can belong to two categories: "supernodes" and "nodes", in this model "nodes" are not really nodes of the network as they do no do routing for other nodes of guifi.net and just attach to a "supernode", while "supernodes" do route. In "supernodes" usually a Mikrotik routerboard is used as router while external CPEs are configured as plain WDS bridge, if two "supernodes" are connected by a wify link the router of node A see the router of node B as it was directly connected with an ethernet cable.
+<<ref:1, [1]>>
+
+
+=== Previous approaches
+
+qMp, Libre-Mesh, Graciasensefils
+
+
+== Libre-Mesh
+
+Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks on any community in the world.
+
+Main tool is Libre-Mesh firmware: based on OpenWrt, eases the creation of WiFi communities, and enables existing communities to add roaming clouds to their networks.
+
+== Batman-adv
+
+B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a linux kernel module operating on layer 2.
+
+== Bird
+
+It's a program which works as a dynamic router in an Internet type network (that is, in a network running either the IPv4 or the IPv6 protocol). It also communicate with the other routers in the Internet to discover the topology of the network which allows him to find optimal (in terms of some metric) rules for forwarding of packets (which are called routing tables) and to adapt themselves to the changing conditions such as outages of network links, building of new connections and so on.
+
+
+// Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
+[sect1]
+== References
+
+1. [[ref:1]] Guifi.net Ibrid Model http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
+
+
+// Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
+[sect1]
+== Glossary
+
+- Router: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other.
+
+- Routing Daemon: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
+

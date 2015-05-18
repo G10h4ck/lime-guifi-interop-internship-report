@@ -1,17 +1,16 @@
 Interoperability between Libre-Mesh and Guifi.net
 =================================================
 :author: Gioacchino Mazzurco
-:email: gio·@·eigenlab·org
+:email: gio@eigenlab·org
 
 The biggest community network of the world is Guifi.net and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually differents parts of our networks uses differents routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
-The scope of this work is to investigate mainly used routing protocols in particular BGP, Bmx6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh implementing seamless interoperability it and Guifi.net. +
+The scope of this work is to investigate mainly used routing protocols in particular BGP, Bmx6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh and possibly implementing seamless interoperability it and Guifi.net. +
 The new feature must be usable and stable so at the end of the project we can deploy it in our production setups such as Barcelona Botanical Garden, our offices in Aureasocial and others clients. +
 Testing of the new features in real environment and protocols parameters adjusting for the optimal functioning is part of this work too.
 
 
 == Guifi.net
-
 Our networks uses differents routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more. +
 Over time lot of guifi.net nodes have been builded following the <<ibridmodel, Ibrid Model>>
 
@@ -22,35 +21,149 @@ As of ibrid model community network nodes can belong to two categories: _superno
 <<ref:1, [1]>>
 
 
-=== The Previous approach: qMp
-
-QMP <<ref:2, [2]>> do facilitate the creation of roaming enabled mesh networks, it is based on OpenWRT and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ <<ref:99>> for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration <<ref:99>>. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
+=== qMp
+QMP <<ref:2, [2]>> do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ <<ref:99>> for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user <<ref:3>> or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
 
 
 == Libre-Mesh
+Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks on any community in the world. +
+Main tool is Libre-Mesh metafirmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
+To accomplish his goal Libre-Mesh have an higly modular design and implementation, the core of Libre-Mesh meta-firmware is the lime-system package.
 
-Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks on any community in the world.
+=== Lime-System
+Lime-System provide a command line tool `lime-config` that know all lime modules and for each of them call their `clean` method and then their `configure` method, the modules provided by the standard lime installation are in order of execution
 
-Main tool is Libre-Mesh metafirmware: based on OpenWrt, eases the creation of WiFi communities, and enables existing communities to add roaming enabled network clouds to their networks.
+. `hardware_detection`
+. `wireless`
+. `network`
+. `firewall`
+. `system`
 
+==== Hardware Detection
+Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to lime needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plugin installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific config sections in `/etc/config/lime` to be read by others lime components if necessary.
+
+==== Wireless
+Wireless module is supposed to detect WiFi interfaces and prepare them for usage with Libre-Mesh, to accomplish that task it reads and write to `/etc/config/lime` and `/etc/config/wireless`.
+
+==== Network
+Network module is in charge of configuring network interfaces and routing protocols, it is a big task to accomplish in a nifty way to do it is modular too. It offers a tight API to his modules that are called `proto` (such as `lime-proto-bgp`) while they must expose to network module a statefull interface that consists of:
+
+- `configured` flag, it is flase by default and setted to true when the `proto` is cofigured.
+- `configure(args)` this method is in charge of configuring the underlying routing protocol, args is an array containing all parameters found in configuration file.
+- `setup_interface(ifname, args)` thi function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all parameters found in configuration file.
+- `apply()` usually just restart the underlying routing protocol to make the new configurations effective.
+
+==== Firewall
+If OpenWrt firewall is installed configure it according to Libre-Mesh needs.
+
+==== System
+Configure other general and miscellaneous stuff that do not fit well in other modules.
 
 == Batman-adv
 
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a linux kernel module operating on layer 2.
+
 
 == Bird
 
 It's a program which works as a dynamic router in an Internet type network (that is, in a network running either the IPv4 or the IPv6 protocol). It also communicate with the other routers in the Internet to discover the topology of the network which allows him to find optimal (in terms of some metric) rules for forwarding of packets (which are called routing tables) and to adapt themselves to the changing conditions such as outages of network links, building of new connections and so on.
 
 
+=== Exporting BGP routes to a kernel table
+
+[source,bash]
+--------------------------------------
+table tobmx;
+
+protocol pipe {
+	table master;
+	peer table tobmx;
+	import all;
+	export filter {
+		if source = RTS_BGP then accept;
+		else reject;
+        };
+}
+
+protocol kernel
+{
+	scan time 20;
+	table tobmx;
+	kernel table 200;
+	import all;
+	export all;
+}
+--------------------------------------
+
+=== Importing BMX6 route with low preference
+
+[source,bash]
+--------------------------------------
+TODO
+--------------------------------------
+
+
+=== Interesting configuration snippet
+
+[source,bash]
+--------------------------------------
+protocol bgp {
+        local as 65000;                      # Use a private AS number
+        neighbor 198.51.100.130 as 64496;    # Our neighbor ...
+        multihop;                            # ... which is connected indirectly
+        export filter {                      # We use non-trivial export rules
+                if source = RTS_STATIC then { # Export only static routes
+                        # Assign our community
+                        bgp_community.add((65000,64501));
+                        # Artificially increase path length
+                        # by advertising local AS number twice
+                        if bgp_path ~ [= 65000 =] then
+                                bgp_path.prepend(65000);
+                        accept;
+                }
+                reject;
+        };
+        import all;
+        source address 198.51.100.14;   # Use a non-standard source address
+}
+--------------------------------------
+
+=== Interesting threads
+
+- link:http://bird.network.cz/pipermail/bird-users/2012-February/002822.html[How redistribute routes from kernel table]
+- link:http://bird.network.cz/pipermail/bird-users/2013-November/004051.html[Routes in kernel table not being imported]
+- link:http://pastebin.ca/2986781[BIRD protocols default preferences]
+- link:http://bird.network.cz/?get_doc&f=bird-3.html#ss3.3[BIRD protocol preference option]
+
+
+== BMX6
+
+=== Importing BGP routes with low bandwidth
+
+[source,bash]
+--------------------------------------
+config plugin 'table'
+        option plugin 'bmx6_table.so'
+
+config redistTable 'fromBird'      
+        option redistTable 'fromBird'  
+        option table '200'                        
+        option bandwidth '100'     
+        option all '1'                 
+        option sys '12'
+--------------------------------------
+
+
+
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]
 == References
 
-1. [[ref:1]] Guifi.net Ibrid Model http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
-2. [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
+. [[ref:1]] Guifi.net Ibrid Model http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
+. [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
+. [[ref:3]] QMP manual connection to Guifi.net http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
 
-99. [[ref:99]] Reference Needed
+. [[ref:99]] Reference Needed
 
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error

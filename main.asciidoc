@@ -2,6 +2,7 @@ Interoperability between Libre-Mesh and Guifi.net
 =================================================
 :author: Gioacchino Mazzurco
 :email: gio@eigenlab·org
+:lang: en
 
 The biggest community network of the world is Guifi.net and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually differents parts of our networks uses differents routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
@@ -63,6 +64,14 @@ Configure other general and miscellaneous stuff that do not fit well in other mo
 
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a linux kernel module operating on layer 2.
 
+=== Network map
+[source,bash]
+-----------------------
+uci del alfred.alfred.disabled
+uci commit
+/etc/init.d/alfred enable
+/etc/init.d/alfred start
+-----------------------
 
 == Bird
 
@@ -170,12 +179,12 @@ config redistTable 'fromBird'
 [sect1]
 == Glossary
 
-- AP: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
+- *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
 
-- Quagga: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
+- *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
 
-- Router: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other.
+- *Router*: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other.
 
-- Routing Daemon: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
+- *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
 
-- WDS: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
+- *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.

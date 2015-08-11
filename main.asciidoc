@@ -147,6 +147,9 @@ protocol bgp {
 
 == BMX6
 
+=== Limitation of stable version
+BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plugin, but despite the high CPU consuption the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version (called informally BMX7) node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a bloking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do furtsr testing at out offices in Barcelona.
+
 === Importing BGP routes with low bandwidth
 
 [source,bash]

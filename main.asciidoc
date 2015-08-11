@@ -147,8 +147,11 @@ protocol bgp {
 
 == BMX6
 
-=== Limitation of stable version
+=== Route count limitation
 BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plugin, but despite the high CPU consuption the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version (called informally BMX7) node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a bloking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do furtsr testing at out offices in Barcelona.
+
+=== Export proto number to kernel table for BMX6 routes
+To make it easier for the user and other protocols from wich protocol route have been generated kernel routing table support exposing of proto number associated with a router, BMX6 at moment use ``static'' as proto identifier in kernel routing table, but this make impossible to distinguish between real static routes and BMX6 ones from a routing table perspective, this should be fixed in BMX6 as soon as possible. A possible solution I have discussed with BMX6 main developer at BattlemeshV8 is to let the user specify the proto number which BMX6 should use to export routes to kernel routing table in BMX6 config file, seems the proposal has been welcomed by the developer and this should be implemented soon.
 
 === Importing BGP routes with low bandwidth
 

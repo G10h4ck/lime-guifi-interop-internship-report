@@ -18,16 +18,15 @@ Over time lot of guifi.net nodes have been builded following the <<ibridmodel, I
 [[ibridmodel]]
 === Ibrid model
 
-As of ibrid model community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do no do routing for other nodes of guifi.net and just attach to a _supernodos_, while _supernodos_ do route. In _supernodos_ usually a Mikrotik routerboard is used as router while externals wify AP are configured as plain WDS bridge, if two _supernodos_ are connected by a wify link the router of node A see the router of node B as it was directly connected with an ethernet cable.
-<<ref:1, [1]>>
+As of ibrid model community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do no do routing for other nodes of guifi.net and just attach to a _supernodos_, while _supernodos_ do route. In _supernodos_ usually a Mikrotik routerboard is used as router while externals wify AP are configured as plain WDS bridge, if two _supernodos_ are connected by a wify link the router of node A see the router of node B as it was directly connected with an ethernet cable. ^<<ref:1, [1]>>^
 
 
 === qMp
-QMP <<ref:2, [2]>> do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ <<ref:99>> for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user <<ref:3>> or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
+QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
 
 
 == Libre-Mesh
-Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks on any community in the world. +
+Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks for any community in the world. +
 Main tool is Libre-Mesh metafirmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
 To accomplish his goal Libre-Mesh have an higly modular design and implementation, the core of Libre-Mesh meta-firmware is the lime-system package.
 
@@ -49,10 +48,16 @@ Wireless module is supposed to detect WiFi interfaces and prepare them for usage
 ==== Network
 Network module is in charge of configuring network interfaces and routing protocols, it is a big task to accomplish in a nifty way to do it is modular too. It offers a tight API to his modules that are called `proto` (such as `lime-proto-bgp`) while they must expose to network module a statefull interface that consists of:
 
-- `configured` flag, it is flase by default and setted to true when the `proto` is cofigured.
-- `configure(args)` this method is in charge of configuring the underlying routing protocol, args is an array containing all parameters found in configuration file.
-- `setup_interface(ifname, args)` thi function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all parameters found in configuration file.
+- `configured` flag, it is false by default and setted to true when the `proto` is configured.
+- `configure(args)` this method is in charge of configuring the underlying routing protocol, args is an array containing all parameters found in configuration file, parameters have positional meaning.
+- `setup_interface(ifname, args)` this function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all parameters found in configuration file.
 - `apply()` usually just restart the underlying routing protocol to make the new configurations effective.
+
+===== lime-proto-bgp
+To accomplish the task of interoperability between libre-mesh networks and guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as backend it uses BIRD.
+While the module is in charge of configuring BGP routing it delegate trought the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between BGP and the specific `proto`, to accomplish that a new callback has been added to the standard `proto` API:
+
+- `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with.
 
 ==== Firewall
 If OpenWrt firewall is installed configure it according to Libre-Mesh needs.
@@ -104,15 +109,12 @@ protocol kernel
 }
 --------------------------------------
 
-=== Importing BMX6 route with low preference
+=== Importing mesh routes with low preference
+Guifi.net BGP routers are form different vendors and often they have different implementation on wich route attributes are considered when deciding wich path to prefere, after reading documentations from different vendors, seems to me that in eBGP setups (like Guifi.net) the most realiable way to share a route with low preference is to artificially enlarge it's AS path, this tecnique is called AS-path-prepending and it's common in situation where someone want to share a route but want others routers prefere other paths if there is some path available.
+some references:
+http://wiki.nil.com/AS-path_prepending_%28technical_details%29
+Check #bird 2015/08/19 IRC log for more details
 
-[source,bash]
---------------------------------------
-TODO
---------------------------------------
-
-
-=== Interesting configuration snippet
 
 [source,bash]
 --------------------------------------
@@ -148,10 +150,9 @@ protocol bgp {
 == BMX6
 
 === Route count limitation
+
 BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plugin, but despite the high CPU consuption the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version (called informally BMX7) node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a bloking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do furtsr testing at out offices in Barcelona.
 
-=== Export proto number to kernel table for BMX6 routes
-To make it easier for the user and other protocols from wich protocol route have been generated kernel routing table support exposing of proto number associated with a router, BMX6 at moment use ``static'' as proto identifier in kernel routing table, but this make impossible to distinguish between real static routes and BMX6 ones from a routing table perspective, this should be fixed in BMX6 as soon as possible. A possible solution I have discussed with BMX6 main developer at BattlemeshV8 is to let the user specify the proto number which BMX6 should use to export routes to kernel routing table in BMX6 config file, seems the proposal has been welcomed by the developer and this should be implemented soon.
 
 === Importing BGP routes with low bandwidth
 
@@ -178,7 +179,7 @@ config redistTable 'fromBird'
 . [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
 . [[ref:3]] QMP manual connection to Guifi.net http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
 
-. [[ref:99]] Reference Needed
+. [[ref:0]] Citation Needed
 
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
@@ -186,6 +187,8 @@ config redistTable 'fromBird'
 == Glossary
 
 - *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
+
+- *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols.
 
 - *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
 

@@ -4,31 +4,35 @@ Interoperability between Libre-Mesh and Guifi.net
 :email: gio@eigenlab·org
 :lang: en
 
-The biggest community network of the world is Guifi.net and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually differents parts of our networks uses differents routing protocols. +
+:lua: {basebackend@docbook:c++:lua}
+//:lua: {basebackend@docbook:[5.0]Lua:lua}
+// Probably interesting to fix PDF lua syntax highlighting https://developer.jboss.org/message/738608
+
+The biggest community network of the world is Guifi.net ^<<ref:5, [5]>> and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
-The scope of this work is to investigate mainly used routing protocols in particular BGP, Bmx6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh and possibly implementing seamless interoperability it and Guifi.net. +
+The scope of this work is to investigate mainly used routing protocols in particular BGP, BMX6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh and possibly implementing seamless interoperability it and Guifi.net. +
 The new feature must be usable and stable so at the end of the project we can deploy it in our production setups such as Barcelona Botanical Garden, our offices in Aureasocial and others clients. +
 Testing of the new features in real environment and protocols parameters adjusting for the optimal functioning is part of this work too.
 
 
 == Guifi.net
-Our networks uses differents routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more. +
-Over time lot of guifi.net nodes have been builded following the <<ibridmodel, Ibrid Model>>
+Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more. +
+Over time lot of Guifi.net nodes have been build following the <<modelohibrido, Modelo Híbrido>>
 
-[[ibridmodel]]
-=== Ibrid model
+[[modelohibrido]]
+=== Modelo Híbrido
 
-As of ibrid model community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do no do routing for other nodes of guifi.net and just attach to a _supernodos_, while _supernodos_ do route. In _supernodos_ usually a Mikrotik routerboard is used as router while externals wify AP are configured as plain WDS bridge, if two _supernodos_ are connected by a wify link the router of node A see the router of node B as it was directly connected with an ethernet cable. ^<<ref:1, [1]>>^
+As of _Modelo Híbrido_ community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _supernodos_, while _supernodos_ do route. In _supernodos_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge, if two _supernodos_ are connected by a WiFi link the router of each node see the router of the other node as it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _supernodo_ has his own unique private ASN assigned by the Guifi.net Drupal based map, in this setup each _supernodo_ of Guifi.net act as an AS with typical eBGP information exchange mode. ^<<ref:1, [1]>><<ref:5, [5]>>^
 
 
 === qMp
-QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<ibridmodel, Ibrid Model>> to mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
+QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> to mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
 
 
 == Libre-Mesh
 Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks for any community in the world. +
-Main tool is Libre-Mesh metafirmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
-To accomplish his goal Libre-Mesh have an higly modular design and implementation, the core of Libre-Mesh meta-firmware is the lime-system package.
+Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
+To accomplish his goal LiMe meta-firmware have an highly modular design and implementation, the core of LiMe meta-firmware is the lime-system package.
 
 === Lime-System
 Lime-System provide a command line tool `lime-config` that know all lime modules and for each of them call their `clean` method and then their `configure` method, the modules provided by the standard lime installation are in order of execution
@@ -53,17 +57,29 @@ Network module is in charge of configuring network interfaces and routing protoc
 - `setup_interface(ifname, args)` this function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all parameters found in configuration file.
 - `apply()` usually just restart the underlying routing protocol to make the new configurations effective.
 
-===== lime-proto-bgp
-To accomplish the task of interoperability between libre-mesh networks and guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as backend it uses BIRD.
-While the module is in charge of configuring BGP routing it delegate trought the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between BGP and the specific `proto`, to accomplish that a new callback has been added to the standard `proto` API:
-
-- `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with.
-
 ==== Firewall
 If OpenWrt firewall is installed configure it according to Libre-Mesh needs.
 
 ==== System
 Configure other general and miscellaneous stuff that do not fit well in other modules.
+
+=== Simple interoperability use-case
+image::images/simple_exchange_topology.png[align="center"]
+
+Legend::
+- Black routers: routers running LiMe with pure mesh setup.
+- Red routers: Guifi.net routers configured as of _Modelo Híbrido_.
+- Blue straight lines: Cabled mesh links.
+- Blue curvy lines: WiFi mesh links.
+- Yellow straight lines: Guifi.net links as of _Modelo Híbrido_.
+
+===== lime-proto-bgp
+To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
+While the module is in charge of configuring BGP routing it delegate trought the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between BGP and the specific `proto`, to accomplish that a new callback has been added to the standard `proto` API:
+
+- `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with, this function take as parameters two tables that are both readeable to read already defined template variable and writeable to eventually define additional template variables to pass back to `proto` BGP and returns a template snippet that is appended to the bird configuration file by `proto` BGP.
+
+
 
 == Batman-adv
 
@@ -169,15 +185,35 @@ config redistTable 'fromBird'
         option sys '12'
 --------------------------------------
 
+==== Reducing the performance footprint
+Default BMX6 `redistTable` configurations are not suitable to our needs in fact they make the router sloppy and with 100% CPU load every-time, doing some analysis on what was happening I found some causes:
+
+- By default `redistTable` do routes aggregation that is a CPU and memory intensive work.
+- It reacts to every single change in the routing table recalculating all aggregations.
+- Our routing table is big so calculating the ``aggregated'' version is a long work.
+- Our average device have quite limited resources (300-600Mhz MIPS CPU, 32-128MB RAM)
+
+To solve this problem I have disabled route aggregation while enabling routing table event aggregation, with event aggregation it should be even possible to enable route aggregation but further studying it's needed, and the behavior of loop avoidance in case aggregation is enabled need to be studied too.
+
+
+[source,{lua}]
+---------------------------------------------------------
+--// Disable route aggregation
+uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
+--// Aggregate routing tables events by 60s time slots
+uci:set("bmx6", "general", "redistTableDelay", "60000") 
+---------------------------------------------------------
 
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]
 == References
 
-. [[ref:1]] Guifi.net Ibrid Model http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
+. [[ref:1]] Guifi.net _Modelo Híbrido_ http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
 . [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
-. [[ref:3]] QMP manual connection to Guifi.net http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
+. [[ref:3]] QMP manual connection to Guifi.net _Modelo Híbrido_ http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
+. [[ref:4]] Guifi.net _Modelo Híbrido Supernodos_ http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos (Castilian)
+. [[ref:5]] Guifi.net the largest community network in the world https://en.wikipedia.org/wiki/Community_network
 
 . [[ref:0]] Citation Needed
 
@@ -188,7 +224,23 @@ config redistTable 'fromBird'
 
 - *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
 
+- *AS*: Autonomous System. TODO
+
+- *ASN*: Autonomous System Number. TODO
+
+- *BGP*: Border Gateway Protocol. TODO
+
 - *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols.
+
+- *Community Network*: TODO
+
+- *Drupal*: TODO
+
+- *eBGP*: External BGP. TODO
+
+- *Firmware*: Firmware is a type of software that usually control low-level components of the device it is usually held in ROM. While this is the general accepted meaning of the term, in the context of embedded routing and in community networks it is common practice to call firmware the software running on the routers, while it is usually flashed like a proper firmware it is really a software providing a full operative system and higher levels tools such as web interface or command line interface.
+
+- *LiMe*: Common abbreviation for Libre-Mesh.
 
 - *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
 
@@ -197,3 +249,5 @@ config redistTable 'fromBird'
 - *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
 
 - *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
+
+- *WiFi*: TODO

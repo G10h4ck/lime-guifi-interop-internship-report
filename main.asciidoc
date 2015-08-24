@@ -4,11 +4,12 @@ Interoperability between Libre-Mesh and Guifi.net
 :email: gio@eigenlab·org
 :lang: en
 
+
 :lua: {basebackend@docbook:c++:lua}
 //:lua: {basebackend@docbook:[5.0]Lua:lua}
 // Probably interesting to fix PDF lua syntax highlighting https://developer.jboss.org/message/738608
 
-The biggest community network of the world is Guifi.net ^<<ref:5, [5]>> and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
+The biggest community network of the world is Guifi.net ^<<ref:5, [5]>>^ and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
 The scope of this work is to investigate mainly used routing protocols in particular BGP, BMX6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh and possibly implementing seamless interoperability it and Guifi.net. +
 The new feature must be usable and stable so at the end of the project we can deploy it in our production setups such as Barcelona Botanical Garden, our offices in Aureasocial and others clients. +
@@ -16,19 +17,24 @@ Testing of the new features in real environment and protocols parameters adjusti
 
 
 == Guifi.net
-Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more. +
-Over time lot of Guifi.net nodes have been build following the <<modelohibrido, Modelo Híbrido>>
+Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more.
+Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, Modelo Híbrido>>_.
+This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _Modelo Híbrido_ limitation lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
 
 [[modelohibrido]]
 === Modelo Híbrido
 
-As of _Modelo Híbrido_ community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _supernodos_, while _supernodos_ do route. In _supernodos_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge, if two _supernodos_ are connected by a WiFi link the router of each node see the router of the other node as it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _supernodo_ has his own unique private ASN assigned by the Guifi.net Drupal based map, in this setup each _supernodo_ of Guifi.net act as an AS with typical eBGP information exchange mode. ^<<ref:1, [1]>><<ref:5, [5]>>^
+As of _Modelo Híbrido_ community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _supernodos_, while _supernodos_ do route. In _supernodos_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge, if two _supernodos_ are connected by a WiFi link the router of each node see the router of the other node as it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _supernodo_ has his own unique private ASN assigned by the Guifi.net Drupal based map, in this setup each _supernodo_ of Guifi.net act as an AS with typical eBGP information exchange mode. 
+-------------
+Because _Modelo Híbrido_ rely on BGP for routing for each link that is established two peering configuration needs to be written.
+-------------
+^<<ref:1, [1]>><<ref:4, [4]>>^
 
 
 === qMp
-QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports automatic configuration and provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> to mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol whould imply a big refactor in qMp code.
+QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> to mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring in qMp code.
 
-
+[[libre-mesh]]
 == Libre-Mesh
 Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks for any community in the world. +
 Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
@@ -70,7 +76,7 @@ Legend::
 - Black routers: routers running LiMe with pure mesh setup.
 - Red routers: Guifi.net routers configured as of _Modelo Híbrido_.
 - Blue straight lines: Cabled mesh links.
-- Blue curvy lines: WiFi mesh links.
+- Blue curvy dashed lines: WiFi mesh links.
 - Yellow straight lines: Guifi.net links as of _Modelo Híbrido_.
 
 ===== lime-proto-bgp
@@ -251,3 +257,10 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 - *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
 
 - *WiFi*: TODO
+
+== Appendix A : License
+This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. +
+To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/. +
+Copyright © 2015 Gioacchino Mazzurco.
+
+image::images/CC-by-sa.png["License", align="left", link="http://creativecommons.org/licenses/by-sa/4.0/"]

@@ -5,10 +5,6 @@ Interoperability between Libre-Mesh and Guifi.net
 :lang: en
 
 
-:lua: {basebackend@docbook:c++:lua}
-//:lua: {basebackend@docbook:[5.0]Lua:lua}
-// Probably interesting to fix PDF lua syntax highlighting https://developer.jboss.org/message/738608
-
 The biggest community network of the world is Guifi.net ^<<ref:5, [5]>>^ and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
 The scope of this work is to investigate mainly used routing protocols in particular BGP, BMX6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh and possibly implementing seamless interoperability between it and Guifi.net. +
@@ -75,9 +71,13 @@ Legend::
 - Yellow straight lines: Guifi.net links as of _Modelo Híbrido_.
 
 This use case is someway workable also with the pasts solution (manual configuration) but with some drawback:
-- The mesh network must use a previously defined continuos subnet such as 192.0.2.0/24.
-- The mesh network can't use a discontinuos set of subnets like 192.0.2.0/26 + 192.0.2.192/26.
+
 - The red and black router must announce statically the whole 10.0.0.0/8 to the mesh network, that means it will get packets also for unexistent addresses in that range.
+-----------------------------------------------------------------------------------------------------------------------------------
+TODO: Rewrite
+- All the subnets must be previously known and written manually in configurations defined continuous subnet such as 192.0.2.0/24.
+- The mesh network can't use a discontinuos set of subnets like 192.0.2.0/26 + 192.0.2.192/26.
+-----------------------------------------------------------------------------------------------------------------------------------
 
 All those limitations are solved using the software developed during this internship, moreover other more complex but more common interoperability cases are possible.
 
@@ -210,11 +210,11 @@ Default BMX6 `redistTable` configurations are not suitable to our needs in fact 
 To solve this problem I have disabled route aggregation while enabling routing table event aggregation, with event aggregation it should be even possible to enable route aggregation but further studying it's needed, and the behavior of loop avoidance in case aggregation is enabled need to be studied too.
 
 
-[source,{lua}]
+[source,lua]
 ---------------------------------------------------------
---// Disable route aggregation
+-- Disable route aggregation
 uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
---// Aggregate routing tables events by 60s time slots
+-- Aggregate routing tables events by 60s time slots
 uci:set("bmx6", "general", "redistTableDelay", "60000") 
 ---------------------------------------------------------
 

@@ -36,17 +36,16 @@ Libre-Mesh is an initiative undertaken by community networks members of several 
 Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
 To accomplish his goal LiMe meta-firmware have an highly modular design and implementation, the core of LiMe meta-firmware is the lime-system package.
 
-=== Lime-System
-Lime-System provide a command line tool `lime-config` that know all lime modules and for each of them call their `clean` method and then their `configure` method, the modules provided by the standard lime installation are in order of execution
+=== Software Architecture
+LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool `lime-config` that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their `clean()` and `configure()` methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
 
-. `hardware_detection`
-. `wireless`
-. `network`
-. `firewall`
-. `system`
+image::images/libre-mesh_software_architecture.png[align="center"]
+
+Highlighted in green the parts modified and in blue the brand-new parts developed from scratch in the scope of the internship.
+
 
 ==== Hardware Detection
-Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to lime needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plugin installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific config sections in `/etc/config/lime` to be read by others lime components if necessary.
+Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to lime needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plugin installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
 
 ==== Wireless
 Wireless module is supposed to detect WiFi interfaces and prepare them for usage with Libre-Mesh, to accomplish that task it reads and write to `/etc/config/lime` and `/etc/config/wireless`.
@@ -74,6 +73,13 @@ Legend::
 - Blue straight lines: Cabled mesh links.
 - Blue curvy dashed lines: WiFi mesh links.
 - Yellow straight lines: Guifi.net links as of _Modelo Híbrido_.
+
+This use case is someway workable also with the pasts solution (manual configuration) but with some drawback:
+- The mesh network must use a previously defined continuos subnet such as 192.0.2.0/24.
+- The mesh network can't use a discontinuos set of subnets like 192.0.2.0/26 + 192.0.2.192/26.
+- The red and black router must announce statically the whole 10.0.0.0/8 to the mesh network, that means it will get packets also for unexistent addresses in that range.
+
+All those limitations are solved using the software developed durin this works, moreover other more complex but more commone interoperability cases are possible:
 
 ===== lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
@@ -251,6 +257,8 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 - *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
 
 - *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
+
+- *UML*: The Unified Modeling Language (UML) is a general-purpose modeling language in the field of software engineering, which is designed to provide a standard way to visualize the design of a system.
 
 - *WiFi*: TODO
 

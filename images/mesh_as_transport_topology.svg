@@ -1,0 +1,976 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="792pt"
+   height="612pt"
+   id="svg3207"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="mesh_as_transport_topology.svg">
+  <defs
+     id="defs3209">
+    <linearGradient
+       y2="55.728371"
+       x2="281.96432"
+       y1="117.51517"
+       x1="196.78905"
+       gradientTransform="matrix(0.1921501,0,0,1,4.0053779,193.49781)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4153"
+       xlink:href="#linearGradient3172"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientTransform="matrix(0.1899712,0,0,1,411.0355,329.18409)"
+       y2="155.81082"
+       x2="277.80676"
+       y1="60.087051"
+       x1="279.27539"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4149"
+       xlink:href="#linearGradient3172"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="117.23363"
+       x2="304.61481"
+       y1="117.51517"
+       x1="196.78905"
+       id="linearGradient3170"
+       xlink:href="#linearGradient3172"
+       inkscape:collect="always" />
+    <radialGradient
+       r="147.14285"
+       fy="602.7193"
+       fx="328.57144"
+       cy="602.7193"
+       cx="328.57144"
+       gradientTransform="matrix(1,0,0,0.177184,0,495.9268)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient13688"
+       xlink:href="#linearGradient12828"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="737.01562"
+       x2="470.00089"
+       y1="737.01562"
+       x1="175.71875"
+       gradientTransform="matrix(0.471308,0,0,0.471308,118.8781,123.5182)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient13633"
+       xlink:href="#linearGradient12001"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient12001">
+      <stop
+         id="stop12003"
+         offset="0"
+         style="stop-color:#1b4a78;stop-opacity:1;" />
+      <stop
+         id="stop12005"
+         offset="1"
+         style="stop-color:#5dacd1;stop-opacity:1;" />
+    </linearGradient>
+    <radialGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.177184,-1.31839e-15,495.9268)"
+       r="147.14285"
+       fy="602.7193"
+       fx="328.57144"
+       cy="602.7193"
+       cx="328.57144"
+       id="radialGradient13651"
+       xlink:href="#linearGradient12828"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient12828">
+      <stop
+         style="stop-color:#484849;stop-opacity:1;"
+         offset="0"
+         id="stop12830" />
+      <stop
+         id="stop12862"
+         offset="0"
+         style="stop-color:#434344;stop-opacity:1;" />
+      <stop
+         style="stop-color:#8f8f90;stop-opacity:0.0000000;"
+         offset="1.0000000"
+         id="stop12832" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3172">
+      <stop
+         style="stop-color:#781b1b;stop-opacity:1;"
+         offset="0"
+         id="stop3174" />
+      <stop
+         style="stop-color:#d15d5d;stop-opacity:1;"
+         offset="1"
+         id="stop3176" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3778">
+      <stop
+         id="stop3780"
+         offset="0"
+         style="stop-color:#2d2d2d;stop-opacity:1" />
+      <stop
+         id="stop3782"
+         offset="1"
+         style="stop-color:#000000;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3790">
+      <stop
+         style="stop-color:#2d2d2d;stop-opacity:0"
+         offset="0"
+         id="stop3792" />
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="1"
+         id="stop3794" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="solid"
+       id="linearGradient5240">
+      <stop
+         id="stop5242"
+         offset="0"
+         style="stop-color:#2d2d2d;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       y2="55.728371"
+       x2="281.96432"
+       y1="117.51517"
+       x1="196.78905"
+       gradientTransform="matrix(0.1921501,0,0,1,4.0053779,193.49781)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4153-0"
+       xlink:href="#linearGradient3172-9"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientTransform="matrix(0.1899712,0,0,1,411.0355,329.18409)"
+       y2="155.81082"
+       x2="277.80676"
+       y1="60.087051"
+       x1="279.27539"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4149-3"
+       xlink:href="#linearGradient3172-9"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="117.23363"
+       x2="304.61481"
+       y1="117.51517"
+       x1="196.78905"
+       id="linearGradient3170-7"
+       xlink:href="#linearGradient3172-9"
+       inkscape:collect="always" />
+    <radialGradient
+       r="147.14285"
+       fy="602.7193"
+       fx="328.57144"
+       cy="602.7193"
+       cx="328.57144"
+       gradientTransform="matrix(1,0,0,0.177184,0,495.9268)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient13688-6"
+       xlink:href="#linearGradient12828-3"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="737.01562"
+       x2="470.00089"
+       y1="737.01562"
+       x1="175.71875"
+       gradientTransform="matrix(0.471308,0,0,0.471308,118.8781,123.5182)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient13633-8"
+       xlink:href="#linearGradient12001-9"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient12001-9">
+      <stop
+         id="stop12003-5"
+         offset="0"
+         style="stop-color:#1b4a78;stop-opacity:1;" />
+      <stop
+         id="stop12005-9"
+         offset="1"
+         style="stop-color:#5dacd1;stop-opacity:1;" />
+    </linearGradient>
+    <radialGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.177184,-1.31839e-15,495.9268)"
+       r="147.14285"
+       fy="602.7193"
+       fx="328.57144"
+       cy="602.7193"
+       cx="328.57144"
+       id="radialGradient13651-1"
+       xlink:href="#linearGradient12828-3"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient12828-3">
+      <stop
+         style="stop-color:#484849;stop-opacity:1;"
+         offset="0"
+         id="stop12830-7" />
+      <stop
+         id="stop12862-7"
+         offset="0"
+         style="stop-color:#434344;stop-opacity:1;" />
+      <stop
+         style="stop-color:#8f8f90;stop-opacity:0.0000000;"
+         offset="1.0000000"
+         id="stop12832-9" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3172-9">
+      <stop
+         style="stop-color:#781b1b;stop-opacity:1;"
+         offset="0"
+         id="stop3174-5" />
+      <stop
+         style="stop-color:#d15d5d;stop-opacity:1;"
+         offset="1"
+         id="stop3176-4" />
+    </linearGradient>
+    <linearGradient
+       y2="55.728371"
+       x2="281.96432"
+       y1="117.51517"
+       x1="196.78905"
+       gradientTransform="matrix(0.1921501,0,0,1,4.0053779,193.49781)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4153-7"
+       xlink:href="#linearGradient3172-5"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientTransform="matrix(0.1899712,0,0,1,411.0355,329.18409)"
+       y2="155.81082"
+       x2="277.80676"
+       y1="60.087051"
+       x1="279.27539"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient4149-6"
+       xlink:href="#linearGradient3172-5"
+       inkscape:collect="always" />
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="117.23363"
+       x2="304.61481"
+       y1="117.51517"
+       x1="196.78905"
+       id="linearGradient3170-3"
+       xlink:href="#linearGradient3172-5"
+       inkscape:collect="always" />
+    <radialGradient
+       r="147.14285"
+       fy="602.7193"
+       fx="328.57144"
+       cy="602.7193"
+       cx="328.57144"
+       gradientTransform="matrix(1,0,0,0.177184,0,495.9268)"
+       gradientUnits="userSpaceOnUse"
+       id="radialGradient13688-9"
+       xlink:href="#linearGradient12828-2"
+       inkscape:collect="always" />
+    <linearGradient
+       y2="737.01562"
+       x2="470.00089"
+       y1="737.01562"
+       x1="175.71875"
+       gradientTransform="matrix(0.471308,0,0,0.471308,118.8781,123.5182)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient13633-4"
+       xlink:href="#linearGradient12001-5"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient12001-5">
+      <stop
+         id="stop12003-0"
+         offset="0"
+         style="stop-color:#1b4a78;stop-opacity:1;" />
+      <stop
+         id="stop12005-5"
+         offset="1"
+         style="stop-color:#5dacd1;stop-opacity:1;" />
+    </linearGradient>
+    <radialGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1,0,0,0.177184,-1.31839e-15,495.9268)"
+       r="147.14285"
+       fy="602.7193"
+       fx="328.57144"
+       cy="602.7193"
+       cx="328.57144"
+       id="radialGradient13651-5"
+       xlink:href="#linearGradient12828-2"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient12828-2">
+      <stop
+         style="stop-color:#484849;stop-opacity:1;"
+         offset="0"
+         id="stop12830-70" />
+      <stop
+         id="stop12862-9"
+         offset="0"
+         style="stop-color:#434344;stop-opacity:1;" />
+      <stop
+         style="stop-color:#8f8f90;stop-opacity:0.0000000;"
+         offset="1.0000000"
+         id="stop12832-6" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3172-5">
+      <stop
+         style="stop-color:#070707;stop-opacity:1;"
+         offset="0"
+         id="stop3174-3" />
+      <stop
+         style="stop-color:#141414;stop-opacity:1;"
+         offset="1"
+         id="stop3176-7" />
+    </linearGradient>
+    <linearGradient
+       osb:paint="gradient"
+       id="linearGradient3809">
+      <stop
+         id="stop3811"
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1;" />
+      <stop
+         id="stop3813"
+         offset="1"
+         style="stop-color:#000000;stop-opacity:0;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172-2"
+       id="linearGradient2184-1"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.471308,0,0,0.471308,-49.6934,-237.9103)"
+       x1="175.71875"
+       y1="737.01562"
+       x2="470.00089"
+       y2="737.01562" />
+    <linearGradient
+       id="linearGradient3172-2">
+      <stop
+         id="stop3174-8"
+         offset="0"
+         style="stop-color:#070707;stop-opacity:1;" />
+      <stop
+         id="stop3176-43"
+         offset="1"
+         style="stop-color:#141414;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       y2="737.01562"
+       x2="470.00089"
+       y1="737.01562"
+       x1="175.71875"
+       gradientTransform="matrix(0.471308,0,0,0.471308,453.70247,93.767794)"
+       gradientUnits="userSpaceOnUse"
+       id="linearGradient3144-4"
+       xlink:href="#linearGradient3172-2-1"
+       inkscape:collect="always" />
+    <linearGradient
+       id="linearGradient3172-2-1">
+      <stop
+         id="stop3174-8-8"
+         offset="0"
+         style="stop-color:#070707;stop-opacity:1;" />
+      <stop
+         id="stop3176-43-6"
+         offset="1"
+         style="stop-color:#141414;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172-6"
+       id="linearGradient2184"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.471308,0,0,0.471308,-49.6934,-237.9103)"
+       x1="175.71875"
+       y1="737.01562"
+       x2="470.00089"
+       y2="737.01562" />
+    <linearGradient
+       id="linearGradient3172-6">
+      <stop
+         id="stop3174-36"
+         offset="0"
+         style="stop-color:#781b1b;stop-opacity:1;" />
+      <stop
+         id="stop3176-6"
+         offset="1"
+         style="stop-color:#d15d5d;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172-1"
+       id="linearGradient2184-4"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.471308,0,0,0.471308,-49.6934,-237.9103)"
+       x1="175.71875"
+       y1="737.01562"
+       x2="470.00089"
+       y2="737.01562" />
+    <linearGradient
+       id="linearGradient3172-1">
+      <stop
+         id="stop3174-4"
+         offset="0"
+         style="stop-color:#781b1b;stop-opacity:1;" />
+      <stop
+         id="stop3176-0"
+         offset="1"
+         style="stop-color:#d15d5d;stop-opacity:1;" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172-6"
+       id="linearGradient3314"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.40440876,0,0,0.40440876,166.8427,-194.8859)"
+       x1="175.71875"
+       y1="737.01562"
+       x2="470.00089"
+       y2="737.01562" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172"
+       id="linearGradient4456"
+       x1="53.4375"
+       y1="691.875"
+       x2="414.84375"
+       y2="691.875"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.58588105,0,0,0.58860759,-22.870519,-323.571)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient12001"
+       id="linearGradient4456-8"
+       x1="53.4375"
+       y1="691.875"
+       x2="414.84375"
+       y2="691.875"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.61738003,0,0,0.62025316,341.07126,-348.27828)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172"
+       id="linearGradient4456-2"
+       x1="53.4375"
+       y1="691.875"
+       x2="414.84375"
+       y2="691.875"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.6614786,0,0,0.66455696,704.33974,-379.63409)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3172"
+       id="linearGradient3314-2"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.40440876,0,0,0.40440876,541.61884,-198.28729)"
+       x1="175.71875"
+       y1="737.01562"
+       x2="470.00089"
+       y2="737.01562" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:document-units="in"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.71111111"
+     inkscape:cx="495"
+     inkscape:cy="495"
+     inkscape:current-layer="layer1"
+     id="namedview3211"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="721"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3213">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#131797;stroke-width:3.54330709;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 576.5625,97.03125 50.625,19.6875"
+       id="path4603"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#131797;stroke-width:3.54330709;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 347.34375,102.65625 64.6875,-5.625"
+       id="path4601"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ffd700;stroke-width:3.54330709;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 715.78125,67.5 64.6875,-12.65625"
+       id="path4605"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#ffd700;stroke-width:3.54330709;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 195.46875,105.46875 258.75,95.625"
+       id="path4599"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6919"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/simple_exchange_topology.png"
+       inkscape:export-xdpi="78.617538"
+       inkscape:export-ydpi="78.617538"><flowRegion
+         id="flowRegion6921"><rect
+           id="rect6923"
+           width="127.16049"
+           height="121.10523"
+           x="22.202625"
+           y="169.56596" /></flowRegion><flowPara
+         id="flowPara6925" /></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot6933"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/simple_exchange_topology.png"
+       inkscape:export-xdpi="78.617538"
+       inkscape:export-ydpi="78.617538"><flowRegion
+         id="flowRegion6935"><rect
+           id="rect6937"
+           width="205.87889"
+           height="127.16049"
+           x="496.53143"
+           y="526.82635" /></flowRegion><flowPara
+         id="flowPara6939" /></flowRoot>    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3280"
+       d="m 237.91958,72.989871 0,0.252757 c 0.005,-0.08366 0.0177,-0.169286 0.0253,-0.252757 l -0.0253,0 z m 118.94676,0 c 0.0259,0.283536 0.0505,0.573362 0.0505,0.859369 l 0,-0.859369 -0.0505,0 z m 0.0505,0.859369 c -10e-6,12.915668 -26.66406,23.392526 -59.51129,23.392526 -32.33401,8e-6 -58.67088,-10.14884 -59.48603,-22.785915 l 0,34.905559 c -0.0129,0.20058 -0.0126,0.39216 -0.0126,0.59397 0,0.19346 7.5e-4,0.389 0.0126,0.58134 0.78213,12.64862 27.13079,22.82382 59.48603,22.82382 32.35523,0 58.70389,-10.1752 59.48601,-22.82382 l 0.0253,0 0,-0.42969 c 8.2e-4,-0.0504 0,-0.1012 0,-0.15165 0,-0.0505 8.1e-4,-0.10128 0,-0.15165 l 0,-35.95449 z"
+       style="fill:url(#linearGradient3314);fill-opacity:1;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cccccccccccscccscc"
+       inkscape:connector-curvature="0"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 237.91958,72.989871 0,0.252757 c 0.005,-0.08366 0.0177,-0.169286 0.0253,-0.252757 z m 118.94676,0 c 0.0259,0.283536 0.0505,0.573362 0.0505,0.859369 l 0,-0.859369 z m 0.0505,0.859369 c -10e-6,12.915668 -26.10257,41.8009 -60.47657,44.23777 -36.88246,1.92667 -54.0019,-2.96978 -58.52075,-7.55029 0.78213,12.64862 27.13079,22.82382 59.48603,22.82382 32.35523,0 58.70389,-10.1752 59.48601,-22.82382 l 0.0253,0 0,-0.42969 c 8.2e-4,-0.0504 0,-0.1012 0,-0.15165 0,-0.0505 8.1e-4,-0.10128 0,-0.15165 z"
+       id="path3282" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="ccsccc"
+       inkscape:connector-curvature="0"
+       id="path3284"
+       d="m 326.02979,57.799567 0.68506,-27.63074 c 0,0 -1.96105,-10.032565 2.28353,-10.047538 4.14765,-0.01467 1.59847,10.047538 1.59847,10.047538 l 0.45671,27.859094 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.85805625px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="ccsccc"
+       inkscape:connector-curvature="0"
+       id="path3286"
+       d="m 257.46848,58.406298 0.68505,-27.630731 c 0,0 -1.96105,-10.032565 2.28353,-10.047547 4.14766,-0.01467 1.59847,10.047547 1.59847,10.047547 l 0.45671,27.859086 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.85805625px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <ellipse
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3288"
+       style="fill:#781b1b;fill-opacity:1;stroke:none"
+       cx="297.41135"
+       cy="75.66803"
+       rx="59.505856"
+       ry="23.397949" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3290"
+       d="m 302.13973,76.123132 11.15677,0.74414 11.15675,0.744132 -3.73375,1.773019 15.48422,5.043337 -6.96251,3.306211 -15.48423,-5.043337 -3.73376,1.77301 -3.9376,-4.172221 -3.94589,-4.168291 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3292"
+       d="m 269.8899,88.473693 1.89216,-4.387679 1.89216,-4.38768 4.50832,1.468392 12.82394,-6.089565 8.40687,2.738186 -12.82395,6.089565 4.50832,1.468392 -10.60891,1.548568 -10.59891,1.551821 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3294"
+       d="m 294.56494,73.655963 -3.9376,-4.172219 -3.93762,-4.172221 -3.73376,1.77301 -15.48423,-5.043328 -6.96251,3.30621 15.48423,5.043337 -3.73377,1.773008 11.15677,0.744141 11.14849,0.748062 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3296"
+       d="m 326.81331,61.443088 -10.6089,1.548568 -10.60891,1.54856 4.50833,1.4684 -12.82396,6.089563 8.40688,2.738186 12.82394,-6.089562 4.50831,1.468391 1.89216,-4.387679 1.90215,-4.384427 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3298"
+       d="m 326.97002,21.45796 c 0.88514,1.155287 2.77837,1.295742 4.02645,0.177901"
+       style="fill:none;stroke:#0000ff;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3300"
+       d="m 326.30138,24.248959 c 1.82683,1.027591 3.54006,0.684764 5.08145,-3e-4"
+       style="fill:none;stroke:#00ff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3302"
+       d="m 326.31523,27.200235 c 1.68785,0.798233 3.04039,0.803175 4.82915,0.02017"
+       style="fill:none;stroke:#ffff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3304"
+       d="m 326.65776,29.940472 c 2.11226,1.255946 4.00627,0.0069 4.00627,0.0069"
+       style="fill:none;stroke:#ff0000;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;marker-start:none" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3306"
+       d="m 258.4087,22.0647 c 0.88515,1.155287 2.77837,1.295742 4.02646,0.177892"
+       style="fill:none;stroke:#0000ff;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3308"
+       d="m 257.74006,24.855691 c 1.82683,1.027591 3.54007,0.684763 5.08145,-2.92e-4"
+       style="fill:none;stroke:#00ff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3310"
+       d="m 257.75391,27.806975 c 1.68786,0.798233 3.04039,0.803175 4.82916,0.02016"
+       style="fill:none;stroke:#ffff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3312"
+       d="m 258.09645,30.547212 c 2.11226,1.255937 4.00626,0.0069 4.00626,0.0069"
+       style="fill:none;stroke:#ff0000;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;marker-start:none" />
+    <path
+       style="fill:url(#linearGradient4456);fill-opacity:1;stroke:none;stroke-width:2.48031497;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 134.49346,18.28125 A 54.377084,35.178501 0 0 0 91.93127,31.624937 43.254499,28.142801 0 0 0 73.937173,29.041733 43.254499,28.142801 0 0 0 30.682671,57.184533 43.254499,28.142801 0 0 0 41.363557,75.647499 37.89918,25.659612 0 0 0 8.4375,101.05419 a 37.89918,25.659612 0 0 0 37.89918,25.65961 37.89918,25.659612 0 0 0 12.685695,-1.5083 49.021765,35.592366 0 0 0 46.222815,23.857 49.021765,35.592366 0 0 0 43.8255,-19.73906 44.902289,34.350771 0 0 0 26.20559,6.49539 44.902289,34.350771 0 0 0 44.90229,-34.35077 44.902289,34.350771 0 0 0 -36.07287,-33.675947 54.377084,35.178501 0 0 0 4.76486,-14.332359 54.377084,35.178501 0 0 0 -54.3771,-35.178504 z"
+       id="path4437"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:25.83359528px;line-height:125%;font-family:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="116.52161"
+       y="56.234985"
+       id="text6927"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475"
+       transform="scale(1.0115333,0.9885982)"><tspan
+         sodipodi:role="line"
+         id="tspan6929"
+         x="116.52161"
+         y="56.234985">Guifi.net</tspan><tspan
+         sodipodi:role="line"
+         x="116.52161"
+         y="92.32872"
+         id="tspan6931">BGP</tspan><tspan
+         sodipodi:role="line"
+         x="116.52161"
+         y="128.42245"
+         id="tspan4458">Island</tspan></text>
+    <path
+       style="fill:url(#linearGradient4456-8);fill-opacity:1;stroke:none;stroke-width:2.48031497;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 506.89567,11.953125 a 57.300583,37.069818 0 0 0 -44.85049,14.06109 45.58001,29.655855 0 0 0 -18.96152,-2.722087 45.58001,29.655855 0 0 0 -45.58001,29.655858 45.58001,29.655855 0 0 0 11.25512,19.455594 39.936771,27.039161 0 0 0 -34.69627,26.772649 39.936771,27.039161 0 0 0 39.93677,27.039161 39.936771,27.039161 0 0 0 13.36773,-1.58939 51.657344,37.505934 0 0 0 48.70791,25.13963 51.657344,37.505934 0 0 0 46.18171,-20.80029 47.316391,36.197587 0 0 0 27.61449,6.8446 47.316391,36.197587 0 0 0 47.31639,-36.197593 47.316391,36.197587 0 0 0 -38.01228,-35.486481 57.300583,37.069818 0 0 0 5.02104,-15.102919 57.300583,37.069818 0 0 0 -57.30059,-37.069822 z"
+       id="path4437-1"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <path
+       style="fill:url(#linearGradient4456-2);fill-opacity:1;stroke:none;stroke-width:2.48031497;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 882.00875,6.328125 a 61.393482,39.717662 0 0 0 -48.05409,15.065453 48.835725,31.77413 0 0 0 -20.31592,-2.916521 48.835725,31.77413 0 0 0 -48.83572,31.774133 48.835725,31.77413 0 0 0 12.05906,20.84528 42.789397,28.97053 0 0 0 -37.17458,28.68498 42.789397,28.97053 0 0 0 42.7894,28.97053 42.789397,28.97053 0 0 0 14.32256,-1.70292 55.347154,40.184929 0 0 0 52.18705,26.93532 55.347154,40.184929 0 0 0 49.4804,-22.28603 50.696133,38.783129 0 0 0 29.58696,7.3335 A 50.696133,38.783129 0 0 0 978.75,100.24872 50.696133,38.783129 0 0 0 938.02256,62.22749 61.393482,39.717662 0 0 0 943.40224,46.045791 61.393482,39.717662 0 0 0 882.00875,6.328125 Z"
+       id="path4437-11"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3280-6"
+       d="m 612.69572,69.58848 0,0.252757 c 0.005,-0.08366 0.0177,-0.169286 0.0253,-0.252757 l -0.0253,0 z m 118.94676,0 c 0.0259,0.283536 0.0505,0.573362 0.0505,0.859369 l 0,-0.859369 -0.0505,0 z m 0.0505,0.859369 c -1e-5,12.915671 -26.66406,23.392531 -59.51129,23.392531 -32.33401,0 -58.67088,-10.14884 -59.48603,-22.78592 l 0,34.90556 c -0.0129,0.20058 -0.0126,0.39216 -0.0126,0.59397 0,0.19346 7.5e-4,0.389 0.0126,0.58134 0.78213,12.64862 27.13079,22.82382 59.48603,22.82382 32.35523,0 58.70389,-10.1752 59.48601,-22.82382 l 0.0253,0 0,-0.42969 c 8.2e-4,-0.0504 0,-0.1012 0,-0.15165 0,-0.0505 8.1e-4,-0.10128 0,-0.15165 l 0,-35.954491 z"
+       style="fill:url(#linearGradient3314-2);fill-opacity:1;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cccccccccccscccscc"
+       inkscape:connector-curvature="0"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 612.69572,69.58848 0,0.252757 c 0.005,-0.08366 0.0177,-0.169286 0.0253,-0.252757 z m 118.94676,0 c 0.0259,0.283536 0.0505,0.573362 0.0505,0.859369 l 0,-0.859369 z m 0.0505,0.859369 c -1e-5,12.915671 -26.10257,41.800901 -60.47657,44.237771 -36.88246,1.92667 -54.0019,-2.96978 -58.52075,-7.55029 0.78213,12.64862 27.13079,22.82382 59.48603,22.82382 32.35523,0 58.70389,-10.1752 59.48601,-22.82382 l 0.0253,0 0,-0.42969 c 8.2e-4,-0.0504 0,-0.1012 0,-0.15165 0,-0.0505 8.1e-4,-0.10128 0,-0.15165 z"
+       id="path3282-6" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="ccsccc"
+       inkscape:connector-curvature="0"
+       id="path3284-1"
+       d="m 700.80593,54.398176 0.68506,-27.63074 c 0,0 -1.96105,-10.032565 2.28353,-10.047538 4.14765,-0.01467 1.59847,10.047538 1.59847,10.047538 l 0.45671,27.859094 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.85805625px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="ccsccc"
+       inkscape:connector-curvature="0"
+       id="path3286-1"
+       d="m 632.24462,55.004907 0.68505,-27.630731 c 0,0 -1.96105,-10.032565 2.28353,-10.047547 4.14766,-0.01467 1.59847,10.047547 1.59847,10.047547 l 0.45671,27.859086 z"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.85805625px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    <ellipse
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3288-2"
+       style="fill:#781b1b;fill-opacity:1;stroke:none"
+       cx="672.1875"
+       cy="72.26664"
+       rx="59.505856"
+       ry="23.397949" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3290-4"
+       d="m 676.91587,72.721741 11.15677,0.74414 11.15675,0.744132 -3.73375,1.773019 15.48422,5.043337 -6.96251,3.306211 -15.48423,-5.043337 -3.73376,1.77301 -3.9376,-4.172221 -3.94589,-4.168291 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3292-1"
+       d="m 644.66604,85.0723 1.89216,-4.387677 1.89216,-4.38768 4.50832,1.468392 12.82394,-6.089565 8.40687,2.738186 -12.82395,6.089565 4.50832,1.468389 -10.60891,1.54857 -10.59891,1.55182 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3294-9"
+       d="m 669.34108,70.254572 -3.9376,-4.172219 -3.93762,-4.172221 -3.73376,1.77301 -15.48423,-5.043328 -6.96251,3.30621 15.48423,5.043337 -3.73377,1.773008 11.15677,0.744141 11.14849,0.748062 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       id="path3296-3"
+       d="m 701.58945,58.041697 -10.6089,1.548568 -10.60891,1.54856 4.50833,1.4684 -12.82396,6.089563 8.40688,2.738186 12.82394,-6.089562 4.50831,1.468391 1.89216,-4.387679 1.90215,-4.384427 z"
+       style="fill:#f2fdff;fill-opacity:0.71171169;stroke:none"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3298-7"
+       d="m 701.74616,18.056569 c 0.88514,1.155287 2.77837,1.295742 4.02645,0.177901"
+       style="fill:none;stroke:#0000ff;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3300-0"
+       d="m 701.07752,20.847568 c 1.82683,1.027591 3.54006,0.684764 5.08145,-3e-4"
+       style="fill:none;stroke:#00ff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3302-6"
+       d="m 701.09137,23.798844 c 1.68785,0.798233 3.04039,0.803175 4.82915,0.02017"
+       style="fill:none;stroke:#ffff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3304-7"
+       d="m 701.4339,26.539081 c 2.11226,1.255946 4.00627,0.0069 4.00627,0.0069"
+       style="fill:none;stroke:#ff0000;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;marker-start:none" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3306-1"
+       d="m 633.18484,18.663309 c 0.88515,1.155287 2.77837,1.295742 4.02646,0.177892"
+       style="fill:none;stroke:#0000ff;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3308-4"
+       d="m 632.5162,21.4543 c 1.82683,1.027591 3.54007,0.684763 5.08145,-2.92e-4"
+       style="fill:none;stroke:#00ff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3310-4"
+       d="m 632.53005,24.405584 c 1.68786,0.798233 3.04039,0.803175 4.82916,0.02016"
+       style="fill:none;stroke:#ffff00;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+    <path
+       inkscape:export-ydpi="76.190475"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path3312-7"
+       d="m 632.87259,27.145821 c 2.11226,1.255937 4.00626,0.0069 4.00626,0.0069"
+       style="fill:none;stroke:#ff0000;stroke-width:0.85805625px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;marker-start:none" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:25.83359528px;line-height:125%;font-family:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none"
+       x="847.62195"
+       y="49.88475"
+       id="text6927-3"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475"
+       transform="scale(1.0115333,0.9885982)"><tspan
+         sodipodi:role="line"
+         id="tspan6929-7"
+         x="847.62195"
+         y="49.88475">Guifi.net</tspan><tspan
+         sodipodi:role="line"
+         x="847.62195"
+         y="82.176743"
+         id="tspan6931-6">BGP</tspan><tspan
+         sodipodi:role="line"
+         x="847.62195"
+         y="114.46873"
+         id="tspan4458-2">Island</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:26.68456268px;line-height:125%;font-family:Sans;text-align:center;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="480.91943"
+       y="50.352142"
+       id="text4591"
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/gioacchino/Development/relazione_tirocinio/images/mesh_as_transport_topology.png"
+       inkscape:export-xdpi="76.190475"
+       inkscape:export-ydpi="76.190475"><tspan
+         sodipodi:role="line"
+         id="tspan4593"
+         x="480.91943"
+         y="50.352142">Guifi.net</tspan><tspan
+         sodipodi:role="line"
+         x="480.91943"
+         y="83.707848"
+         id="tspan4595">LiMe</tspan><tspan
+         sodipodi:role="line"
+         x="480.91943"
+         y="117.06355"
+         id="tspan4597">Island</tspan></text>
+  </g>
+</svg>

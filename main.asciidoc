@@ -79,9 +79,15 @@ This use case is someway workable also with the pasts solution (manual configura
 - The mesh network can't use a discontinuos set of subnets like 192.0.2.0/26 + 192.0.2.192/26.
 - The red and black router must announce statically the whole 10.0.0.0/8 to the mesh network, that means it will get packets also for unexistent addresses in that range.
 
-All those limitations are solved using the software developed durin this works, moreover other more complex but more commone interoperability cases are possible:
+All those limitations are solved using the software developed during this internship, moreover other more complex but more common interoperability cases are possible.
 
-===== lime-proto-bgp
+=== Multiple exchanges use-case
+image::images/multiple_exchanges_topology.png[align="center"]
+
+=== Mesh as transport use-case
+image::images/mesh_as_transport_topology.png[align="center"]
+
+=== lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
 While the module is in charge of configuring BGP routing it delegate trought the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between BGP and the specific `proto`, to accomplish that a new callback has been added to the standard `proto` API:
 

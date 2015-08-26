@@ -4,6 +4,10 @@ Interoperability between Libre-Mesh and Guifi.net
 :email: gio@eigenlab·org
 :lang: en
 
+:MdHd: Modelo Híbrido
+:SpNd: supernodo
+:Nd: nodo
+
 
 The biggest community network of the world is Guifi.net ^<<ref:5, [5]>>^ and it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
@@ -14,14 +18,13 @@ Testing of the new features in real environment and protocols parameters adjusti
 
 == Guifi.net
 Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more.
-Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, Modelo Híbrido>>_.
-This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _Modelo Híbrido_ limitation lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
+Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, {MdHd}>>_.
+This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _{MdHd}_ limitation lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
 
 [[modelohibrido]]
-=== Modelo Híbrido
-
-As of _Modelo Híbrido_ community network nodes can belong to two categories: _supernodos_ and _nodos_, in this model _nodos_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _supernodos_, while _supernodos_ do route ^<<ref:4, [4]>>^. In _supernodos_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge ^<<ref:1, [1]>>^, if two _supernodos_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _supernodo_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _supernodo_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
-While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _Modelo Híbrido_ has helped Guifi.net to grow but over time new tecnology better suited for wireless community have emerged exposing many limitations of this model.
+=== {MdHd}
+As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route ^<<ref:4, [4]>>^. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge ^<<ref:1, [1]>>^, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
+While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new tecnology better suited for wireless community have emerged exposing many limitations of this model.
 
 === qMp
 QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring in qMp code.
@@ -60,38 +63,51 @@ If OpenWrt firewall is installed configure it according to Libre-Mesh needs.
 ==== System
 Configure other general and miscellaneous stuff that do not fit well in other modules.
 
-=== Simple interoperability use-case
+=== Interoperability use-cases
+Due to LiMe modular nature this development has many possible application that spread out of boundaries of this internship, in following sections a brief analysis of more common use-cases on which the development has been focused is exposed.
+
+[[meshdistribution]]
+==== Mesh network as distribution
+In this scenario a BGP backbone is used as transport network while the mesh network is used as ``last mile'' distribution.
+
 image::images/simple_exchange_topology.png[align="center"]
 
 Legend::
 - Black routers: routers running LiMe with pure mesh setup.
-- Red routers: Guifi.net routers configured as of _Modelo Híbrido_.
+- Red routers: Guifi.net routers configured as of _{MdHd}_.
 - Blue straight lines: Cabled mesh links.
 - Blue curvy dashed lines: WiFi mesh links.
-- Yellow straight lines: Guifi.net links as of _Modelo Híbrido_.
+- Yellow straight lines: Guifi.net links as of _{MdHd}_.
 
-This use case is someway workable also with the pasts solution (manual configuration) but with some drawback:
+This use case is someway workable also with the pasts solution but with strong drawbacks:
 
-- The red and black router must announce statically the whole 10.0.0.0/8 to the mesh network, that means it will get packets also for unexistent addresses in that range.
------------------------------------------------------------------------------------------------------------------------------------
-TODO: Rewrite
-- All the subnets must be previously known and written manually in configurations defined continuous subnet such as 192.0.2.0/24.
-- The mesh network can't use a discontinuos set of subnets like 192.0.2.0/26 + 192.0.2.192/26.
------------------------------------------------------------------------------------------------------------------------------------
+- Instead of the ``red and black'' router we would need two devices one of the ``red type'' let's call it +R+ and one of the ``black type'' lets call it +B+ connected, this mean a frontier node cost the double on average.
+- The +B+ router would announce statically the whole 10.0.0.0/8 to the mesh network and have +R+ as gateway for the entire 10.0.0.0/8 net, this causes packets generated into the mesh directed to nonexistent hosts in that range will flow all across the mesh and even get into the BGP backbone, effectively reducing bandwidth available for legitimate packets.
+- In the +R+ router all the subnets used by the mesh network must be statically routed to +B+ router and then written into the BGP daemon configuration to be announced to the rest of the ``red network'', so each time a subnet is added to the the mesh network the +R+ router need to be reconfigured manually, consuming time of some skilled Guifi.net operator.
 
-All those limitations are solved using the software developed during this internship, moreover other more complex but more common interoperability cases are possible.
+All those limitations are solved using the software developed during this internship, moreover other more complex and even more common interoperability scenarios gets solved.
 
-=== Multiple exchanges use-case
+==== Mesh network with multiple exchanges
+*TODO: Needs further analysis* +
+This scenario is very common in high population density zones, small neighborhood community mesh network grow beyond the district boundaries gaining geographical proximity to multiple backbone nodes, as the number of user usually grow too as the network expand having just an exchange point become a bottleneck, in this case having multiple exchange point can improve the access bandwidth to upstream networks.
+
 image::images/multiple_exchanges_topology.png[align="center"]
 
-=== Mesh as transport use-case
+This scenario in not practically manageable with past technology, and the more exchange point are added the trickier it gets to have a working stable configuration, while with the development done during this internship after BGP peering setup everything works out of the box.
+
+==== Mesh network as transport
+*TODO: Needs further analysis* +
+The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a <<meshdistribution, leaf network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
+
 image::images/mesh_as_transport_topology.png[align="center"]
+
+This will certain encourage LiMe adoption and maybe will finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive tasks, with consequent costs reduction and accessibility for the masses increased.
 
 === lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
 While the module is in charge of configuring BGP routing it delegate trought the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between BGP and the specific `proto`, to accomplish that a new callback has been added to the standard `proto` API:
 
-- `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with, this function take as parameters two tables that are both readeable to read already defined template variable and writeable to eventually define additional template variables to pass back to `proto` BGP and returns a template snippet that is appended to the bird configuration file by `proto` BGP.
+- `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with, this function take as parameters two tables that are both readable to read already defined template variable and writable to eventually define additional template variables to pass back to `proto` BGP and returns a template snippet that is appended to the bird configuration file by `proto` BGP.
 
 
 
@@ -223,10 +239,10 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 [sect1]
 == References
 
-. [[ref:1]] Guifi.net _Modelo Híbrido_ http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
+. [[ref:1]] Guifi.net _{MdHd}_ http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
 . [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
-. [[ref:3]] QMP manual connection to Guifi.net _Modelo Híbrido_ http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
-. [[ref:4]] Guifi.net _Modelo Híbrido Supernodos_ http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos (Castilian)
+. [[ref:3]] QMP manual connection to Guifi.net _{MdHd}_ http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
+. [[ref:4]] Guifi.net _{MdHd} {SpNd}s_ http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos (Castilian)
 . [[ref:5]] Guifi.net the largest community network in the world https://en.wikipedia.org/wiki/Community_network
 
 . [[ref:0]] Citation Needed
@@ -271,6 +287,6 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 == Appendix A : License
 This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. +
 To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/. +
-Copyright © 2015 Gioacchino Mazzurco.
+Copyright © 2015 {author}.
 
 image::images/CC-by-sa.png["License", align="left", link="http://creativecommons.org/licenses/by-sa/4.0/"]

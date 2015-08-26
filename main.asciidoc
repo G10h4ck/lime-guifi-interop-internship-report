@@ -31,7 +31,7 @@ QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks
 
 [[libre-mesh]]
 == Libre-Mesh
-Libre-Mesh is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks for any community in the world. +
+Libre-Mesh (often referenced as LiMe) is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks for any community in the world. +
 Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
 To accomplish his goal LiMe meta-firmware have an highly modular design and implementation, the core of LiMe meta-firmware is the lime-system package.
 
@@ -97,11 +97,11 @@ This scenario in not practically manageable with past technology, and the more e
 
 ==== Mesh network as transport
 *TODO: Needs further analysis* +
-The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a <<meshdistribution, leaf network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
+The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a leaf <<meshdistribution, distribution network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
 
 image::images/mesh_as_transport_topology.png[align="center"]
 
-This will certain encourage LiMe adoption and maybe will finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive tasks, with consequent costs reduction and accessibility for the masses increased.
+This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
 
 === lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
@@ -113,16 +113,21 @@ While the module is in charge of configuring BGP routing it delegate trought the
 
 == Batman-adv
 
-B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a linux kernel module operating on layer 2.
+B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2. +
+As it works on layer 2 it doesn't need much interaction with BGP to announce the mesh subnet route, announcing the route for subnet used by batman-adv mesh cloud as been achieved implementing `bgp_conf(...)` directly into `lime.proto.lan` without modifying any code related to batman-adv.
 
-=== Network map
-[source,bash]
------------------------
-uci del alfred.alfred.disabled
-uci commit
-/etc/init.d/alfred enable
-/etc/init.d/alfred start
------------------------
+[source,lua]
+------------------------------------------------------------
+function lan.bgp_conf(templateVarsIPv4, templateVarsIPv6)
+	local base_conf = [[
+protocol direct {
+	interface "br-lan";
+}
+]]
+	return base_conf
+end
+------------------------------------------------------------
+
 
 == Bird
 
@@ -157,8 +162,8 @@ protocol kernel
 
 === Importing mesh routes with low preference
 Guifi.net BGP routers are form different vendors and often they have different implementation on which route attributes are considered when deciding which path to prefer, after reading documentations from different vendors, seems to me that in eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending and it's common in situation where someone want to share a route but want others routers prefer other paths if there is some path available.
-some references:
-http://wiki.nil.com/AS-path_prepending_%28technical_details%29
+some references: +
+http://wiki.nil.com/AS-path_prepending_%28technical_details%29 +
 Check #bird 2015/08/19 IRC log for more details
 
 
@@ -274,15 +279,17 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 
 - *LiMe*: Common abbreviation for Libre-Mesh.
 
+- *OpenWrt*: OpenWrt is an operating system based on the Linux kernel, primarily used on embedded devices to route network traffic. All components OpenWrt ships are optimized for size, to be small enough for fitting into the limited storage and memory available in home routers.
+
 - *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
 
 - *Router*: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other.
 
 - *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
 
-- *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
-
 - *UML*: The Unified Modeling Language (UML) is a general-purpose modeling language in the field of software engineering, which is designed to provide a standard way to visualize the design of a system.
+
+- *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
 
 - *WiFi*: WiFi is a local area wireless computer networking technology that allows electronic devices to network, mainly using the 2.4 gigahertz (12 cm) UHF and 5 gigahertz (6 cm) SHF ISM radio bands.
 

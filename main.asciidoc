@@ -19,7 +19,7 @@ Testing of the new features in real environment and protocols parameters adjusti
 == Guifi.net
 Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more.
 Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, {MdHd}>>_.
-This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _{MdHd}_ limitation lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
+This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _{MdHd}_ limitations lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
 
 [[modelohibrido]]
 === {MdHd}
@@ -27,7 +27,7 @@ As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ a
 While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new tecnology better suited for wireless community have emerged exposing many limitations of this model.
 
 === qMp
-QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring in qMp code.
+QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
 
 [[libre-mesh]]
 == Libre-Mesh
@@ -44,27 +44,27 @@ Highlighted in green the parts modified and in blue the brand-new parts develope
 
 
 ==== Hardware Detection
-Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to lime needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plugin installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
+Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plugin installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
 
 ==== Wireless
-Wireless module is supposed to detect WiFi interfaces and prepare them for usage with Libre-Mesh, to accomplish that task it reads and write to `/etc/config/lime` and `/etc/config/wireless`.
+Wireless module is supposed to detect WiFi interfaces and prepare them for usage with LiMe, to accomplish that task it reads and write to `/etc/config/lime` and `/etc/config/wireless`, as depicted in the UML schema it is modular itself and delegate part of the works to his submodules called `mode`.
 
 ==== Network
 Network module is in charge of configuring network interfaces and routing protocols, it is a big task to accomplish in a nifty way to do it is modular too. It offers a tight API to his modules that are called `proto` (such as `lime-proto-bgp`) while they must expose to network module a statefull interface that consists of:
 
 - `configured` flag, it is false by default and setted to true when the `proto` is configured.
 - `configure(args)` this method is in charge of configuring the underlying routing protocol, args is an array containing all parameters found in configuration file, parameters have positional meaning.
-- `setup_interface(ifname, args)` this function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all parameters found in configuration file.
+- `setup_interface(ifname, args)` this function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all related parameters found in configuration file.
 - `apply()` usually just restart the underlying routing protocol to make the new configurations effective.
 
 ==== Firewall
-If OpenWrt firewall is installed configure it according to Libre-Mesh needs.
+Configure OpenWrt firewall if installed or iptables according to Libre-Mesh needs.
 
 ==== System
-Configure other general and miscellaneous stuff that do not fit well in other modules.
+Configure other miscellaneous stuff that do not fit well in other modules.
 
 === Interoperability use-cases
-Due to LiMe modular nature this development has many possible application that spread out of boundaries of this internship, in following sections a brief analysis of more common use-cases on which the development has been focused is exposed.
+Due to LiMe modular nature this development has many possible application that spread out of boundaries of this internship, in the following sections a brief analysis of more common use-cases on which the development has been focused is exposed.
 
 [[meshdistribution]]
 ==== Mesh network as distribution
@@ -88,7 +88,7 @@ This use case is someway workable also with the pasts solution but with strong d
 All those limitations are solved using the software developed during this internship, moreover other more complex and even more common interoperability scenarios gets solved.
 
 ==== Mesh network with multiple exchanges
-*TODO: Needs further analysis* +
+*TODO: Needs further analysis + control flow schema* +
 This scenario is very common in high population density zones, small neighborhood community mesh network grow beyond the district boundaries gaining geographical proximity to multiple backbone nodes, as the number of user usually grow too as the network expand having just an exchange point become a bottleneck, in this case having multiple exchange point can improve the access bandwidth to upstream networks.
 
 image::images/multiple_exchanges_topology.png[align="center"]
@@ -96,7 +96,7 @@ image::images/multiple_exchanges_topology.png[align="center"]
 This scenario in not practically manageable with past technology, and the more exchange point are added the trickier it gets to have a working stable configuration, while with the development done during this internship after BGP peering setup everything works out of the box.
 
 ==== Mesh network as transport
-*TODO: Needs further analysis* +
+*TODO: Needs further analysis + control flow schema* +
 The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a leaf <<meshdistribution, distribution network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
 
 image::images/mesh_as_transport_topology.png[align="center"]
@@ -105,10 +105,9 @@ This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, g
 
 === lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
-While the module is in charge of configuring BGP routing it delegate trought the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between BGP and the specific `proto`, to accomplish that a new callback has been added to the standard `proto` API:
+While the module is in charge of configuring BGP routing it delegate through the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between the specific `proto` and BGP, to accomplish that a new callback has been added to the standard `proto` API:
 
 - `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with, this function take as parameters two tables that are both readable to read already defined template variable and writable to eventually define additional template variables to pass back to `proto` BGP and returns a template snippet that is appended to the bird configuration file by `proto` BGP.
-
 
 
 == Batman-adv
@@ -131,7 +130,7 @@ end
 
 == Bird
 
-It's a program which works as a dynamic router in an Internet type network (that is, in a network running either the IPv4 or the IPv6 protocol). It also communicate with the other routers in the Internet to discover the topology of the network which allows him to find optimal (in terms of some metric) rules for forwarding of packets (which are called routing tables) and to adapt themselves to the changing conditions such as outages of network links, building of new connections and so on.
+It's a routing daemon implementing various protocols in particular BGP.
 
 
 === Exporting BGP routes to a kernel table

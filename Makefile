@@ -5,8 +5,12 @@ ASCIIDOC_INSTALL_DIR="/usr/share/asciidoc/"
 .PHONY: all
 all: pdf html
 
+.PHONY: dia
+dia:
+	dia -O images -t png diagrams/*.dia
+
 .PHONY: pdf
-pdf: $(LUA_HIGHLIGHT_WORKAROUND_STYLE)
+pdf: $(LUA_HIGHLIGHT_WORKAROUND_STYLE) dia
 	a2x --verbose -f pdf \
 		-a lang=en \
 		--dblatex-opts="-s ./$(LUA_HIGHLIGHT_WORKAROUND_STYLE)" \
@@ -15,7 +19,7 @@ pdf: $(LUA_HIGHLIGHT_WORKAROUND_STYLE)
 		main.asciidoc
 
 .PHONY: html
-html:
+html: dia
 	asciidoc --verbose \
 		-a toc2 \
 		main.asciidoc

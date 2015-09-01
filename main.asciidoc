@@ -8,7 +8,7 @@ Interoperability between Libre-Mesh and Guifi.net
 :SpNd: supernodo
 :Nd: nodo
 
-//= Introduction
+//== Introduction
 
 The biggest community network of the world is Guifi.net ^<<ref:5, [5]>>^ it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
@@ -17,6 +17,12 @@ The new feature must be usable and stable so at the end of the project we can de
 Testing of the new features in real environment and protocols parameters adjusting for the optimal functioning is part of this work too.
 
 == State of the art
+
+=== BGP
+BGP (acronym of Border Gateway Protocol) is a standard routing protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet. BGP makes routing decisions based on paths, network policies, or rule-sets configured by a network administrator and is involved in making core routing decisions, because it needs information of each route reachability path to make decisions BGP is usually classified as a path vector protocol. Version 4 of BGP has been in use on the Internet since 1994, it's mayor improvement in respect to older version that are obsolete and unused on the Internet is the support for classless inter-domain routing (CIDR) and routes aggregation. +
+BGP may be used for routing within an AS. In this application it is referred to as Internal BGP, or iBGP. In contrast, the Internet application of the protocol may be referred to as Exterior Border Gateway Protocol, External BGP, or eBGP. +
+As BGP doesn't perform any type of neighbor discovery, peers are established by manual configuration. For each peer router a connection through TCP port 179 must be established, after the connection is established BGP daemons synchronize with peers by sending the whole routing information they have to peers, after this initial sync only updates are transmitted to peers.
+
 === Guifi.net
 Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more.
 Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, {MdHd}>>_.
@@ -26,9 +32,6 @@ This solution imply lot of manual work and a central provisioning server that kn
 ==== {MdHd}
 As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route ^<<ref:4, [4]>>^. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge ^<<ref:1, [1]>>^, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
 While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new tecnology better suited for wireless community have emerged exposing many limitations of this model.
-
-=== qMp
-QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
 
 === Bird
 It's a routing daemon implementing various protocols in particular BGP.
@@ -42,12 +45,17 @@ BMX6 store distribute routes in a shared structure called ``node description'' f
 === Batman-adv
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2.
 
+=== qMp
+QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
 
 [[libre-mesh]]
 === Libre-Mesh
 Libre-Mesh (often referenced as LiMe) is an initiative undertaken by community networks members of several continents that collaborate towards a common goal: to develop a set of tools that facilitate the deployment of Free Networks for any community in the world. +
 Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of community networks, and enables existing communities to add roaming enabled network clouds to their networks. +
 To accomplish his goal LiMe meta-firmware have an highly modular design and implementation, the core of LiMe meta-firmware is the lime-system package.
+
+==== Network Architecture
+TODO
 
 ==== Software Architecture
 LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool `lime-config` that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their `clean()` and `configure()` methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
@@ -77,6 +85,15 @@ Configure OpenWrt firewall if installed or iptables according to Libre-Mesh need
 ===== System
 Configure other miscellaneous stuff that do not fit well in other modules.
 
+===== Hardware detector ground routing
+TODO
+
+===== Hardware detector OpenWrt wan
+TODO
+
+===== Hardware detector USB radio
+TODO
+
 ===== Protocol adhoc
 TODO
 
@@ -99,11 +116,16 @@ TODO
 ===== Protocol lan
 TODO
 
-
-==== Network Architecture
+==== WiFi mode adhoc
 TODO
 
-== Developed tool
+==== WiFi mode ap
+TODO
+
+==== WiFi mode ieee80211s
+TODO
+
+== Developed tools
 
 === lime-system
 
@@ -279,56 +301,14 @@ TODO
 [sect1]
 == References
 
-. [[ref:1]] Guifi.net _{MdHd}_ http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
-. [[ref:2]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
-. [[ref:3]] QMP manual connection to Guifi.net _{MdHd}_ http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
-. [[ref:4]] Guifi.net _{MdHd} {SpNd}s_ http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos (Castilian)
-. [[ref:5]] Guifi.net the largest community network in the world https://en.wikipedia.org/wiki/Community_network
-. [[ref:6]] BGP specification RFC 4271 https://tools.ietf.org/html/rfc4271
-
-. [[ref:0]] Citation Needed https://en.wikipedia.org/wiki/Wikipedia:Verifiability
+include::references.asciidoc[]
 
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]
 == Glossary
 
-- *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
-
-- *AS*: Within the Internet, an autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet.
-
-- *ASN*: An autonomous system number (ASN) is a unique number to identify an autonomous system (AS) and which enables that system to exchange exterior routing information with other neighboring autonomous systems.
-
-- *BGP*: Border Gateway Protocol (BGP) is a protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet.
-
-- *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols.
-
-- *Community Network*: A community network is a computer-based system that is intended to help support geographical communities by supporting, augmenting, and extending already existing social networks.
-
-- *Drupal*: Drupal is a free and open-source web content-management framework written in PHP and distributed under the GNU General Public License.
-
-- *eBGP*: Short for External Border Gateway Protocol, eBGP is the protocol used to transport information to other BGP enabled systems in different autonomous systems (AS).
-
-- *Firmware*: Firmware is a type of software that usually control low-level components of the device it is usually held in ROM. While this is the general accepted meaning of the term, in the context of embedded routing and in community networks it is common practice to call firmware the software running on the routers, while it is usually flashed like a proper firmware it is really a software providing a full operative system and higher levels tools such as web interface or command line interface.
-
-- *IP*: The Internet Protocol (IP) is the principal communications protocol in the Internet protocol suite for relaying datagrams across network boundaries. Its routing function enables inter-networking, and essentially establishes the Internet.
-
-- *LiMe*: Common abbreviation for Libre-Mesh.
-
-- *OpenWrt*: OpenWrt is an operating system based on the Linux kernel, primarily used on embedded devices to route network traffic. All components OpenWrt ships are optimized for size, to be small enough for fitting into the limited storage and memory available in home routers.
-
-- *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
-
-- *Router*: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other.
-
-- *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
-
-- *UML*: The Unified Modeling Language (UML) is a general-purpose modeling language in the field of software engineering, which is designed to provide a standard way to visualize the design of a system.
-
-- *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
-
-- *WiFi*: WiFi is a local area wireless computer networking technology that allows electronic devices to network, mainly using the 2.4 gigahertz (12 cm) UHF and 5 gigahertz (6 cm) SHF ISM radio bands.
-
+include::glossary.asciidoc[]
 
 == Appendix: Code
 TODO

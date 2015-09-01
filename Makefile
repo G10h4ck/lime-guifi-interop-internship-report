@@ -10,7 +10,7 @@ dia:
 	dia -O images -t png diagrams/*.dia
 
 .PHONY: pdf
-pdf: $(LUA_HIGHLIGHT_WORKAROUND_STYLE) dia
+pdf: dia $(LUA_HIGHLIGHT_WORKAROUND_STYLE)
 	a2x --verbose -f pdf \
 		-a lang=en \
 		--dblatex-opts="-s ./$(LUA_HIGHLIGHT_WORKAROUND_STYLE)" \

@@ -19,7 +19,7 @@ Testing of the new features in real environment and protocols parameters adjusti
 == State of the art
 
 === BGP
-BGP (acronym of Border Gateway Protocol) is a standard routing protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet. BGP makes routing decisions based on paths, network policies, or rule-sets configured by a network administrator and is involved in making core routing decisions, because it needs information of each route reachability path to make decisions BGP is usually classified as a path vector protocol. Version 4 of BGP has been in use on the Internet since 1994, it's mayor improvement in respect to older version that are obsolete and unused on the Internet is the support for classless inter-domain routing (CIDR) and routes aggregation. +
+BGP (acronym of Border Gateway Protocol) is a standard routing protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet. BGP makes routing decisions based on paths, network policies, or rule-sets configured by a network administrator that is involved in making core routing decisions, because it needs information of each route reachability path to make decisions BGP is usually classified as a path vector protocol. Version 4 of BGP has been in use on the Internet since 1994, it's mayor improvement in respect to older version that are obsolete and unused on the Internet is the support for classless inter-domain routing (CIDR) and routes aggregation. +
 BGP may be used for routing within an AS. In this application it is referred to as Internal BGP, or iBGP. In contrast, the Internet application of the protocol may be referred to as Exterior Border Gateway Protocol, External BGP, or eBGP. +
 As BGP doesn't perform any type of neighbor discovery, peers are established by manual configuration. For each peer router a connection through TCP port 179 must be established, after the connection is established BGP daemons synchronize with peers by sending the whole routing information they have to peers, after this initial sync only updates are transmitted to peers.
 
@@ -46,7 +46,7 @@ BMX6 store distribute routes in a shared structure called ``node description'' f
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2.
 
 === qMp
-QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, Ibrid Model>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
+QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
 
 [[libre-mesh]]
 === Libre-Mesh
@@ -230,7 +230,7 @@ config redistTable 'fromBird'
 --------------------------------------
 
 
-== Sperimental results
+== Experimental results
 TODO
 
 === Interoperability use-cases

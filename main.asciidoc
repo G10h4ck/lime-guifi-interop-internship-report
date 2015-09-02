@@ -24,22 +24,30 @@ BGP may be used for routing within an AS. In this application it is referred to 
 As BGP doesn't perform any type of neighbor discovery, peers are established by manual configuration. For each peer router a connection through TCP port 179 must be established, after the connection is established BGP daemons synchronize with peers by sending the whole routing information they have to peers, after this initial sync only updates are transmitted to peers.
 
 === Guifi.net
-Our networks uses different routing protocols such as BGP, OSPF, OLSR, Bmx6, BATMAN-adv, Babel and more.
+Our networks uses different routing protocols such as BGP, OSPF, OLSR, BMX6, BATMAN-adv, Babel and more.
 Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, {MdHd}>>_.
 This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _{MdHd}_ limitations lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
 
 [[modelohibrido]]
 ==== {MdHd}
 As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route <<ref:mdhdspnd>>. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge <<ref:mdhd>>, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
-While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new tecnology better suited for wireless community have emerged exposing many limitations of this model.
+While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new technology better suited for wireless community have emerged exposing many limitations of this model.
 
 === Bird
 It's a routing daemon implementing various protocols in particular BGP.
 
 === BMX6
-==== Route count limitation
+BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It originated as an independent branch of the BATMAN routing protocol and is already used successfully in mesh networks <<ref:bmxan>>. Being a mesh routing protocol, BMX6 distributes node descriptions which can contain node-specific configurations. It optimizes the communication between neighboring nodes for minimal protocol overhead.
 
-BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version (called informally BMX7) node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do further testing at our offices in Barcelona.
+.BMX6 is
+Pro-active::
+	Even if there is no traffic in the network, the routes to all the network nodes are known pro-actively.
+
+Distance-vector::
+	Nodes does not have a global view of the network topology, the next-hop to a destination is computed based on aggregated information.
+
+Table-driven::
+	Each node hold a table that maps each destination node to the next hop and the cost it will take to get there.
 
 
 === Batman-adv
@@ -62,11 +70,8 @@ LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a com
 
 image::images/lime-system_UML.png[align="center"]
 
-Highlighted in green the parts modified and in blue the brand-new parts developed from scratch in the scope of the internship.
-
-
 ===== Hardware Detection
-Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plugin installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
+Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plug-in installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
 
 ===== Wireless
 Wireless module is supposed to detect WiFi interfaces and prepare them for usage with LiMe, to accomplish that task it reads and write to `/etc/config/lime` and `/etc/config/wireless`, as depicted in the UML schema it is modular itself and delegate part of the works to his submodules called `mode`.
@@ -98,14 +103,30 @@ TODO
 TODO
 
 ===== Protocol anygw
-TODO
+
+This protocol is shipped as an optional package `lime-proto-anygw`, but is installed and enabled by the default in LiMe distribution.
+
+image::images/lime-proto-anygw_UML.png[align="center"]
+
+The anygw LiMe protocol is a light implementation of anycast gateway, it builds the virtual Ethernet interface `anygw` on top of <<proto:lan, Lan protocol>> clients access interface `br-lan` using the Linux kernel module `macvlan` <<ref:macvlan>>. When any-cast gateway is enabled the first address of the mesh network subnet is reserved for any-cast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all any-cast gateways on a LiMe L2 cloud share the same IP and MAC address, so when a client sends a packets directed outside it's cloud it gets routed at L3 by the nearest router.
+
+
+.`anygw` addresses generation
+[source, lua]
+---------------------------------------------
+local ipv4, ipv6 = network.primary_address()
+
+local anygw_mac = "aa:aa:aa:aa:aa:aa"
+local anygw_ipv6 = ipv6:minhost()
+local anygw_ipv4 = ipv4:minhost()
+---------------------------------------------
 
 ===== Protocol batadv
 TODO
 
 image::images/lime-proto-batadv_UML.png[align="center"]
 
-===== Protocol bmx6
+===== Protocol BMX6
 TODO
 
 image::images/lime-proto-bmx6_UML.png[align="center"]
@@ -113,8 +134,9 @@ image::images/lime-proto-bmx6_UML.png[align="center"]
 ===== Protocol ieee80211s
 TODO
 
+[[proto:lan]]
 ===== Protocol lan
-TODO
+The lan LiMe protocol is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces.
 
 ==== WiFi mode adhoc
 TODO
@@ -129,9 +151,13 @@ TODO
 
 === lime-system
 
+image::images/lime-system_devel_UML.png[align="center"]
+
+Highlighted in green the parts modified in the scope of the internship.
+
 As it works on layer 2 it doesn't need much interaction with BGP to announce the mesh subnet route, announcing the route for subnet used by batman-adv mesh cloud as been achieved implementing `bgp_conf(...)` directly into `lime.proto.lan` without modifying any code related to batman-adv.
 
-[source,lua]
+[source, lua]
 ------------------------------------------------------------
 function lan.bgp_conf(templateVarsIPv4, templateVarsIPv6)
 	local base_conf = [[
@@ -142,6 +168,9 @@ protocol direct {
 	return base_conf
 end
 ------------------------------------------------------------
+
+=== lime-proto-anygw
+TODO code too
 
 === lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
@@ -272,6 +301,10 @@ The most important technical factor that slowed down LiMe adoption into Guifi.ne
 image::images/mesh_as_transport_topology.png[align="center"]
 
 This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
+
+==== Route count limitation
+
+BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do further testing at our offices in Barcelona.
 
 ==== Reducing the performance footprint
 Default BMX6 `redistTable` configurations are not suitable to our needs in fact they make the router sloppy and with 100% CPU load every-time, doing some analysis on what was happening I found some causes:

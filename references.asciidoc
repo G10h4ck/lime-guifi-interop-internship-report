@@ -1,8 +1,11 @@
 - [[[ref:cnw]]] Community networks in the world https://en.wikipedia.org/wiki/Community_network
 - [[[ref:mdhdspnd]]] Guifi.net _{MdHd} {SpNd}s_ http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos (Castilian)
 - [[[ref:mdhd]]] Guifi.net _{MdHd}_ http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
+- [[[ref:bmxan]]] Analysis of the BMX6 routing protocol http://bmx6.net/attachments/download/134/Thesis_AnalysisOfTheBMX6RoutingProtocol_GlennDaneels.pdf
 - [[[ref:qmp]]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
 - [[[ref:qmpmdhd]]] QMP manual connection to Guifi.net _{MdHd}_ http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
 - [[[ref:bgprfc]]] BGP specification RFC 4271 https://tools.ietf.org/html/rfc4271
+- [[[ref:macvlan]]] Some notes on macvlan and macvtap http://backreference.org/2014/03/20/some-notes-on-macvlanmacvtap/
+- [[[ref:macaddress]]] MAC Address https://en.wikipedia.org/wiki/MAC_address
 
 - [[[ref:missing]]] Citation Needed https://en.wikipedia.org/wiki/Wikipedia:Verifiability

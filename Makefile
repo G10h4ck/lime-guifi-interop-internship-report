@@ -13,6 +13,7 @@ dia:
 pdf: dia $(LUA_HIGHLIGHT_WORKAROUND_STYLE)
 	a2x --verbose -f pdf \
 		-a lang=en \
+		--asciidoc-opts="-f ./docbook-auto-references.conf" \
 		--dblatex-opts="-s ./$(LUA_HIGHLIGHT_WORKAROUND_STYLE)" \
 		--dblatex-opts="-P doc.publisher.show=0" \
 		--dblatex-opts="-P latex.output.revhistory=0" \

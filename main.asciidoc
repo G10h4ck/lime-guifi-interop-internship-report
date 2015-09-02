@@ -10,7 +10,7 @@ Interoperability between Libre-Mesh and Guifi.net
 
 //== Introduction
 
-The biggest community network of the world is Guifi.net ^<<ref:5, [5]>>^ it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
+The biggest community network in the world is Guifi.net <<ref:cnw>> it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
 The scope of this work is to investigate mainly used routing protocols in particular BGP, BMX6 and BATMAN-adv, to study past interoperability experiments and to extend Libre-Mesh and possibly implementing seamless interoperability between it and Guifi.net. +
 The new feature must be usable and stable so at the end of the project we can deploy it in our production setups such as Barcelona Botanical Garden, our offices in Aureasocial and others clients. +
@@ -30,7 +30,7 @@ This solution imply lot of manual work and a central provisioning server that kn
 
 [[modelohibrido]]
 ==== {MdHd}
-As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route ^<<ref:4, [4]>>^. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge ^<<ref:1, [1]>>^, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
+As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route <<ref:mdhdspnd>>. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge <<ref:mdhd>>, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
 While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new tecnology better suited for wireless community have emerged exposing many limitations of this model.
 
 === Bird
@@ -46,7 +46,7 @@ BMX6 store distribute routes in a shared structure called ``node description'' f
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2.
 
 === qMp
-QMP ^<<ref:2, [2]>>^ do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6, qMp already supports configuration provisioning by guifi.net map _unsolclick_ ^<<ref:0, [citation needed]>>^ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user ^<<ref:3, [3]>>^ or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
+qMp do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6 <<ref:qmp>>, qMp already supports configuration provisioning by guifi.net map _unsolclick_ <<ref:missing>> for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user <<ref:qmpmdhd>> or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
 
 [[libre-mesh]]
 === Libre-Mesh
@@ -296,12 +296,12 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 == Conclusions
 TODO
 
-
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]
 == References
 
 include::references.asciidoc[]
+
 
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error

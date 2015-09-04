@@ -12,9 +12,13 @@
 - [[[ref:birdmultitable]]] Vincent Bernat. 2015. "Network lab: site to site VPN". http://vincent.bernat.im/en/blog/2011-lab-site-to-site-vpn.html
 - [[[ref:birdwikipedia]]] Wikipedia. 2015. Bird Internet routing daemon. https://en.wikipedia.org/wiki/Bird_Internet_routing_daemon
 - [[[ref:birdowrt]]] OpenWrt source code. 2015. BIRD into OpenWrt routing feed. https://github.com/openwrt-routing/packages/tree/master/bird
-- [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
+- [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX. http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
+- [[[ref:anycast]]] Wikipedia. 2015. Anycast. https://en.wikipedia.org/wiki/Anycast
+- [[[ref:unicast]]] Wikipedia. 2015. Unicast. https://en.wikipedia.org/wiki/Unicast
+- [[[ref:lastmile]]] Wikipedia. 2015. Last mile. https://en.wikipedia.org/wiki/Last_mile
+- [[[ref:tablepro]]] Wikipedia. 2015. Table-driven proactive routing. https://en.wikipedia.org/wiki/List_of_ad_hoc_routing_protocols#Table-driven_.28proactive.29_routing
+- [[[ref:distvect]]] Wikipedia. 2015. Distance-vector routing protocol. https://en.wikipedia.org/wiki/Distance-vector_routing_protocol
+- [[[ref:batmanadv]]] Open-mesh.org. 2015. B.A.T.M.A.N. advanced. http://www.open-mesh.org/projects/batman-adv/wiki/Wiki
+- [[[ref:contextswitch]]] Wikipedia. 2015. Context switch. https://en.wikipedia.org/wiki/Context_switch
 
 - [[[ref:missing]]] Wikipedia. 2015. Wikipedia:Verifiability. https://en.wikipedia.org/wiki/Wikipedia:Verifiability
-
-
-TODO: add references for Unicast Multicast Anycast

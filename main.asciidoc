@@ -24,9 +24,9 @@ BGP may be used for routing within an AS. In this application it is referred to 
 As BGP doesn't perform any type of neighbor discovery, peers are established by manual configuration. For each peer router a connection through TCP port 179 must be established, after the connection is established BGP daemons synchronize with peers by sending the whole routing information they have to peers, after this initial sync only updates are transmitted to peers.
 
 === Guifi.net
-Our networks uses different routing protocols such as BGP, OSPF, OLSR, BMX6, BATMAN-adv, Babel and more.
+Guifi.net networks uses different routing protocols such as BGP, OSPF, OLSR, BMX6, BATMAN-adv, Babel and more.
 Over time lot of Guifi.net nodes have been build sticking to the older but well known solution named _<<modelohibrido, {MdHd}>>_.
-This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _{MdHd}_ limitations lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Aside from this context <<libre-mesh, Libre-Mesh>> has been bred independently but with the joint forces of multiples community networks seems a long term viable solution and offer already lot of advantages in respect to the other explored paths.
+This solution imply lot of manual work and a central provisioning server that know all details about the Guifi.net network, de facto limiting the resilience,  the scalability and the growth of Guifi.net. To overcome _{MdHd}_ limitations lot of efforts developing new solutions have existed most of them based on mesh technology but none of them, mainly because of resource lack and consequent missing long term support, have been widely adopted causing even more fragmentation and making more difficult interoperability. Even if <<libre-mesh, Libre-Mesh>> has been bred independently, it is already used in some Guifi.net zones, but like other mesh based solution it is at moment used only for last mile distribution.
 
 [[modelohibrido]]
 ==== {MdHd}
@@ -40,21 +40,10 @@ BIRD is used in several Internet exchanges as a route server <<ref:birdwikipedia
 
 
 === BMX6
-BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It originated as an independent branch of the BATMAN routing protocol and is already used successfully in mesh networks <<ref:bmxan>>. Being a mesh routing protocol, BMX6 distributes node descriptions which can contain node-specific configurations. It optimizes the communication between neighboring nodes for minimal protocol overhead.
+BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It originated as an independent branch of the BATMAN routing protocol and is already used successfully in mesh networks <<ref:bmxan>>. Being a mesh routing protocol, BMX6 distributes node descriptions which can contain node-specific configurations. It optimizes the communication between neighboring nodes for minimal protocol overhead. From a routing protocol point of view BMX6 is classified as *table-driven proactive, distance vector* routing protocol so even if there is no traffic in the network, the routes to all the network nodes are known by all nodes <<ref:tablepro>>, while nodes does not have a global view of the network topology, so their knowledge is limited to next-hop to all destinations and the distance associated to it <<ref:distvect>>.
 
-.BMX6 is
-Pro-active::
-	Even if there is no traffic in the network, the routes to all the network nodes are known pro-actively.
-
-Distance-vector::
-	Nodes does not have a global view of the network topology, the next-hop to a destination is computed based on aggregated information.
-
-Table-driven::
-	Each node hold a table that maps each destination node to the next hop and the cost it will take to get there.
-
-
-=== Batman-adv
-B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2.
+=== B.A.T.M.A.N. advanced
+B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2. While usually wireless routing protocol implementations operates on L3 which means they exchange routing information by sending IP packets and bring their routing decision into effect by manipulating the kernel routing table. Batman-adv operates entirely on L2, not only the routing information is transported using raw Ethernet frames but also the data traffic is handled by batman-adv. It encapsulates and forwards all traffic until it reaches the destination, hence emulating a virtual network switch of all nodes participating. Therefore to the upper level all nodes appear to be link local and are unaware of the network's topology as well as unaffected by lower level network changes. Operating as a L2 routing protocol as there is no _L2 routing table_ to manipulate, data frames must be processed directly by batman-adv and doing it in user-space would be very inefficient, as for each packet processed it would be +read()+ and +write()+ to the kernel and back causing multiple context switching that are computationally intensive <<ref:contextswitch>>, which limits the sustainable bandwidth especially on low-end devices. To have good support for these devices as well and an overall good efficiency, batman-adv is implemented as a Linux kernel module. This way batman-adv avoid the context switching costs and only introduces a negligible packet processing overhead even under a high load. <<ref:batmanadv>>
 
 === qMp
 qMp do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6 <<ref:qmp>>, qMp already supports configuration provisioning by guifi.net map _unsolclick_ <<ref:missing>> for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user <<ref:qmpmdhd>> or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
@@ -282,7 +271,7 @@ Due to LiMe modular nature this development has many possible application that s
 
 [[meshdistribution]]
 ==== Mesh network as distribution
-In this scenario a BGP backbone is used as transport network while the mesh network is used as ``last mile'' distribution.
+In this scenario a BGP backbone is used as transport network while the mesh network is used as last mile distribution.
 
 image::images/simple_exchange_topology.png[align="center"]
 
@@ -344,19 +333,6 @@ uci:set("bmx6", "general", "redistTableDelay", "60000")
 == Conclusions
 TODO
 
-// Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
-[sect1]
-== References
-
-include::references.asciidoc[]
-
-
-
-// Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
-[sect1]
-== Glossary
-
-include::glossary.asciidoc[]
 
 == Appendix: Code
 TODO
@@ -367,3 +343,15 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/
 Copyright © 2015 {author}.
 
 image::images/CC-by-sa.png["License", align="left", link="http://creativecommons.org/licenses/by-sa/4.0/"]
+
+// Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
+[sect1]
+== Glossary
+
+include::glossary.asciidoc[]
+
+// Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
+[sect1]
+== References
+
+include::references.asciidoc[]

@@ -1,4 +1,4 @@
-- *Anycast*: TODO
+- *Anycast*: Anycast is a network addressing and routing methodology in which datagrams from a single sender are routed to the topologically nearest node in a group of potential receivers, though it may be sent to several nodes, all identified by the same destination address <<ref:anycast>>.
 
 - *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
 
@@ -18,9 +18,13 @@
 
 - *eBGP*: Short for External Border Gateway Protocol, eBGP is the protocol used to transport information to other BGP enabled systems in different autonomous systems (AS).
 
+- *Ethernet*: TODO
+
 - *Firmware*: Firmware is a type of software that usually control low-level components of the device it is usually held in ROM. While this is the general accepted meaning of the term, in the context of embedded routing and in community networks it is common practice to call firmware the software running on the routers, while it is usually flashed like a proper firmware it is really a software providing a full operative system and higher levels tools such as web interface or command line interface.
 
 - *IP*: The Internet Protocol (IP) is the principal communications protocol in the Internet protocol suite for relaying datagrams across network boundaries. Its routing function enables inter-networking, and essentially establishes the Internet.
+
+- *Last mile*: Last mile is the common colloquialism referring to that portion of the telecommunications network chain that physically reaches the end-user <<ref:lastmile>>.
 
 - *LiMe*: Common abbreviation for Libre-Mesh.
 
@@ -38,7 +42,7 @@
 
 - *UML*: The Unified Modeling Language (UML) is a general-purpose modeling language in the field of software engineering, which is designed to provide a standard way to visualize the design of a system.
 
-- *Unicast*: TODO
+- *Unicast*: In computer networking, unicast transmission is the sending of messages to a single network destination identified by a unique address <<ref:unicast>>.
 
 - *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
 

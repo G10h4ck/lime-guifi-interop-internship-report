@@ -1,11 +1,20 @@
-- [[[ref:cnw]]] Community networks in the world https://en.wikipedia.org/wiki/Community_network
-- [[[ref:mdhdspnd]]] Guifi.net _{MdHd} {SpNd}s_ http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos (Castilian)
-- [[[ref:mdhd]]] Guifi.net _{MdHd}_ http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net (Castilian)
-- [[[ref:bmxan]]] Analysis of the BMX6 routing protocol http://bmx6.net/attachments/download/134/Thesis_AnalysisOfTheBMX6RoutingProtocol_GlennDaneels.pdf
-- [[[ref:qmp]]] Quick Mesh Project (qMp) http://qmp.cat/ (Catalan)
-- [[[ref:qmpmdhd]]] QMP manual connection to Guifi.net _{MdHd}_ http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp (Catalan)
-- [[[ref:bgprfc]]] BGP specification RFC 4271 https://tools.ietf.org/html/rfc4271
-- [[[ref:macvlan]]] Some notes on macvlan and macvtap http://backreference.org/2014/03/20/some-notes-on-macvlanmacvtap/
-- [[[ref:macaddress]]] MAC Address https://en.wikipedia.org/wiki/MAC_address
+- [[[ref:cnw]]] Wikipedia. 2015. Community network. https://en.wikipedia.org/wiki/Community_network
+- [[[ref:mdhdspnd]]] Wiki Guifi.net. 2015. Supernodos híbridos. http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos
+- [[[ref:mdhd]]] Wiki Guifi.net. 2015. Modelo híbrido guifi.net. http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net
+- [[[ref:bmxan]]] Glenn Daneels. 2015. Analysis of the BMX6 routing protocol. http://bmx6.net/attachments/download/134/Thesis_AnalysisOfTheBMX6RoutingProtocol_GlennDaneels.pdf
+- [[[ref:qmp]]] Quick Mesh Project. 2015. Easy deployment of Mesh networks. http://qmp.cat/
+- [[[ref:qmpmdhd]]] Wiki Guifi.net. 2015. Node frontera amb qMp. http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp
+- [[[ref:bgprfc]]] The Internet Society. 2006. A Border Gateway Protocol 4 (BGP-4). https://tools.ietf.org/html/rfc4271
+- [[[ref:macvlan]]] Waldner, Backreference.org. 2014. Some notes on macvlan and macvtap. http://backreference.org/2014/03/20/some-notes-on-macvlanmacvtap/
+- [[[ref:linuxswitching]]] Toshiaki Makita, NTT Open Source Software Center. 2014. Virtual switching technologies and Linux bridge http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf
+- [[[ref:macaddress]]] Wikipedia. 2015. MAC Address. https://en.wikipedia.org/wiki/MAC_address
+- [[[ref:birdipvx]]] BIRD source code. 2015. BIRD FAQ. https://gitlab.labs.nic.cz/labs/bird/wikis/FAQ
+- [[[ref:birdmultitable]]] Vincent Bernat. 2015. "Network lab: site to site VPN". http://vincent.bernat.im/en/blog/2011-lab-site-to-site-vpn.html
+- [[[ref:birdwikipedia]]] Wikipedia. 2015. Bird Internet routing daemon. https://en.wikipedia.org/wiki/Bird_Internet_routing_daemon
+- [[[ref:birdowrt]]] OpenWrt source code. 2015. BIRD into OpenWrt routing feed. https://github.com/openwrt-routing/packages/tree/master/bird
+- [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
 
-- [[[ref:missing]]] Citation Needed https://en.wikipedia.org/wiki/Wikipedia:Verifiability
+- [[[ref:missing]]] Wikipedia. 2015. Wikipedia:Verifiability. https://en.wikipedia.org/wiki/Wikipedia:Verifiability
+
+
+TODO: add references for Unicast Multicast Anycast

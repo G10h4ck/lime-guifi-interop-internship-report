@@ -34,7 +34,10 @@ As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ a
 While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new technology better suited for wireless community have emerged exposing many limitations of this model.
 
 === Bird
-It's a routing daemon implementing various protocols in particular BGP.
+BIRD is an open source implementation of multiple Internet routing protocols in form of a daemon for Unix like systems. It is distributed under the GNU General Public License. BIRD supports IPv4 or IPv6 as separate daemons <<ref:birdipvx>>, multiple routing tables <<ref:birdmultitable>>, and BGP, RIP and OSPF routing protocols, as well as statically defined routes. Its design differs significantly from the better known routing daemons, GNU Zebra and Quagga <<ref:birdwikipedia>>. Currently BIRD is included in many Linux distributions <<ref:birdwikipedia>> in particular into OpenWrt <<ref:birdowrt>>. +
+
+BIRD is used in several Internet exchanges as a route server <<ref:birdwikipedia>>, where it replaced Quagga because of its scalability issues <<ref:birdlinx>>.
+
 
 === BMX6
 BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It originated as an independent branch of the BATMAN routing protocol and is already used successfully in mesh networks <<ref:bmxan>>. Being a mesh routing protocol, BMX6 distributes node descriptions which can contain node-specific configurations. It optimizes the communication between neighboring nodes for minimal protocol overhead.
@@ -108,7 +111,7 @@ This protocol is shipped as an optional package `lime-proto-anygw`, but is insta
 
 image::images/lime-proto-anygw_UML.png[align="center"]
 
-The anygw LiMe protocol is a light implementation of anycast gateway, it builds the virtual Ethernet interface `anygw` on top of <<proto:lan, Lan protocol>> clients access interface `br-lan` using the Linux kernel module `macvlan` <<ref:macvlan>>. When any-cast gateway is enabled the first address of the mesh network subnet is reserved for any-cast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all any-cast gateways on a LiMe L2 cloud share the same IP and MAC address, so when a client sends a packets directed outside it's cloud it gets routed at L3 by the nearest router.
+The anygw LiMe protocol is a light implementation of anycast gateway, it builds the virtual Ethernet interface `anygw` on top of <<proto:lan, Lan protocol>> clients access interface `br-lan` using the Linux kernel module `macvlan` <<ref:macvlan>><<ref:linuxswitching>>. When any-cast gateway is enabled the first address of the mesh network subnet is reserved for any-cast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all any-cast gateways on a LiMe L2 cloud share the same IP and MAC address, so when a client sends a packets directed outside it's cloud it gets routed at L3 by the nearest router.
 
 
 .`anygw` addresses generation
@@ -170,7 +173,19 @@ end
 ------------------------------------------------------------
 
 === lime-proto-anygw
-TODO code too
+TODO
+
+[source, lua]
+------------------------------------------------------------
+function anygw.bgp_conf(templateVarsIPv4, templateVarsIPv6)
+	local base_conf = [[
+protocol direct {
+	interface "anygw";
+}
+]]
+	return base_conf
+end
+------------------------------------------------------------
 
 === lime-proto-bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.

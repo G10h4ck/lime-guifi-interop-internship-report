@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="54cm" height="46cm" viewBox="100 42 1061 919" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="101" y="63" width="1059" height="897"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="101" y="63" width="1059" height="897"/>
+    <rect style="fill: #ffffff" x="101" y="43" width="104.1" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="101" y="43" width="104.1" height="20"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="103" y="58"> LiMe System </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="406" y="77" width="124.1" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="406" y="77" width="124.1" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="468.05" y="96">LiMe Module</text>
+    <rect style="fill: #ffffff" x="406" y="105" width="124.1" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="406" y="105" width="124.1" height="8"/>
+    <rect style="fill: #ffffff" x="406" y="113" width="124.1" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="406" y="113" width="124.1" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="409" y="127">+clean()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="409" y="143">+configure()</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="520" y="660" width="618.3" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="520" y="660" width="618.3" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="829.15" y="679">LiMe Routing Protocol</text>
+    <rect style="fill: #ffffff" x="520" y="688" width="618.3" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="520" y="688" width="618.3" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="523" y="702">+configured: boolean = true if already configured, false otherwise</text>
+    <rect style="fill: #ffffff" x="520" y="708" width="618.3" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="520" y="708" width="618.3" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="523" y="722">+configure(in args:table)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="523" y="738">+setup_interface(in ifname:string linux ifname,in args:table)</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="523" y="754">+bgp_conf(inout templateVarsIPv4:table,inout templateVarsIPv6:table): string   </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="520" y="440" width="518.2" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="520" y="440" width="518.2" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="779.1" y="459">LiMe WiFi Mode</text>
+    <rect style="fill: #ffffff" x="520" y="468" width="518.2" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="520" y="468" width="518.2" height="8"/>
+    <rect style="fill: #ffffff" x="520" y="476" width="518.2" height="20"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="520" y="476" width="518.2" height="20"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="523" y="490">+setup_radio(in radio:uci::wireless::wifi-device,in args:table):  </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="660" y="200" width="230.65" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="660" y="200" width="230.65" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:italic;font-weight:700" x="775.325" y="219">LiMe Hardware Detector</text>
+    <rect style="fill: #ffffff" x="660" y="228" width="230.65" height="8"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="660" y="228" width="230.65" height="8"/>
+    <rect style="fill: #ffffff" x="660" y="236" width="230.65" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="660" y="236" width="230.65" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="663" y="250">+clean()</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="663" y="266">+detect_hardware()</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="220" y="220" width="147.2" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="220" y="220" width="147.2" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="293.6" y="241.9">
+      <tspan x="293.6" y="241.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="293.6" y="262">hardware_detection</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="293.6" y1="244.9" x2="293.6" y2="244.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="460" width="71.6" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="460" width="71.6" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="335.8" y="481.9">
+      <tspan x="335.8" y="481.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="335.8" y="502">wireless</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="335.8" y1="484.9" x2="335.8" y2="484.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="693" width="71.95" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="693" width="71.95" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="335.975" y="714.9">
+      <tspan x="335.975" y="714.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="335.975" y="735">network</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="335.975" y1="717.9" x2="335.975" y2="717.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="780" width="66.3" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="780" width="66.3" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="333.15" y="801.9">
+      <tspan x="333.15" y="801.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="333.15" y="822">firewall</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="333.15" y1="804.9" x2="333.15" y2="804.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="300" y="860" width="66.25" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="860" width="66.25" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="333.125" y="881.9">
+      <tspan x="333.125" y="881.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="333.125" y="902">system</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="333.125" y1="884.9" x2="333.125" y2="884.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="780" y="840" width="56.35" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="780" y="840" width="56.35" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="808.175" y="861.9">
+      <tspan x="808.175" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="808.175" y="882">bmx6</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="808.175" y1="864.9" x2="808.175" y2="864.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="201" y="97" width="91.25" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="201" y="97" width="91.25" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="246.625" y="118.9">
+      <tspan x="246.625" y="118.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="246.625" y="139">lime-config</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="246.625" y1="121.9" x2="246.625" y2="121.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="560" y="340" width="117.4" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="560" y="340" width="117.4" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="618.7" y="361.9">
+      <tspan x="618.7" y="361.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="618.7" y="382">ground_routing</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="618.7" y1="364.9" x2="618.7" y2="364.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="722" y="340" width="105.5" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="722" y="340" width="105.5" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="774.75" y="361.9">
+      <tspan x="774.75" y="361.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="774.75" y="382">openwrt_wan</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="774.75" y1="364.9" x2="774.75" y2="364.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="880" y="340" width="81.95" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="880" y="340" width="81.95" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="920.975" y="361.9">
+      <tspan x="920.975" y="361.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="920.975" y="382">usb_radio</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="920.975" y1="364.9" x2="920.975" y2="364.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="660" y="560" width="59" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="660" y="560" width="59" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="689.5" y="581.9">
+      <tspan x="689.5" y="581.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="689.5" y="602">adhoc</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="689.5" y1="584.9" x2="689.5" y2="584.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="765" y="562" width="36" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="765" y="562" width="36" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="783" y="583.9">
+      <tspan x="783" y="583.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="783" y="604">ap</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="783" y1="586.9" x2="783" y2="586.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="840" y="560" width="94.65" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="840" y="560" width="94.65" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="887.325" y="581.9">
+      <tspan x="887.325" y="581.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="887.325" y="602">ieee80211s</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="887.325" y1="584.9" x2="887.325" y2="584.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="580" y="840" width="59" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="580" y="840" width="59" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="609.5" y="861.9">
+      <tspan x="609.5" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="609.5" y="882">adhoc</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="609.5" y1="864.9" x2="609.5" y2="864.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="500" y="840" width="44.45" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" x="500" y="840" width="44.45" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="522.225" y="861.9">
+      <tspan x="522.225" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="522.225" y="882">bgp</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="522.225" y1="864.9" x2="522.225" y2="864.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="880" y="840" width="94.65" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="880" y="840" width="94.65" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="927.325" y="861.9">
+      <tspan x="927.325" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="927.325" y="882">ieee80211s</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="927.325" y1="864.9" x2="927.325" y2="864.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="680" y="840" width="64.6" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="680" y="840" width="64.6" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="712.3" y="861.9">
+      <tspan x="712.3" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="712.3" y="882">batadv</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="712.3" y1="864.9" x2="712.3" y2="864.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1020" y="840" width="39.5" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #00ff00" x="1020" y="840" width="39.5" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1039.75" y="861.9">
+      <tspan x="1039.75" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1039.75" y="882">lan</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="1039.75" y1="864.9" x2="1039.75" y2="864.9"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1100" y="840" width="46.4" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1100" y="840" width="46.4" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1123.2" y="861.9">
+      <tspan x="1123.2" y="861.9"></tspan>
+    </text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1123.2" y="882">wan</text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="1123.2" y1="864.9" x2="1123.2" y2="864.9"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="468.05,167.236 468.05,220 367.2,220 367.2,220 "/>
+    <polygon style="fill: #ffffff" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="389" y1="123" x2="292.25" y2="123"/>
+    <polygon style="fill: #000000" points="389,128 405,123 389,118 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="389,128 405,123 389,118 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="389.166" y1="136.632" x2="292.25" y2="123"/>
+    <polygon style="fill: #000000" points="388.469,141.583 405.01,138.861 389.862,131.681 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="388.469,141.583 405.01,138.861 389.862,131.681 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="643" y1="246" x2="367.2" y2="246"/>
+    <polygon style="fill: #000000" points="643,251 659,246 643,241 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="643,251 659,246 643,241 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="643.025" y1="261.072" x2="367.2" y2="246"/>
+    <polygon style="fill: #000000" points="642.753,266.065 659.001,261.945 643.298,256.08 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="642.753,266.065 659.001,261.945 643.298,256.08 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="775.325,290.236 775.325,314 774.75,314 774.75,340 "/>
+    <polygon style="fill: #ffffff" points="783.325,290.236 775.325,274.236 767.325,290.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="783.325,290.236 775.325,274.236 767.325,290.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="775.325,290.236 775.325,314 618.7,314 618.7,340 "/>
+    <polygon style="fill: #ffffff" points="783.325,290.236 775.325,274.236 767.325,290.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="783.325,290.236 775.325,274.236 767.325,290.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="775.325,290.236 775.325,314 920.975,314 920.975,340 "/>
+    <polygon style="fill: #ffffff" points="783.325,290.236 775.325,274.236 767.325,290.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="783.325,290.236 775.325,274.236 767.325,290.236 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="503" y1="486" x2="371.6" y2="486"/>
+    <polygon style="fill: #000000" points="503,491 519,486 503,481 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="503,491 519,486 503,481 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="779.1,514.236 779.1,546.5 783,546.5 "/>
+    <polygon style="fill: #ffffff" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="779.1,514.236 779.1,536 887.325,536 887.325,560 "/>
+    <polygon style="fill: #ffffff" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="779.1,514.236 779.1,536 689.5,536 689.5,560 "/>
+    <polygon style="fill: #ffffff" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="468.05,167.236 468.05,460 371.6,460 371.6,460 "/>
+    <polygon style="fill: #ffffff" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="503" y1="718.115" x2="371.95" y2="719"/>
+    <polygon style="fill: #000000" points="503.034,723.115 519,718.007 502.967,713.115 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="503.034,723.115 519,718.007 502.967,713.115 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="503.087" y1="732.286" x2="371.95" y2="719"/>
+    <polygon style="fill: #000000" points="502.583,737.261 519.005,733.899 503.591,727.312 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="502.583,737.261 519.005,733.899 503.591,727.312 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 609.5,820 609.5,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 712.3,820 712.3,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 808.174,820 808.174,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 522.224,820 522.224,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 927.326,820 927.326,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 1123.2,820 1123.2,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="829.15,778.236 829.15,820 1039.75,820 1039.75,840 "/>
+    <polygon style="fill: #ffffff" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="837.15,778.236 829.15,762.236 821.15,778.236 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="516.312" y1="766.595" x2="500" y2="840"/>
+    <polygon style="fill: #000000" points="521.193,767.68 519.783,750.976 511.431,765.511 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="521.193,767.68 519.783,750.976 511.431,765.511 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="468.05,167.236 468.05,692.75 371.95,692.75 371.95,693 "/>
+    <polygon style="fill: #ffffff" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="468.05,167.236 468.05,780 366.3,780 366.3,780 "/>
+    <polygon style="fill: #ffffff" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="468.05,167.236 468.05,860 366.25,860 366.25,860 "/>
+    <polygon style="fill: #ffffff" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="476.05,167.236 468.05,151.236 460.05,167.236 "/>
+  </g>
+  <ellipse style="fill: #000000" cx="148" cy="123" rx="10" ry="10"/>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="159.005,123 169.005,123 189.994,123 195.522,123 "/>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="187.758,128 197.758,123 187.758,118 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 8; stroke: #000000" points="779.1,514.236 779.1,537 783,537 783,562 "/>
+    <polygon style="fill: #ffffff" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="787.1,514.236 779.1,498.236 771.1,514.236 "/>
+  </g>
+</svg>

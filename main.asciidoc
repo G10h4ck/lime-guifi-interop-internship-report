@@ -4,6 +4,8 @@ Interoperability between Libre-Mesh and Guifi.net
 :email: gio@eigenlab·org
 :lang: en
 
+:imgExt: {basebackend@docbook:300dpi.png:820px.png}
+
 :MdHd: Modelo Híbrido
 :SpNd: supernodo
 :Nd: nodo
@@ -33,7 +35,7 @@ This solution imply lot of manual work and a central provisioning server that kn
 As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route <<ref:mdhdspnd>>. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge <<ref:mdhd>>, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
 While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new technology better suited for wireless community have emerged exposing many limitations of this model.
 
-=== Bird
+=== BIRD
 BIRD is an open source implementation of multiple Internet routing protocols in form of a daemon for Unix like systems. It is distributed under the GNU General Public License. BIRD supports IPv4 or IPv6 as separate daemons <<ref:birdipvx>>, multiple routing tables <<ref:birdmultitable>>, and BGP, RIP and OSPF routing protocols, as well as statically defined routes. Its design differs significantly from the better known routing daemons, GNU Zebra and Quagga <<ref:birdwikipedia>>. Currently BIRD is included in many Linux distributions <<ref:birdwikipedia>> in particular into OpenWrt <<ref:birdowrt>>. +
 
 BIRD is used in several Internet exchanges as a route server <<ref:birdwikipedia>>, where it replaced Quagga because of its scalability issues <<ref:birdlinx>>.
@@ -60,7 +62,7 @@ TODO
 ==== Software Architecture
 LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool `lime-config` that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their `clean()` and `configure()` methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
 
-image::images/lime-system_UML.png[align="center"]
+image::images/lime-system_UML_{imgExt}[align="center"]
 
 ===== Hardware Detection
 Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plug-in installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
@@ -80,7 +82,7 @@ Network module is in charge of configuring network interfaces and routing protoc
 Configure OpenWrt firewall if installed or iptables according to Libre-Mesh needs.
 
 ===== System
-Configure other miscellaneous stuff that do not fit well in other modules.
+Configure system general settings like host-name and other miscellaneous stuff.
 
 ===== Hardware detector ground routing
 TODO
@@ -98,10 +100,19 @@ TODO
 
 This protocol is shipped as an optional package `lime-proto-anygw`, but is installed and enabled by the default in LiMe distribution.
 
-image::images/lime-proto-anygw_UML.png[align="center"]
+image::images/lime-proto-anygw_UML_{imgExt}[align="center"]
 
-The anygw LiMe protocol is a light implementation of anycast gateway, it builds the virtual Ethernet interface `anygw` on top of <<proto:lan, Lan protocol>> clients access interface `br-lan` using the Linux kernel module `macvlan` <<ref:macvlan>><<ref:linuxswitching>>. When any-cast gateway is enabled the first address of the mesh network subnet is reserved for any-cast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all any-cast gateways on a LiMe L2 cloud share the same IP and MAC address, so when a client sends a packets directed outside it's cloud it gets routed at L3 by the nearest router.
+In WiFi networks usually when a client move and get far from the AP it is associated, if it sense better signal from another AP with the same SSID it is expected to automatically ->deassociate<- from the far node and associate to the near one. When during this process upper network layers, specifically the user, doesn't experience a connection interruption it is commonly referred as roaming <<ref:missing>>. LiMe mesh networks does supports roaming at L2. In L2 roaming scenarios because the clients are usually configured via DHCP and it operates at an higher layer then roaming the client keep using the same gateway of when it associated first time without caring of it's position, this behavior may cause client packets be routed in a suboptimal way, moreover if the client keep roaming far away from the initial gateway it may experience low network performances.
 
+image::images/suboptimal_roaming_{imgExt}[align="center"]
+
+Legenda::
+- Blue dashed lines: Mesh links
+- Purple dot dashed line: Client packets routed at L3
+- Green dot dashed line: Client packets routed at L2
+
+
+To avoid this unwanted behavior +lime-proto-anygw+ offer a light implementation of anycast gateway. Anygw builds the virtual Ethernet interface `anygw` on top of <<proto:lan, Lan protocol>> clients access interface `br-lan` using the Linux kernel module `macvlan` <<ref:macvlan>><<ref:linuxswitching>>. When anycast gateway is enabled the first address of the mesh network subnet is reserved for anycast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all anycast gateways on a LiMe L2 cloud share the same IP and MAC address.
 
 .`anygw` addresses generation
 [source, lua]
@@ -113,15 +124,20 @@ local anygw_ipv6 = ipv6:minhost()
 local anygw_ipv4 = ipv4:minhost()
 ---------------------------------------------
 
+In this way when a client sends a packets directed outside it's cloud it gets ``intercepted'' and optimally routed at L3 by the nearest router.
+
+image::images/anygw_roaming_{imgExt}[align="center"]
+
+
 ===== Protocol batadv
 TODO
 
-image::images/lime-proto-batadv_UML.png[align="center"]
+image::images/lime-proto-batadv_UML_{imgExt}[align="center"]
 
 ===== Protocol BMX6
 TODO
 
-image::images/lime-proto-bmx6_UML.png[align="center"]
+image::images/lime-proto-bmx6_UML_{imgExt}[align="center"]
 
 ===== Protocol ieee80211s
 TODO
@@ -143,11 +159,16 @@ TODO
 
 === lime-system
 
-image::images/lime-system_devel_UML.png[align="center"]
+Even if LiMe is highly modular, to have a sane and modular itself BGP route exchange implementation required some modification to LiMe core, in particular the abstract class _Lime Routing Protocol_ has been extended by adding the +bgp_conf(...)+ method. A _Lime Routing Protocol_ which want to exchange routes with BGP should implement that method in a way that it does the necessary configuration of the +proto+ itself and returns to the caller a string containing a BIRD snippet configuration for route exchange with that +proto+.
+
+image::images/lime-system_devel_UML_{imgExt}[align="center"]
 
 Highlighted in green the parts modified in the scope of the internship.
 
-As it works on layer 2 it doesn't need much interaction with BGP to announce the mesh subnet route, announcing the route for subnet used by batman-adv mesh cloud as been achieved implementing `bgp_conf(...)` directly into `lime.proto.lan` without modifying any code related to batman-adv.
+
+==== Protocol lan
+
+As +proto+ lan does very minimal work at L3 it doesn't need much interaction with BGP to announce his subnet route. Implementing +lime.proto.lan.bgp_conf(...)+ has been quite simple as you can see in the following code snippet.
 
 [source, lua]
 ------------------------------------------------------------
@@ -162,7 +183,7 @@ end
 ------------------------------------------------------------
 
 === lime-proto-anygw
-TODO
+As the interaction of +lime.proto.anygw+ with +lime.proto.bgp+ is very similar to the one of +lime.proto.lan+, +lime.proto.anygw.bgp_conf(...)+ is just an adaptation of +lime.proto.lan.bgp_conf(...)+ as you can see in the following code snippet.
 
 [source, lua]
 ------------------------------------------------------------
@@ -273,10 +294,10 @@ Due to LiMe modular nature this development has many possible application that s
 ==== Mesh network as distribution
 In this scenario a BGP backbone is used as transport network while the mesh network is used as last mile distribution.
 
-image::images/simple_exchange_topology.png[align="center"]
+image::images/simple_exchange_topology_{imgExt}[align="center"]
 
-Legend::
-- Black routers: routers running LiMe with pure mesh setup.
+Legenda::
+- Black routers: Routers running LiMe with pure mesh setup.
 - Red routers: Guifi.net routers configured as of _{MdHd}_.
 - Blue straight lines: Cabled mesh links.
 - Blue curvy dashed lines: WiFi mesh links.
@@ -294,7 +315,7 @@ All those limitations are solved using the software developed during this intern
 *TODO: Needs further analysis + control flow schema* +
 This scenario is very common in high population density zones, small neighborhood community mesh network grow beyond the district boundaries gaining geographical proximity to multiple backbone nodes, as the number of user usually grow too as the network expand having just an exchange point become a bottleneck, in this case having multiple exchange point can improve the access bandwidth to upstream networks.
 
-image::images/multiple_exchanges_topology.png[align="center"]
+image::images/multiple_exchanges_topology_{imgExt}[align="center"]
 
 This scenario in not practically manageable with past technology, and the more exchange point are added the trickier it gets to have a working stable configuration, while with the development done during this internship after BGP peering setup everything works out of the box.
 
@@ -302,7 +323,7 @@ This scenario in not practically manageable with past technology, and the more e
 *TODO: Needs further analysis + control flow schema* +
 The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a leaf <<meshdistribution, distribution network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
 
-image::images/mesh_as_transport_topology.png[align="center"]
+image::images/mesh_as_transport_topology_{imgExt}[align="center"]
 
 This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
 
@@ -342,7 +363,7 @@ This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 Inte
 To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/4.0/. +
 Copyright © 2015 {author}.
 
-image::images/CC-by-sa.png["License", align="left", link="http://creativecommons.org/licenses/by-sa/4.0/"]
+image::images/CC-by-sa_{imgExt}["License", align="left", link="http://creativecommons.org/licenses/by-sa/4.0/"]
 
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]

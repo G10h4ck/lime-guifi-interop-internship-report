@@ -40,6 +40,8 @@
 
 - *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
 
+- *SSID*: TODO
+
 - *UML*: The Unified Modeling Language (UML) is a general-purpose modeling language in the field of software engineering, which is designed to provide a standard way to visualize the design of a system.
 
 - *Unicast*: In computer networking, unicast transmission is the sending of messages to a single network destination identified by a unique address <<ref:unicast>>.

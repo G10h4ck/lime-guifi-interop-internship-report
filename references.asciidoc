@@ -20,5 +20,8 @@
 - [[[ref:distvect]]] Wikipedia. 2015. Distance-vector routing protocol. https://en.wikipedia.org/wiki/Distance-vector_routing_protocol
 - [[[ref:batmanadv]]] Open-mesh.org. 2015. B.A.T.M.A.N. advanced. http://www.open-mesh.org/projects/batman-adv/wiki/Wiki
 - [[[ref:contextswitch]]] Wikipedia. 2015. Context switch. https://en.wikipedia.org/wiki/Context_switch
+- [[[ref:routeloop]]] Wikipedia. 2015. Routing loop problem. https://en.wikipedia.org/wiki/Routing_loop_problem
+- [[[ref:wkpdbgp]]] Wikipedia. 2015. Border Gateway Protocol. https://en.wikipedia.org/wiki/Border_Gateway_Protocol
+- [[[ref:ebgpibgp]]] Juniper Networks. 2015. IBGP and EBGP. https://www.juniper.net/techpubs/software/junos-es/junos-es93/junos-es-swconfig-interfaces-and-routing/ibgp-and-ebgp.html
 
 - [[[ref:missing]]] Wikipedia. 2015. Wikipedia:Verifiability. https://en.wikipedia.org/wiki/Wikipedia:Verifiability

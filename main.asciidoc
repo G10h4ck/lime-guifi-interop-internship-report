@@ -312,12 +312,33 @@ This use case is someway workable also with the pasts solution but with strong d
 All those limitations are solved using the software developed during this internship, moreover other more complex and even more common interoperability scenarios gets solved.
 
 ==== Mesh network with multiple exchanges
-*TODO: Needs further analysis + control flow schema* +
 This scenario is very common in high population density zones, small neighborhood community mesh network grow beyond the district boundaries gaining geographical proximity to multiple backbone nodes, as the number of user usually grow too as the network expand having just an exchange point become a bottleneck, in this case having multiple exchange point can improve the access bandwidth to upstream networks.
 
 image::images/multiple_exchanges_topology_{imgExt}[align="center"]
 
-This scenario in not practically manageable with past technology, and the more exchange point are added the trickier it gets to have a working stable configuration, while with the development done during this internship after BGP peering setup everything works out of the box.
+This scenario in not practically manageable with past technology, the more exchange points are added the trickier it gets to manually write a configuration that works stably. During the internship an automatic solution has been developed although it hasn't been trivial, the usual Guifi.net eBGP setup is not enough as it causes routing loop <<ref:routeloop>> in this situation. When an host like +2001:DB8:9::4+ from the LiMe network send a packet to an host like +2001:DB8:1::3+ into BGP network the packet make his way to the destination without problems. Unfortunately is not the same when +2001:DB8:1::3+ send a packet to his friend +2001:DB8:9::4+. The packet is correctly routed toward the exchange +BGPx2+ but there because routes learned via BGP are preferred it's sent back to +BGP4+ expecting it have a better path for those packets. +BGP4+ again thinks that +BGPx2+ is the best next hop to reach +2001:DB8:9::4+ and forward the packet to +BGPx2+ and so on till the packet TTL is exhausted and one of the routers discard it.
+
+image::images/multiple_exchanges_ebgp_loop_{imgExt}[align="center"]
+
+Legenda::
+- Directed black dashed line: packets flowing in the direction of the arrow.
+
+But what in detail causes this unwanted behavior? We can find the answer is in +BGPx2+ routing table of which the relevant snippet is reported in the following lines.
+
+---------------------------------------------------------------
+2001:DB8:1::/64 via $BGP4 proto bird metric 0
+2001:DB8:1::/64 dev bmxOut_BGPx1 proto static metric 1024
+2001:DB8:9::/64 via 2001:DB8:8::1 proto bird metric 0
+2001:DB8:9::/64 dev bmxOut_BMX1 proto static metric 1024
+---------------------------------------------------------------
+
+We can observe there are two routes towards +2001:DB8:9::/64+ one learned via BGP (the +proto bird+ ones) that have lower metric and one learned by BMX6 (the ones associated to +dev bmx*+) that have higher metric, thus the BIRD routes are always preferred. One could think that the problem could be fixed just by giving to BMX6 more preference but this tentative would just fail because it solves the loop in the BGP->BMX6 direction but it creates the exact opposite loop in BMX6->BGP direction. To solve this problem the classic way to solve this problem on BGP networks usually is adopt the iBGP setup. In a iBGP setup routers share the same ASN so the exchanges can recognize internal routes when they learn them form other eBGP routers and avoid adding them to the kernel routing table. To adopt iBGP solve the problem but with an unbearable cost for an auto-organized mesh network that is that each iBGP router must be configured to establish peering connections to each other router in a setup called _full-mesh_ where every router speaks to all other routers directly <<ref:wkpdbgp>>. At this point, no other solutions then iBGP has been found. I started investigating how iBGP works internally and I discovered that the _full-mesh_ peering is needed because every iBGP router need share the same routing information with all other iBGP routers <<ref:ebgpibgp>>. In our case as BMX6 is a proactive distance-vector routing daemon it already spreads all routes to all routes so I supposed that in our case the iBGP _full-mesh_ setup may be avoided, and empirical tests proved this supposition true. In fact loop is avoided and every host of both BGP and BMX6 networks can successfully reach every host of the whole Guifi.net (both BMX6 and BGP parts).
+
+---------------------------------------------------------------
+2001:DB8:1::/64 via $BGP4 proto bird metric 0
+2001:DB8:1::/64 dev bmxOut_BGPx1 proto static metric 1024
+2001:DB8:9::/64 dev bmxOut_BMX1 proto static metric 1024
+---------------------------------------------------------------
 
 ==== Mesh network as transport
 *TODO: Needs further analysis + control flow schema* +

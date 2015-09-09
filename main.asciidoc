@@ -1,5 +1,5 @@
-Interoperability between Libre-Mesh and Guifi.net
-=================================================
+Interoperability between classic infrastructure and Libre-Mesh networks in Guifi.net
+====================================================================================
 :author: Gioacchino Mazzurco
 :email: gio@eigenlab·org
 :lang: en
@@ -62,48 +62,75 @@ TODO
 ==== Software Architecture
 LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool `lime-config` that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their `clean()` and `configure()` methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
 
+[[fig:lime-system_UML]]
+.UML diagram of lime-system package.
 image::images/lime-system_UML_{imgExt}[align="center"]
 
 ===== Hardware Detection
-Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task it is modular itself and for each hardware detection plug-in installed ( such as `lime-hwd-usbradio` ) it execute the respective `clean` method that is supposed to cleanup outdated configuration and the `detect_hardware` method that is supposed to configure the hardware and can put specific `config` sections in `/etc/config/lime` to be read by others lime components if necessary.
+Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task as you cas see in <<fig:lime-system_UML>> it is modular itself and it's submodules are called +detectors+. For each +detector+ installed ( such as +lime-hwd-usbradio+ ) it execute the respective +clean()+ method that is supposed to cleanup outdated configuration and the +detect_hardware()+ method that is supposed to configure the hardware and can write specific +config+ sections in +/etc/config/lime+ to be read by others lime components if necessary.
 
 ===== Wireless
-Wireless module is supposed to detect WiFi interfaces and prepare them for usage with LiMe, to accomplish that task it reads and write to `/etc/config/lime` and `/etc/config/wireless`, as depicted in the UML schema it is modular itself and delegate part of the works to his submodules called `mode`.
+Wireless module detect WiFi interfaces and prepare them for usage with LiMe, to accomplish its task it reads and write to +/etc/config/lime+ and +/etc/config/wireless+, as depicted in <<fig:lime-system_UML>> it is modular itself and delegate part of the works to his submodules called +mode+. Each +mode+ must implement a method called +setup_radio(radio, args)+ that take as argument an +uci.wireless.radio+ table and optional adjuntive arguments and is in charge of configure the WiFi radio to operate as needed by LiMe.
 
 ===== Network
-Network module is in charge of configuring network interfaces and routing protocols, it is a big task to accomplish in a nifty way to do it is modular too. It offers a tight API to his modules that are called `proto` (such as `lime-proto-bgp`) while they must expose to network module a statefull interface that consists of:
+Network module is in charge of configuring network interfaces and routing protocols, it is a big task to accomplish in a nifty way to do it is modular too. It offers a tight API to his modules that are called +proto+ (such as +lime-proto-bgp+) while they must expose to network module a statefull interface that consists of:
 
-- `configured` flag, it is false by default and setted to true when the `proto` is configured.
-- `configure(args)` this method is in charge of configuring the underlying routing protocol, args is an array containing all parameters found in configuration file, parameters have positional meaning.
-- `setup_interface(ifname, args)` this function is called once per each networking interface found on the router `ifname` is the linux name of the interface and `args` is an array containing all related parameters found in configuration file.
-- `apply()` usually just restart the underlying routing protocol to make the new configurations effective.
+- +configured+ flag, it is false by default and setted to true when the +proto+ is configured.
+- +configure(args)+ this method is in charge of configuring the underlying routing protocol, args is an array containing all parameters found in configuration file, parameters have positional meaning.
+- +setup_interface(ifname, args)+ this function is called once per each networking interface found on the router +ifname+ is the Linux name of the interface and +args+ is an array containing all related parameters found in configuration file.
+- +apply()+ usually just restart the underlying routing daemon to make the new configurations effective.
 
 ===== Firewall
-Configure OpenWrt firewall if installed or iptables according to Libre-Mesh needs.
+Configure OpenWrt firewall if installed or iptables and ebtables according to LiMe needs.
 
 ===== System
 Configure system general settings like host-name and other miscellaneous stuff.
 
 ===== Hardware detector ground routing
-TODO
+Ground routing is a node setup similar to _{MdHd}_ in the sense of splitting routing and geographic linking task into different devices. In this setup a device running LiMe is in charge of routing while other devices justs deal with physic and link layer stuff. Those devices can keep their original fabric firmware, or being flashed with a plain OpenWrt image or even run a lite version of LiMe. The name ``ground routing'' came from the habit of routing enthusiasts, to keep the L1/L2 devices on which they do not usually change the configurations on the roof (necessary to have good WiFi links) while the ``ground router'', which is the subject of their experiments, is kept inside the house, ``on the ground'', so if the configuration changes accidentally disrupt connectivity to the router, physical access is simple and there is no need to access the roof for recovery. As this functionality is not needed in default setup +lime-hwd-ground-routing+ is distributed as a separate package and is not included in the default LiMe distribution.
+
+.UML diagram of lime-hwd-ground-routing package.
+image::images/lime-hwd-ground-routing_UML_{imgExt}[align="center"]
+
+When invoked by +lime.hardware_detection+, +lime.hwd.ground_routing.clean()+ clean outdated ground routing sections, then +lime.hwd.ground_routing.detect_hardware()+ creates ground routing configuration sections that eventually can include 802.11q interfaces or hardware switch configurations <<ref:owrthwswitch>><<ref:owrtswitch>>, according to node owner needs and hardware capabilities. In contrast to _{MdHd}_ and Ninix.org _Routing a terra_ that are meant for a specific routing protocol (BGP the first <<ref:mdhd>>, and OLSR the latter <<ref:nnxgr>>) LiMe Ground Routing is routing protocol agnostic, thanks to the LiMe modular structure it is focused just on preparing the L1/L2 setup on the LiMe router and then the upper layer routing modules treat L2 interfaces created by Ground Routing the same as any other L2 interface <<ref:limegr>>. This permit to LiMe networks to use any routing protocol on top of a Ground Routing setup and not being limited to a specific routing protocol, thanks to this abstraction LiMe can also ``emulate'' Ninix.org _Routing a terra_ just installing both +lime-hwd-ground-routing+ and +lime-proto-olsr+, and Guifi.net _{MdHd}_ just installing both +lime-hwd-ground-routing+ and +lime-proto-bgp+ that is part of the work done during this internship.
 
 ===== Hardware detector OpenWrt wan
-TODO
+This hardware detector is shipped as an optional package +lime-hwd-openwrt-wan+, but is installed and enabled by the default in LiMe distribution.
+
+.UML diagram of lime-hwd-openwrt-wan package.
+image::images/lime-hwd-openwrt-wan_UML_{imgExt}[align="center"]
+
+Low cost consumer hardware, that community networks often use, have multiple Ethernet ports, although from a technical point of view those Ethernet ports are pretty much equivalent each other, vendors usually present them as different to the end user, in particular there is usually a separated port labeled WAN end the other ports usually grouped together labeled LAN. The end user is told by the router vendor that the WAN port is meant to be connected to the Internet connection and the LAN ports to be connected to local computers. To avoid confusing the user this convention is usually respected both in OpenWrt and in LiMe, although because technically those ports are equivalents there is no automatic way to determine which port is WAN by software. OpenWrt developers when they add support and write the default configuration for a specific device they let the port labeled as WAN to auto-configure via DHCP while they configure as static the ones labeled as LAN by the vendor <<ref:owrtlanwan>>. LiMe does support almost every device that is well supported by OpenWrt so, instead of duplicating the work of determine if there is a WAN labeled port and which port is it, delegate this task to +lime-hwd-openwrt-wan+ that check which is the WAN port in the OpenWrt default configuration that is backed up into +/etc/lime/config.original/+ by LiMe at first boot <<ref:99limeconfig>> and configure it as needed by LiMe and to behave as user expect to.
+
+.+lime.hwd.openwrt_wan.detect_hardware()+ snippet that retrieves WAN +ifname+.
+[source, lua]
+---------------------------------------------------------
+local uci_o = libuci:cursor()
+uci_o:set_confdir("/etc/lime/config.original")
+uci_o:set_savedir("/dev/null")
+local ifname = uci_o:get("network", "wan", "ifname")
+---------------------------------------------------------
 
 ===== Hardware detector USB radio
-TODO
+This hardware detector is distributed as an optional package +lime-hwd-usbradio+, it is in charge of detecting WiFi USB radio.
+
+.UML diagram of lime-hwd-usbradio package.
+image::images/lime-hwd-usbradio_UML_{imgExt}[align="center"]
+
+Most consumer routers features one or more USB ports, to setup print servers or share files from an attached disk. With OpenWrt those ports are usually usable as full USB  and not only for specific tasks. Taking advantage of this community networks activists started creating low cost multi-radio routers by plugging USB WiFi radios into those routers. Although OpenWrt configuration system doesn't recognize those USB radio automatically so the users had to configure them manually. To fill the gap between OpenWrt wireless configuration system and having USB radio automatically working +lime-hwd-usbradio+ has been developed. As OpenWrt is compatible with Hotplug system <<ref:owrthotplug>> when an USB radio is connected to the router an Hotplug event is fired <<ref:hotplug>>, +lime.hwd.usbradio+ catch that event trough a crafted Hotplug hook <<ref:usbradiohook>> and configure the USB radio taking in account his capabilities. In the log run the lack of good quality support for +adhoc+ or +ieee80211s+ WiFi modes in Linux drivers for USB radios especially for the cheaper ones has discouraged users to use them for mesh links. Currently USB radios detected by +lime-hwd-usbradio+ are mainly used in AP or STA WiFi modes.
 
 ===== Protocol adhoc
-TODO
+This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> and it's enabled by default, it is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +adhoc+.
 
 ===== Protocol anygw
+This protocol is shipped as an optional package +lime-proto-anygw+, but is installed and enabled by the default in LiMe distribution.
 
-This protocol is shipped as an optional package `lime-proto-anygw`, but is installed and enabled by the default in LiMe distribution.
-
+.UML diagram of lime-proto-anygw package.
 image::images/lime-proto-anygw_UML_{imgExt}[align="center"]
 
 In WiFi networks usually when a client move and get far from the AP it is associated, if it sense better signal from another AP with the same SSID it is expected to automatically ->deassociate<- from the far node and associate to the near one. When during this process upper network layers, specifically the user, doesn't experience a connection interruption it is commonly referred as roaming <<ref:missing>>. LiMe mesh networks does supports roaming at L2. In L2 roaming scenarios because the clients are usually configured via DHCP and it operates at an higher layer then roaming the client keep using the same gateway of when it associated first time without caring of it's position, this behavior may cause client packets be routed in a suboptimal way, moreover if the client keep roaming far away from the initial gateway it may experience low network performances.
 
+.Roaming without anygw.
 image::images/suboptimal_roaming_{imgExt}[align="center"]
 
 Legenda::
@@ -112,9 +139,9 @@ Legenda::
 - Green dot dashed line: Client packets routed at L2
 
 
-To avoid this unwanted behavior +lime-proto-anygw+ offer a light implementation of anycast gateway. Anygw builds the virtual Ethernet interface `anygw` on top of <<proto:lan, Lan protocol>> clients access interface `br-lan` using the Linux kernel module `macvlan` <<ref:macvlan>><<ref:linuxswitching>>. When anycast gateway is enabled the first address of the mesh network subnet is reserved for anycast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all anycast gateways on a LiMe L2 cloud share the same IP and MAC address.
+To avoid this unwanted behavior +lime-proto-anygw+ offer a light implementation of anycast gateway. Anygw builds the virtual Ethernet interface +anygw+ on top of <<proto:lan, LAN protocol>> clients access interface +br-lan+ using the Linux kernel module +macvlan+ <<ref:macvlan>><<ref:linuxswitching>>. When anycast gateway is enabled the first address of the mesh network subnet is reserved for anycast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all anycast gateways on a LiMe L2 cloud share the same IP and MAC address.
 
-.`anygw` addresses generation
+.+anygw+ addresses generation.
 [source, lua]
 ---------------------------------------------
 local ipv4, ipv6 = network.primary_address()
@@ -126,33 +153,36 @@ local anygw_ipv4 = ipv4:minhost()
 
 In this way when a client sends a packets directed outside it's cloud it gets ``intercepted'' and optimally routed at L3 by the nearest router.
 
+.Roaming with anygw.
 image::images/anygw_roaming_{imgExt}[align="center"]
 
 
 ===== Protocol batadv
 TODO
 
+.UML diagram of package lime-proto-batadv.
 image::images/lime-proto-batadv_UML_{imgExt}[align="center"]
 
 ===== Protocol BMX6
 TODO
 
+.UML diagram of package lime-proto-bmx6.
 image::images/lime-proto-bmx6_UML_{imgExt}[align="center"]
 
 ===== Protocol ieee80211s
-TODO
+This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> but it is not enabled by default, +lime.proto.ieee80211s+ is a relatively new born into LiMe family and the similarly used +lime.proto.adhoc+ is preferred as default configuration because it has been more tested and is well known to community networks activists. Similarly to his old brother +lime.proto.adhoc+, +lime.proto.ieee80211s+ is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +ieee80211s+.
 
 [[proto:lan]]
-===== Protocol lan
-The lan LiMe protocol is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces.
+===== Protocol LAN
+As you can see in <<fig:lime-system_UML>> +lime.proto.lan+ is shipped as part of +lime-system+ package. LiMe LAN protocol is  enabled by default and is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces into +br-lan+.
 
-==== WiFi mode adhoc
+===== WiFi mode adhoc
 TODO
 
-==== WiFi mode ap
+===== WiFi mode ap
 TODO
 
-==== WiFi mode ieee80211s
+===== WiFi mode ieee80211s
 TODO
 
 == Developed tools
@@ -161,14 +191,15 @@ TODO
 
 Even if LiMe is highly modular, to have a sane and modular itself BGP route exchange implementation required some modification to LiMe core, in particular the abstract class _Lime Routing Protocol_ has been extended by adding the +bgp_conf(...)+ method. A _Lime Routing Protocol_ which want to exchange routes with BGP should implement that method in a way that it does the necessary configuration of the +proto+ itself and returns to the caller a string containing a BIRD snippet configuration for route exchange with that +proto+.
 
+.UML diagram of lime-system package, evidenced in green the developed parts.
 image::images/lime-system_devel_UML_{imgExt}[align="center"]
 
 Highlighted in green the parts modified in the scope of the internship.
 
 
-==== Protocol lan
+==== Protocol LAN
 
-As +proto+ lan does very minimal work at L3 it doesn't need much interaction with BGP to announce his subnet route. Implementing +lime.proto.lan.bgp_conf(...)+ has been quite simple as you can see in the following code snippet.
+As +lime.proto.lan+ does very minimal work at L3 it doesn't need much interaction with BGP to announce his subnet route. Implementing +lime.proto.lan.bgp_conf(...)+ has been quite simple as you can see in the following code snippet.
 
 [source, lua]
 ------------------------------------------------------------
@@ -230,7 +261,7 @@ protocol kernel
 --------------------------------------
 
 ==== Importing mesh routes with low preference
-Guifi.net BGP routers are form different vendors and often they have different implementation on which route attributes are considered when deciding which path to prefer, after reading documentations from different vendors, seems to me that in eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending and it's common in situation where someone want to share a route but want others routers prefer other paths if there is some path available.
+Guifi.net BGP routers are from different vendors and often they have different implementation on which route attributes are considered when deciding which path to prefer, after reading documentations from different vendors, seems to me that in eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending and it's common in situation where someone want to share a route but want others routers prefer other paths if there is some path available.
 some references: +
 http://wiki.nil.com/AS-path_prepending_%28technical_details%29 +
 Check #bird 2015/08/19 IRC log for more details
@@ -293,6 +324,8 @@ Due to LiMe modular nature this development has many possible application that s
 [[meshdistribution]]
 ==== Mesh network as distribution
 In this scenario a BGP backbone is used as transport network while the mesh network is used as last mile distribution.
+
+TODO: Wifi mesh links shold be curvy in graphs
 
 image::images/simple_exchange_topology_{imgExt}[align="center"]
 

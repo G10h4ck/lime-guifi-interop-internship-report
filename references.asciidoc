@@ -23,5 +23,21 @@
 - [[[ref:routeloop]]] Wikipedia. 2015. Routing loop problem. https://en.wikipedia.org/wiki/Routing_loop_problem
 - [[[ref:wkpdbgp]]] Wikipedia. 2015. Border Gateway Protocol. https://en.wikipedia.org/wiki/Border_Gateway_Protocol
 - [[[ref:ebgpibgp]]] Juniper Networks. 2015. IBGP and EBGP. https://www.juniper.net/techpubs/software/junos-es/junos-es93/junos-es-swconfig-interfaces-and-routing/ibgp-and-ebgp.html
+- [[[ref:nnxgr]]] Ninux.org Wiki. 2015. Ground Routing. http://wiki.ninux.org/GroundRouting
+- [[[ref:limegr]]] Libre-Mesh Wiki. 2015. Ground Routing. http://libre-mesh.org/projects/libre-mesh/wiki/Ground_routing
+- [[[ref:owrtswitch]]] OpenWrt Wiki. 2015. Switch Documentation. http://wiki.openwrt.org/doc/uci/network/switch
+- [[[ref:owrthwswitch]]] OpenWrt Wiki. 2015. Ethernet Network Switch. http://wiki.openwrt.org/doc/hardware/switch
+- [[[ref:owrtwdr3600]]] OpenWrt Wiki. 2015. TP-Link TL-WDR3600. http://wiki.openwrt.org/toh/tp-link/tl-wdr3600
+- [[[ref:99limeconfig]]] LiMe Developers. 2015. Libre-mesh code, 99-lime-config. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-system/files/etc/uci-defaults/99-lime-config
+- [[[ref:owrtlanwan]]] OpenWrt Developers. 2015. OpenWrt code, creation of default network configuration. https://github.com/openwrt-mirror/openwrt/blob/master/target/linux/ar71xx/base-files/etc/uci-defaults/02_network
+- [[[ref:hotplug]]] Linux Hotplugging Project. 2015. hotplug(8) - Linux man page. http://linux.die.net/man/8/hotplug
+- [[[ref:owrthotplug]]] OpenWrt Wiki. 2015. Hotplug. http://wiki.openwrt.org/doc/techref/hotplug
+- [[[ref:usbradiohook]]] LiMe Developers. 2015. Libre-mesh code, USB radio hotplug hook. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-hwd-usbradio/src/hotplug-hook.sh
+- [[[ref:wkpduml]]] Wikipedia. 2015. Unified Modeling Language. https://en.wikipedia.org/wiki/Unified_Modeling_Language
+
+- https://en.wikipedia.org/wiki/Mesh_networking
+- https://en.wikipedia.org/wiki/Wireless_mesh_network
+- https://en.wikipedia.org/wiki/Wireless_ad_hoc_network
+
 
 - [[[ref:missing]]] Wikipedia. 2015. Wikipedia:Verifiability. https://en.wikipedia.org/wiki/Wikipedia:Verifiability

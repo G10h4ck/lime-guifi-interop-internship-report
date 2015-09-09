@@ -1,5 +1,7 @@
+*~
 *.css
 *.fo
 *.html
 *.pdf
+images
 lua-highlight-asciidoc-dblatex.sty

@@ -10,13 +10,15 @@
 
 - *ASN*: An autonomous system number (ASN) is a unique number to identify an autonomous system (AS) and which enables that system to exchange exterior routing information with other neighboring autonomous systems.
 
-- *CIDR*: TODO
-
 - *BGP*: Border Gateway Protocol (BGP) is a protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet.
 
 - *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols.
 
 - *Broadcast*: TODO
+
+- *BSSID*: TODO https://es.wikipedia.org/wiki/BSSID
+
+- *CIDR*: TODO
 
 - *Community Network*: A community network is a computer-based system that is intended to help support geographical communities by supporting, augmenting, and extending already existing social networks.
 

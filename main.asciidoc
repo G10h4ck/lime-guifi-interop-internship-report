@@ -102,11 +102,32 @@ Legenda::
 - Documentation addresses conform to RFC 3849 <<ref:rfc3849>>.
 
 ===== Completing the puzzle
-As the network grows L2 clouds start to show their limits
-TODO
+While L2 clouds show their limits as they grow oversize, L3 networks feel an unnecessary complication when they shrink too much. LiMe try to take the best from both of them. LiMe developers suggests to extends L2 clouds till the zone keep having homogeneous requirements, so it can be handled with common policies, moreover the probability to suffer a L2 cloud split must remain low enough, another factor to keep in mind is that if a L2 cloud grow too much broadcast packets will start to be significants bandwidth consumers and this is usually unwanted. Typical suggested L2 clouds can spread across areas like a school, a public garden or a small village. L2 clouds doesn't have mechanisms to connect each other by them self, at this point L3 network start to play his main role, to connect L2 cloud neighborhood each other. While hosts from different cloud can connect each others, as the broadcast domain is split broadcast traffic doesn't propagate. L3 networks moreover can afford splits and rejoins seamlessly. All of this that can seems some kind of ``network magics'' is actually done automatically by LiMe and in a quite understandable way thanks to its modular network and software architecture. +
+Let's dive into it from the ground up: +
+
+L1::
+	At L1 all LiMe nodes of a network, including all clouds pertaining to it, can connect each other if in range, in the case of WiFi Ad Hoc this is obtained by using the same BSSID, in case of cabled Ethernet links connecting the LiMe nodes to the same switch.
+
+.LiMe nodes from different clouds connecting each other at L1.
+image::images/lime_L1_{imgExt}[align="center"]
+
+L1 + L2::
+	TODO
+
+image::images/lime_L1_{imgExt}[align="center"]
+
+L1 + L3::
+	TODO
+
+image::images/lime_L1_{imgExt}[align="center"]
+
+L1 + L2 + L3::
+	TODO
+
+image::images/lime_L1_{imgExt}[align="center"]
 
 ==== Software Architecture
-LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool `lime-config` that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their `clean()` and `configure()` methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
+LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool +lime-config+ that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their +clean()+ and +configure()+ methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
 
 [[fig:lime-system_UML]]
 .UML diagram of lime-system package.

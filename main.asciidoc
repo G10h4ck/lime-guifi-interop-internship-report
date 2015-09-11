@@ -44,6 +44,7 @@ BIRD is used in several Internet exchanges as a route server <<ref:birdwikipedia
 === BMX6
 BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It originated as an independent branch of the BATMAN routing protocol and is already used successfully in mesh networks <<ref:bmxan>>. Being a mesh routing protocol, BMX6 distributes node descriptions which can contain node-specific configurations. It optimizes the communication between neighboring nodes for minimal protocol overhead. From a routing protocol point of view BMX6 is classified as *table-driven proactive, distance vector* routing protocol so even if there is no traffic in the network, the routes to all the network nodes are known by all nodes <<ref:tablepro>>, while nodes does not have a global view of the network topology, so their knowledge is limited to next-hop to all destinations and the distance associated to it <<ref:distvect>>.
 
+[[batman-adv]]
 === B.A.T.M.A.N. advanced
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2. While usually wireless routing protocol implementations operates on L3 which means they exchange routing information by sending IP packets and bring their routing decision into effect by manipulating the kernel routing table. Batman-adv operates entirely on L2, not only the routing information is transported using raw Ethernet frames but also the data traffic is handled by batman-adv. It encapsulates and forwards all traffic until it reaches the destination, hence emulating a virtual network switch of all nodes participating. Therefore to the upper level all nodes appear to be link local and are unaware of the network's topology as well as unaffected by lower level network changes. Operating as a L2 routing protocol as there is no _L2 routing table_ to manipulate, data frames must be processed directly by batman-adv and doing it in user-space would be very inefficient, as for each packet processed it would be +read()+ and +write()+ to the kernel and back causing multiple context switching that are computationally intensive <<ref:contextswitch>>, which limits the sustainable bandwidth especially on low-end devices. To have good support for these devices as well and an overall good efficiency, batman-adv is implemented as a Linux kernel module. This way batman-adv avoid the context switching costs and only introduces a negligible packet processing overhead even under a high load. <<ref:batmanadv>>
 
@@ -57,6 +58,51 @@ Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of communi
 To accomplish his goal LiMe meta-firmware have an highly modular design and implementation, the core of LiMe meta-firmware is the lime-system package.
 
 ==== Network Architecture
+The creation of <<batman-adv, B.A.T.M.A.N. advanced>> has fostered the debate in community networks if it is better to build the mesh network with L2 routing protocols (like batman-adv) or with L3 routing protocols (like Babel, BMX6, OLSR). LiMe developers recognize the bad and the good parts of both worlds (L2/L3) and have decided to get de best of them. While LiMe let the community choice what protocol they prefer the default distribution include both batman-adv and BMX6 operating at same time but with different objectives.
+
+===== L2 cloud
+LiMe developers refers to L2 cloud (or just cloud) as a community network part in which the same broadcast domain is shared. A client connected to a cloud behave like if it is connected on the same Ethernet switch <<ref:wkpdethswitch>> together with all other hosts in the same cloud, all applications that take advantage of being connected to a LAN (as example: for neighbor discovery) can be used seamlessly on a cloud. As the broadcast domain is shared a client can roam without upper layer connectivity interruption across nodes of the same cloud because the assigned IP is still valid and the gateway is still ``directly'' reachable. On a cloud because all hosts share the same broadcast domain broadcast packets like ARP requests are flooded to the whole cloud <<ref:wkpdbroadcstdoimain>>, this pose limits to the scalability of a cloud, moreover sharing the same broadcast domain mean that typical L2 attacks such as ARP spoofing are possible. Those two drawbacks of operating at L2 limits de facto the dimension of a cloud. Despite LiMe developers suggests to avoid to build too big L2 clouds around the world exists community networks using LiMe with L2 clouds spreading on entire small cities without noticing critical problems.
+
+.Simplified LiMe L2 cloud schema of Barcelona Botanical garden network.
+image::images/l2_cloud_botanic_{imgExt}[align="center"]
+
+Legenda::
+- Black routers: LiMe router that offer WiFi connectivity.
+- Blue lines: Mesh links between routers.
+- Persons with smartphone: Visitors accessing ``Guia Multimèdia del Jardí Botànic'' geolocalization capable web application via the WiFi connectivity provided by Libre-Mesh.
+
+===== L3 network
+LiMe developers refers to L3 network (or just network) as a community network part that may contain multiple broadcast domain and in which packet routing between them is done at L3. From the start LiMe has been bred with IPv6 as L3 reference protocol in mind but as of today important applications and a big part of Internet still rely on IPv4 support so LiMe does support both of them implementing a complete dual stack setup. Each broadcast domain must use one or more unique subnets that doesn't overlap with subnets used in other broadcast domains of the same network. Another key concept of LiMe is to build horizontal networks in which there is no discrimination between clients and servers. On a LiMe network every host connected can at same time offer services or be client of services offered by other hosts, because of that bandwidth offered to hosts is symmetric and NAT usage is banned.
+
+Some of NAT drawbacks::
+- In presence of NAT direct connection between hosts is difficult, to open a connection special techniques are required <<ref:wkpdholepunch>>.
+- NAT break the end-to-end principle <<ref:wkpfnat>><<ref:wkpdend2end>>.
+- NAT based network are unfair because the _natted_ host lose the opportunity to be a server (listening for incoming connections), and the non _natted_ automatically acquire a the privilege of listening for connection that isn't fairly distributed to all hosts anymore.
+
+.Connection tentative frustrated by NAT in an IPv4 network.
+image::images/L3_network_nat_{imgExt}[align="center"]
+
+Legenda::
+- Blue lines: Mesh links between routers.
+- Purple directed lines: Upper layer connections.
+- Smart-phone 192.0.2.4: It can open connection non to other hosts like 198.51.100.3, but cannot receive connections because they get frustrated by NAT on his router.
+- Smart-phone 198.51.100.3: It can receive connections from all hosts. It can open connections to all hosts but the the one towards the other smart-phone get frustrated by NAT.
+- Server 203.0.113.34: Same as smart-phone 198.51.100.3.
+- Documentation addresses conform to RFC 5737 <<ref:rfc5737>>.
+
+
+Although the choice of banning NAT from LiMe networks may be imputed to courageous developers it is to be considered as a pragmatic choice too as networks *without* NAT has better performances <<ref:natperformance>>, upper layer applications doesn't have to deal with lower layer asymmetry introduced by NAT, and network debugging is way simpler.
+
+.Connection tentative between clients works seamlessly in an IPv6 network without NAT.
+image::images/L3_network_no_nat_{imgExt}[align="center"]
+
+Legenda::
+- Blue lines: Mesh links between routers.
+- Purple directed lines: Upper layer connections. All hosts con open and receive connections each others.
+- Documentation addresses conform to RFC 3849 <<ref:rfc3849>>.
+
+===== Completing the puzzle
+As the network grows L2 clouds start to show their limits
 TODO
 
 ==== Software Architecture
@@ -117,7 +163,7 @@ This hardware detector is distributed as an optional package +lime-hwd-usbradio+
 .UML diagram of lime-hwd-usbradio package.
 image::images/lime-hwd-usbradio_UML_{imgExt}[align="center"]
 
-Most consumer routers features one or more USB ports, to setup print servers or share files from an attached disk. With OpenWrt those ports are usually usable as full USB  and not only for specific tasks. Taking advantage of this community networks activists started creating low cost multi-radio routers by plugging USB WiFi radios into those routers. Although OpenWrt configuration system doesn't recognize those USB radio automatically so the users had to configure them manually. To fill the gap between OpenWrt wireless configuration system and having USB radio automatically working +lime-hwd-usbradio+ has been developed. As OpenWrt is compatible with Hotplug system <<ref:owrthotplug>> when an USB radio is connected to the router an Hotplug event is fired <<ref:hotplug>>, +lime.hwd.usbradio+ catch that event trough a crafted Hotplug hook <<ref:usbradiohook>> and configure the USB radio taking in account his capabilities. In the log run the lack of good quality support for +adhoc+ or +ieee80211s+ WiFi modes in Linux drivers for USB radios especially for the cheaper ones has discouraged users to use them for mesh links. Currently USB radios detected by +lime-hwd-usbradio+ are mainly used in AP or STA WiFi modes.
+Most consumer routers features one or more USB ports, to setup print servers or share files from an attached disk. With OpenWrt those ports are usually usable as full USB  and not only for specific tasks. Taking advantage of this community networks researcher started creating low cost multi-radio routers by plugging USB WiFi radios into those routers. Although OpenWrt configuration system doesn't recognize those USB radio automatically so the users had to configure them manually. To fill the gap between OpenWrt wireless configuration system and having USB radio automatically working +lime-hwd-usbradio+ has been developed. As OpenWrt is compatible with Hotplug system <<ref:owrthotplug>> when an USB radio is connected to the router an Hotplug event is fired <<ref:hotplug>>, +lime.hwd.usbradio+ catch that event trough a crafted Hotplug hook <<ref:usbradiohook>> and configure the USB radio taking in account his capabilities. In the long run the lack of good quality support for +adhoc+ or +ieee80211s+ WiFi modes in Linux drivers for USB radios especially for the cheaper ones has discouraged users to use them for mesh links. Currently USB radios detected by +lime-hwd-usbradio+ are mainly used in AP or STA WiFi modes.
 
 ===== Protocol adhoc
 This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> and it's enabled by default, it is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +adhoc+.
@@ -170,7 +216,7 @@ TODO
 image::images/lime-proto-bmx6_UML_{imgExt}[align="center"]
 
 ===== Protocol ieee80211s
-This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> but it is not enabled by default, +lime.proto.ieee80211s+ is a relatively new born into LiMe family and the similarly used +lime.proto.adhoc+ is preferred as default configuration because it has been more tested and is well known to community networks activists. Similarly to his old brother +lime.proto.adhoc+, +lime.proto.ieee80211s+ is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +ieee80211s+.
+This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> but it is not enabled by default, +lime.proto.ieee80211s+ is a relatively new born into LiMe family and the similarly used +lime.proto.adhoc+ is preferred as default configuration because it has been more tested and is well known to community networks participants. Similarly to his older brother +lime.proto.adhoc+, +lime.proto.ieee80211s+ is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +ieee80211s+.
 
 [[proto:lan]]
 ===== Protocol LAN

@@ -34,6 +34,17 @@
 - [[[ref:owrthotplug]]] OpenWrt Wiki. 2015. Hotplug. http://wiki.openwrt.org/doc/techref/hotplug
 - [[[ref:usbradiohook]]] LiMe Developers. 2015. Libre-mesh code, USB radio hotplug hook. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-hwd-usbradio/src/hotplug-hook.sh
 - [[[ref:wkpduml]]] Wikipedia. 2015. Unified Modeling Language. https://en.wikipedia.org/wiki/Unified_Modeling_Language
+- [[[ref:wkpdbroadcstdoimain]]] Wikipedia. 2015. Broadcast domain. https://en.wikipedia.org/wiki/Broadcast_domain
+- [[[ref:wkpdethswitch]]] Wikipedia. 2015. Network switch. https://en.wikipedia.org/wiki/Network_switch
+- [[[ref:wkpdarp]]] Wikipedia. 2015. Address Resolution Protocol. https://en.wikipedia.org/wiki/Address_Resolution_Protocol
+- [[[ref:wkpdarpspoofing]]] Wikipedia. 2015. ARP spoofing. https://en.wikipedia.org/wiki/ARP_spoofing
+- [[[ref:wkpdsubnet]]] Wikipedia. 2015. Subnetwork. https://en.wikipedia.org/wiki/Subnetwork
+- [[[ref:wkpfnat]]] Wikipedia. 2015. Network address translation. https://en.wikipedia.org/wiki/Network_address_translation
+- [[[ref:wkpdend2end]]] Wikipedia. 2015. End-to-end principle. https://en.wikipedia.org/wiki/End-to-end_principle
+- [[[ref:wkpdholepunch]]] Wikipedia. 2015. Hole punching (networking). https://en.wikipedia.org/wiki/Hole_punching_%28networking%29
+- [[[ref:rfc5737]]] The Internet Society. 2010. IPv4 Address Blocks Reserved for Documentation. https://tools.ietf.org/html/rfc5737
+- [[[ref:rfc3849]]] The Internet Society. 2004. IPv6 Address Prefix Reserved for Documentation. https://tools.ietf.org/html/rfc3849
+- [[[ref:natperformance]]] Sarabjeet Singh Chugh. 2003. Impact of Network Address Translation on Router Performance. http://scholar.lib.vt.edu/theses/available/etd-10062003-170440/unrestricted/thesis.pdf
 
 - https://en.wikipedia.org/wiki/Mesh_networking
 - https://en.wikipedia.org/wiki/Wireless_mesh_network

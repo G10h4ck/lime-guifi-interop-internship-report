@@ -78,6 +78,8 @@
 
 - *USB*: Universal seria bus TODO
 
+- *VLAN*: TODO
+
 - *WAN*: Wide Area Network TODO
 
 - *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.

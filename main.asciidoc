@@ -102,29 +102,71 @@ Legenda::
 - Documentation addresses conform to RFC 3849 <<ref:rfc3849>>.
 
 ===== Completing the puzzle
-While L2 clouds show their limits as they grow oversize, L3 networks feel an unnecessary complication when they shrink too much. LiMe try to take the best from both of them. LiMe developers suggests to extends L2 clouds till the zone keep having homogeneous requirements, so it can be handled with common policies, moreover the probability to suffer a L2 cloud split must remain low enough, another factor to keep in mind is that if a L2 cloud grow too much broadcast packets will start to be significants bandwidth consumers and this is usually unwanted. Typical suggested L2 clouds can spread across areas like a school, a public garden or a small village. L2 clouds doesn't have mechanisms to connect each other by them self, at this point L3 network start to play his main role, to connect L2 cloud neighborhood each other. While hosts from different cloud can connect each others, as the broadcast domain is split broadcast traffic doesn't propagate. L3 networks moreover can afford splits and rejoins seamlessly. All of this that can seems some kind of ``network magics'' is actually done automatically by LiMe and in a quite understandable way thanks to its modular network and software architecture. +
+While in LiMe L1 isn't used for packet forwarding, L2 clouds show their limits as they grow oversize and L3 networks feel an unnecessary complication when they shrink too much. LiMe try to take the best from all of them. LiMe developers suggests to extends L2 clouds till the zone keep having homogeneous requirements, so it can be handled with common policies, moreover the probability to suffer a L2 cloud split must remain low enough, another factor to keep in mind is that if a L2 cloud grow too much broadcast packets will start to be significants bandwidth consumers and this is usually unwanted. Typical suggested L2 clouds can spread across areas like a school, a public garden or a small village. L2 clouds doesn't have mechanisms to connect each other by them self, at this point L3 network start to play his main role, to connect L2 cloud neighborhood each other. While hosts from different cloud can connect each others, as the broadcast domain is split broadcast traffic doesn't propagate. L3 networks moreover can afford splits and rejoins seamlessly. All of this that can seems some kind of ``network magics'' is actually done automatically by LiMe and in a quite understandable way thanks to its modular network and software architecture. +
 Let's dive into it from the ground up: +
 
 L1::
-	At L1 all LiMe nodes of a network, including all clouds pertaining to it, can connect each other if in range, in the case of WiFi Ad Hoc this is obtained by using the same BSSID, in case of cabled Ethernet links connecting the LiMe nodes to the same switch.
+	At L1 all LiMe nodes of a network, including all clouds pertaining to it, can connect each other if in range, in the case of WiFi Ad Hoc this is obtained by using the same BSSID, in case of cabled Ethernet without further work other then connecting the LiMe nodes to the same switch and in case of WiFi ieee80211s it is obtained using the same +mesh ID+.
 
 .LiMe nodes from different clouds connecting each other at L1.
 image::images/lime_L1_{imgExt}[align="center"]
 
-L1 + L2::
-	TODO
+Legenda::
+	- Black routers: LiMe routers on multiple clouds.
+	- Blue lines: L1 links between routers.
 
-image::images/lime_L1_{imgExt}[align="center"]
+L1 + L2::
+	Each cloud run L2 routing protocol (by default batman-adv) on top of a different 802.1ad VLAN, so although at L1 different clouds can overlap and connect each other there is no visibility from batman-adv point of view, this creates different broadcast domains also for hosts connected to different clouds.
+
+.LiMe nodes from different clouds connecting each other at L1 but not at L2.
+image::images/lime_L1_L2_{imgExt}[align="center"]
+
+Legenda::
+	- Black routers: LiMe routers on multiple clouds.
+	- Blue lines: L1 links between routers.
+	- Brown lines: L2 links of cloud 1.
+	- Orange lines: L2 links of cloud 4.
+	- Fuchsia lines: L2 links of cloud 9.
 
 L1 + L3::
-	TODO
+	All nodes run the L3 routing protocol (by default BMX6) on the same 802.1ad VLAN, so where there is a L1 link a L3 link exists too. This permits different clouds to automatically connect each other.
 
-image::images/lime_L1_{imgExt}[align="center"]
+.LiMe nodes from different clouds connecting each other at L1 and L3.
+image::images/lime_L1_L3_{imgExt}[align="center"]
+
+Legenda::
+	- Black routers: LiMe routers on multiple clouds.
+	- Blue lines: L1 links between routers.
+	- Grey lines: L3 links between routers.
 
 L1 + L2 + L3::
-	TODO
+	Joining all pieces together we obtain what usually a community network using LiMe looks like. A bunch of roaming enabled clouds that route internal traffic at L2 and use L3 for communication outside the cloud.
+	
 
-image::images/lime_L1_{imgExt}[align="center"]
+.LiMe community network detailing links at L1, L2 and L3.
+image::images/lime_L1_L2_L3_{imgExt}[align="center"]
+
+Legenda::
+	- Black routers: LiMe routers on multiple clouds.
+	- Blue lines: L1 links between routers.
+	- Brown lines: L2 links of cloud 1.
+	- Orange lines: L2 links of cloud 4.
+	- Fuchsia lines: L2 links of cloud 9.
+	- Grey lines: L3 links between routers.
+
+L1 + L2 + L3 over L2::
+	A further yet unexplored setup is to automatically enable L3 routing only on nodes that connects multiple cloud and take advantage of the L2 cloud to exchange L3 information instead of use all L1 links, intuitively this could improve scalability but at least a prototype implementation and some empirical data is needed before feasibility could be evaluated.
+
+.LiMe community network detailing links at L1, L2 and L3 over L2.
+image::images/lime_L1_L2_L3_over_L2_{imgExt}[align="center"]
+
+Legenda::
+	- Black routers: LiMe routers on multiple clouds.
+	- Blue lines: L1 links between routers.
+	- Brown lines: L2 links of cloud 1.
+	- Orange lines: L2 links of cloud 4.
+	- Fuchsia lines: L2 links of cloud 9.
+	- Grey lines: L3 links between ``frontier'' routers.
 
 ==== Software Architecture
 LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool +lime-config+ that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their +clean()+ and +configure()+ methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
@@ -225,13 +267,15 @@ image::images/anygw_roaming_{imgExt}[align="center"]
 
 
 ===== Protocol batadv
-TODO
+This protocol is shipped as an optional package +lime-proto-batadv+, but is installed and enabled by the default in LiMe distribution. It configures batman-adv to create LiMe L2 clouds, and setup 802.1ad VLAN as needed by LiMe setup.
 
 .UML diagram of package lime-proto-batadv.
 image::images/lime-proto-batadv_UML_{imgExt}[align="center"]
 
+
+
 ===== Protocol BMX6
-TODO
+This protocol is shipped as an optional package +lime-proto-bmx6+, but is installed and enabled by the default in LiMe distribution. It configures BMX6 for L3 routing between LiMe L3 networks and eventually with upstream connection, it also setup 802.1ad VLAN for BMX6 as needed by LiMe setup.
 
 .UML diagram of package lime-proto-bmx6.
 image::images/lime-proto-bmx6_UML_{imgExt}[align="center"]
@@ -241,16 +285,16 @@ This protocol is shipped as part of +lime-system+ package as you can see in <<fi
 
 [[proto:lan]]
 ===== Protocol LAN
-As you can see in <<fig:lime-system_UML>> +lime.proto.lan+ is shipped as part of +lime-system+ package. LiMe LAN protocol is  enabled by default and is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces into +br-lan+.
+As you can see in <<fig:lime-system_UML>> +lime.proto.lan+ is shipped as part of +lime-system+ package. LiMe LAN protocol is enabled by default and is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces into +br-lan+.
 
 ===== WiFi mode adhoc
-TODO
+As you can see in <<fig:lime-system_UML>> +lime.mode.adhoc+ is shipped as part of +lime-system+ package. LiMe WiFi mode adhoc is enabled by default and configure WiFi interfaces in adhoc mode that are used by upper layer protocols to establish links between LiMe nodes.
 
 ===== WiFi mode ap
-TODO
+As you can see in <<fig:lime-system_UML>> +lime.mode.ap+ is shipped as part of +lime-system+ package. LiMe WiFi mode ap is enabled by default and configure WiFi interfaces as an AP. Those interfaces in default configuration are used by upper layer protocols to provide access to clients, but it is possible to use them for creating links too.
 
 ===== WiFi mode ieee80211s
-TODO
+As you can see in <<fig:lime-system_UML>> +lime.mode.ieee80211s+ is shipped as part of +lime-system+ package. LiMe WiFi mode ieee80211s is not enabled by default as +lime.mode.adhoc+ is generally preferred because it has been more tested over time. LiMe WiFi mode ieee80211s configure WiFi interfaces to create ieee80211s mode but with +mesh forwarding+ disabled, so ieee80211s is used only as link layer and not for packet forwarding that is delegated to upper layer protocols that take advantage of the WiFi interfaces created by +lime.mode.ieee80211s+ to establish links.
 
 == Developed tools
 
@@ -391,8 +435,6 @@ Due to LiMe modular nature this development has many possible application that s
 [[meshdistribution]]
 ==== Mesh network as distribution
 In this scenario a BGP backbone is used as transport network while the mesh network is used as last mile distribution.
-
-TODO: Wifi mesh links shold be curvy in graphs
 
 image::images/simple_exchange_topology_{imgExt}[align="center"]
 

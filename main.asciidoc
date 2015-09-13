@@ -302,10 +302,11 @@ As you can see in <<fig:lime-system_UML>> +lime.mode.ieee80211s+ is shipped as p
 
 Even if LiMe is highly modular, to have a sane and modular itself BGP route exchange implementation required some modification to LiMe core, in particular the abstract class _Lime Routing Protocol_ has been extended by adding the +bgp_conf(...)+ method. A _Lime Routing Protocol_ which want to exchange routes with BGP should implement that method in a way that it does the necessary configuration of the +proto+ itself and returns to the caller a string containing a BIRD snippet configuration for route exchange with that +proto+.
 
-.UML diagram of lime-system package, evidenced in green the developed parts.
+.UML diagram of lime-system package, evidenced in green parts developed during the internship.
 image::images/lime-system_devel_UML_{imgExt}[align="center"]
 
-Highlighted in green the parts modified in the scope of the internship.
+[[lime:proto:bgp_conf]]
+The new API call +lime.proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)+ is called by +<<proto:bgp, lime.proto.bgp>>+ for each +lime.proto+ that has been requested to exchange routes with BGP, this function take as parameters two tables that are both readable to read already defined template variable and writable to eventually define additional template variables to pass back to +lime.proto.bgp+ and returns a template snippet that is appended to the BIRD configuration file by +lime.proto.bgp+. <<fig:lime-proto-bgp_devel_UML>> display as an UML diagram the interaction between +lime.proto.bgp+ and +lime.proto.*+.
 
 
 ==== Protocol LAN
@@ -325,7 +326,7 @@ end
 ------------------------------------------------------------
 
 === lime-proto-anygw
-As the interaction of +lime.proto.anygw+ with +lime.proto.bgp+ is very similar to the one of +lime.proto.lan+, +lime.proto.anygw.bgp_conf(...)+ is just an adaptation of +lime.proto.lan.bgp_conf(...)+ as you can see in the following code snippet.
+As the interaction of +lime.proto.anygw+ with +lime.proto.bgp+ is very similar to the one of +lime.proto.lan+. The modifications necessaries have been very minimal and limited to implementing +lime.proto.anygw.bgp_conf(...)+ as you can see in the following code snippet, and in the UML diagram.
 
 [source, lua]
 ------------------------------------------------------------
@@ -339,79 +340,84 @@ protocol direct {
 end
 ------------------------------------------------------------
 
+.UML diagram of lime-proto-anygw package, evidenced in green parts developed during the internship.
+image::images/lime-proto-anygw_devel_UML_{imgExt}[align="center"]
+
+[[proto:bgp]]
 === lime-proto-bgp
-To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I had to create a new `proto` for libre-mesh called `lime-proto-bgp`, it is in charge of configuring the LiMe system so it is capable of BGP routing, as back-end it uses BIRD.
-While the module is in charge of configuring BGP routing it delegate through the LiMe modularization pattern to the others `proto` the specific configuration needed to make possible to automatize the interoperation between the specific `proto` and BGP, to accomplish that a new callback has been added to the standard `proto` API:
+To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I have created +lime.proto.bgp+ that implements the abstract class _LiMe Routing Protocol_ and is shipped as the optional package +lime-proto-bgp+.
 
-- `proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)` it is called by the `proto` BGP for each `proto` the user has requested to exchange routes with, this function take as parameters two tables that are both readable to read already defined template variable and writable to eventually define additional template variables to pass back to `proto` BGP and returns a template snippet that is appended to the bird configuration file by `proto` BGP.
+[[fig:lime-proto-bgp_devel_UML]]
+.UML diagram of lime-proto-bgp package, evidenced in green parts developed during the internship.
+image::images/lime-proto-bgp_devel_UML_{imgExt}[align="center"]
 
-==== Exporting BGP routes to a kernel table
+This new _LiMe Routing Protocol_ is in charge of configuring the LiMe system so it is capable of BGP routing using BIRD as back-end. To interconnect BGP zones with LiMe zones it establish peering with known BGP peer and export route learned via peering to the main kernel table. To instruct the BGP zones on how to reach the LiMe zones learning from main kernel table is enabled too, the route learned from the main kernel table are then exported to the BGP peering.
 
-[source,bash]
---------------------------------------
-table tobmx;
-
-protocol pipe {
-	table master;
-	peer table tobmx;
-	import all;
-	export filter {
-		if source = RTS_BGP then accept;
-		else reject;
-        };
-}
-
-protocol kernel
-{
+.Snippet of lime-proto-bgp code showing how routes are learned and exported from and to main kernel table.
+[source,lua]
+-----------------------------
+local base_template = [[
+protocol kernel {
+	learn;
 	scan time 20;
-	table tobmx;
-	kernel table 200;
-	import all;
 	export all;
 }
---------------------------------------
+]]
+-----------------------------
 
-==== Importing mesh routes with low preference
-Guifi.net BGP routers are from different vendors and often they have different implementation on which route attributes are considered when deciding which path to prefer, after reading documentations from different vendors, seems to me that in eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending and it's common in situation where someone want to share a route but want others routers prefer other paths if there is some path available.
-some references: +
-http://wiki.nil.com/AS-path_prepending_%28technical_details%29 +
-Check #bird 2015/08/19 IRC log for more details
+Mesh routing protocols do usually have metrics to describe the quality of a path to a route, but BGP has not a similar concept, although it is possible to associate multiples attributes to BGP routes those aren't treated in an uniform way by different vendors implementations and in eBGP are often discarded or ignored <<ref:bgpattributediscard>>. Because there is no reliable way to convert _mesh quality_ of path to a comparable BGP attribute, I decided to take a conservative approach and try to give to BGP zones the false but always worse then reality information that all mesh paths are to avoid if possible. The basic idea is that if a pure BGP path exists it should be preferred to a path including mesh networks because BGP can at least hop on a pure BGP network but cannot understand if a mesh path is good or maybe the worse path possible. In eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending <<ref:bgpaspathprepending>> and it's of common usages in situation where someone want to share a route but artificially lowering the preference.
+
+.Snippet of lime-proto-bgp code showing how mesh paths are avoided if possible.
+[source,lua]
+-----------------------------------------------------------------
+local meshPenalty = args[4] or 8
+
+local mp = "bgp_path.prepend("..localAS..");\n"
+for i=1,meshPenalty do
+	mp = mp .. "\t\t\tbgp_path.prepend("..localAS..");\n"
+end
+-----------------------------------------------------------------
+
+As in BGP direct interaction with network devices is almost absent it doesn't need any configuration for each interface so +lime.proto.bgp.setup_interface(ifname, args)+ is an empty method, this may seems a simplification but come with a not so hidden cost. BGP doesn't offer any mechanism of node discovering so for each BGP peer peering configuration must be generated by LiMe.
 
 
-[source,bash]
---------------------------------------
+.Snippet of lime-proto-bgp code showing how peering configuration is generated for each BGP peer.
+[source,lua]
+----------------------------------------------------------------------------------------------
+local peer_template = [[
 protocol bgp {
-        local as 65000;                      # Use a private AS number
-        neighbor 198.51.100.130 as 64496;    # Our neighbor ...
-        multihop;                            # ... which is connected indirectly
-        export filter {                      # We use non-trivial export rules
-                if source = RTS_STATIC then { # Export only static routes
-                        # Assign our community
-                        bgp_community.add((65000,64501));
-                        # Artificially increase path length
-                        # by advertising local AS number twice
-                        if bgp_path ~ [= 65000 =] then
-                                bgp_path.prepend(65000);
-                        accept;
-                }
-                reject;
-        };
-        import all;
-        source address 198.51.100.14;   # Use a non-standard source address
+	import filter fromBgp;
+	export filter toBgp;
+
+	local as $localAS;
+	neighbor $remoteIP as $remoteAS;
 }
---------------------------------------
+]]
 
-==== BIRD: Interesting threads
+local function apply_peer_template(s)
+	s.localAS = localAS
+	if string.find(s.remoteIP, ":", 1, true) then
+		bird6_config = bird6_config .. utils.expandVars(peer_template, s)
+	elseif string.find(s.remoteIP, ".", 1, true) then
+		bird4_config = bird4_config .. utils.expandVars(peer_template, s)
+	end
+end
+config.foreach("bgp_peer", apply_peer_template)
+----------------------------------------------------------------------------------------------
 
-- link:http://bird.network.cz/pipermail/bird-users/2012-February/002822.html[How redistribute routes from kernel table]
-- link:http://bird.network.cz/pipermail/bird-users/2013-November/004051.html[Routes in kernel table not being imported]
-- link:http://pastebin.ca/2986781[BIRD protocols default preferences]
-- link:http://bird.network.cz/?get_doc&f=bird-3.html#ss3.3[BIRD protocol preference option]
+
++lime.proto.bgp+ is responsible of configuring BGP routing specific parts like BGP peering and BIRD filters. 
+
+it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
 
 
 === lime-proto-bmx6
-==== Importing BGP routes with low bandwidth
+TODO
 
+.UML diagram of lime-proto-bmx6 package, evidenced in green parts developed during the internship.
+image::images/lime-proto-bmx6_devel_UML_{imgExt}[align="center"]
+
+.Importing BGP routes from a kernel table and announce as low bandwidth.
 [source,bash]
 --------------------------------------
 config plugin 'table'
@@ -495,6 +501,8 @@ This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, g
 BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do further testing at our offices in Barcelona.
 
 ==== Reducing the performance footprint
+Thanks to the work done during this internship multiple BMX6 bugs and performance bottlenecks have been discovered during experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has quickly fixed them <<ref:owrtrouting:42d1982>>-<<ref:bmxgit:90ae174>>.
+
 Default BMX6 `redistTable` configurations are not suitable to our needs in fact they make the router sloppy and with 100% CPU load every-time, doing some analysis on what was happening I found some causes:
 
 - By default `redistTable` do routes aggregation that is a CPU and memory intensive work.

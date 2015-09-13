@@ -45,6 +45,53 @@
 - [[[ref:rfc5737]]] The Internet Society. 2010. IPv4 Address Blocks Reserved for Documentation. https://tools.ietf.org/html/rfc5737
 - [[[ref:rfc3849]]] The Internet Society. 2004. IPv6 Address Prefix Reserved for Documentation. https://tools.ietf.org/html/rfc3849
 - [[[ref:natperformance]]] Sarabjeet Singh Chugh. 2003. Impact of Network Address Translation on Router Performance. http://scholar.lib.vt.edu/theses/available/etd-10062003-170440/unrestricted/thesis.pdf
+- [[[ref:owrtrouting:42d1982]]] OpenWrt source code. 2015. Update to latest bmx6-master branch. https://github.com/openwrt-routing/packages/commit/cfefe9fccae2332d147fd9bae7c72d15a42d1982
+- [[[ref:owrtrouting:eec2c3f]]] OpenWrt source code. 2015. Update to latest semtor-branch version. https://github.com/openwrt-routing/packages/commit/5bcc48d5d032dd53ae58d03014b59e879eec2c3f
+- [[[ref:owrtrouting:2ebaa92]]] OpenWrt source code. 2015. Performance fixes. https://github.com/openwrt-routing/packages/commit/70db9d7197c9b5f113b10844197a7dd8d2ebaa92
+- [[[ref:bmxgit:170a847]]] Axel Neumann. 2015. Ip table: detect and fix rule corruption on the fly. https://github.com/axn/bmx6/commit/c04a3bb6acca75ff8665025ad34a47017170a847
+- [[[ref:bmxgit:1152c8c]]] Axel Neumann. 2015. Dump: rerender --traffic and add traffic=devs. https://github.com/axn/bmx6/commit/49833b2dedf799239ea0f80725f26dca11152c8c
+- [[[ref:bmxgit:5b193de]]] Axel Neumann. 2015. Prof: define --cpu argument in cpu.h. https://github.com/axn/bmx6/commit/09ec79c4b4f7af424c4d26d9f8276b1585b193de
+- [[[ref:bmxgit:a3350fa]]] Axel Neumann. 2015. Control: add debuglevel 6,7,9. https://github.com/axn/bmx6/commit/2e706662eec5a010a8407e0b5dd09fad0a3350fa
+- [[[ref:bmxgit:c32f0e9]]] Axel Neumann. 2015. --show=X neigh->nb for shorter line lengths. https://github.com/axn/bmx6/commit/62d547d785ad2650efd484fe30cd577dcc32f0e9
+- [[[ref:bmxgit:cf4484d]]] Axel Neumann. 2015. Shorten originators. https://github.com/axn/bmx6/commit/e5e70071ef7c74b04002c4c62cc689448cf4484d
+- [[[ref:bmxgit:4b32a8f]]] Axel Neumann. 2015. Ip table: less error debug logs. https://github.com/axn/bmx6/commit/c893847b458294e4559b8523f3397fbee4b32a8f
+- [[[ref:bmxgit:23c9a57]]] Axel Neumann. 2015. Prof: ignore profiling probe if out of range (likely due to critical system time drift). https://github.com/axn/bmx6/commit/ecfb56ca08af8dbd8004b62b4c8b1966023c9a57
+- [[[ref:bmxgit:8442565]]] Axel Neumann. 2015. Let --tunnels show non-existing gwName as ---. https://github.com/axn/bmx6/commit/a5e7a17c6c578d30a13a34404caa6fd208442565
+- [[[ref:bmxgit:e52fef5]]] Axel Neumann. 2015. Link: debug --link mac. https://github.com/axn/bmx6/commit/f26814fdac1c66fcd88903452af902e6be52fef5
+- [[[ref:bmxgit:baf743d]]] Axel Neumann. 2015. Link: debug --link mac. https://github.com/axn/bmx6/commit/4f17779c11bc19dd3acb9265010d74ff1baf743d
+- [[[ref:bmxgit:2ae7152]]] Axel Neumann. 2015. Crypt: do NOT syslog private keys!. https://github.com/axn/bmx6/commit/b2664572a1ed6b890476d1e172c00ca772ae7152
+- [[[ref:bmxgit:81dbb0b]]] Axel Neumann. 2015. Bmx desc: less verbose description-update syslogs. https://github.com/axn/bmx6/commit/85a8f10ba865afa66816f032a2d469fd681dbb0b
+- [[[ref:bmxgit:52cfaad]]] Axel Neumann. 2015. Table redist: filter out temporary table-route changes --redistTableInDelay --redistTableOutDelay. https://github.com/axn/bmx6/commit/59d09f44e7b9c04a9546a273fdc559e2d52cfaad
+- [[[ref:bmxgit:d35b2b0]]] Axel Neumann. 2015. Table: resync_routes(). https://github.com/axn/bmx6/commit/0b115dd0826193e5010c48deaed0acfb9d35b2b0
+- [[[ref:bmxgit:76a9e0c]]] Axel Neumann. 2015. Bmx desc sec ip: fix assertion error codes. https://github.com/axn/bmx6/commit/5f8fc62f650a305035a7ca53c7304ccf076a9e0c
+- [[[ref:bmxgit:5e0d744]]] Axel Neumann. 2015. Hna: --proactiveTunRoutes=1. https://github.com/axn/bmx6/commit/56f1cb7a28e8eabd72c7500d4405296315e0d744
+- [[[ref:bmxgit:e8f0e3d]]] Axel Neumann. 2015. Prof: align --cpu output. https://github.com/axn/bmx6/commit/209ce12be0f2c608e731ce8822433d80de8f0e3d
+- [[[ref:bmxgit:5ec9901]]] Axel Neumann. 2015. Hna: cpu-profile eval_tun_bit_tree(). https://github.com/axn/bmx6/commit/ace691a520d2c1382b6710a872367771d5ec9901
+- [[[ref:bmxgit:5e990eb]]] Axel Neumann. 2015. Redist table: cpu-profile redistribution functions. https://github.com/axn/bmx6/commit/473738ed85d6b2097085d1941f62114595e990eb
+- [[[ref:bmxgit:294d5fb]]] Axel Neumann. 2015. Node: fix neigh_create() crash due to disabled packet signatures. https://github.com/axn/bmx6/commit/15ca5d54ba203bbd27a69c59bafb098ac294d5fb
+- [[[ref:bmxgit:f88d8ac]]] Axel Neumann. 2015. Link: debug descKey and pktKey in --links. https://github.com/axn/bmx6/commit/0ed1d1be34223800846baa65b0e99fd4df88d8ac
+- [[[ref:bmxgit:748e175]]] Axel Neumann. 2015. All: rename pktKey->linkKey and descKey->nodeKey and related stuff. https://github.com/axn/bmx6/commit/200465889061dd134ceb3bb3fcf864f49748e175
+- [[[ref:bmxgit:2c21549]]] Axel Neumann. 2015. Bmx content hna prof sec: align status outputs. https://github.com/axn/bmx6/commit/86f53178d5a7ac8425f9e0931aeec7eb92c21549
+- [[[ref:bmxgit:2156de7]]] Axel Neumann. 2015. Sec: --linkSignatureLen.... https://github.com/axn/bmx6/commit/48b8674c2a4f7ed0f01b20ab62a35ba2f2156de7
+- [[[ref:bmxgit:2b5da2f]]] Axel Neumann. 2015. Table let resync_routes() call filter_temporary_route_changes(NOW). https://github.com/axn/bmx6/commit/b233d81659b186e8988e19a22166de5742b5da2f
+- [[[ref:bmxgit:6b99c4c]]] Axel Neumann. 2015. Key: debugging destroy_orig_node() reasons... https://github.com/axn/bmx6/commit/b62e635c4ef5839f5deab42153b7e82936b99c4c
+- [[[ref:bmxgit:ac6e32c]]] Axel Neumann. 2015. Bmx: CRITICAL_PURGE_TIME_DRIFT 20->60. https://github.com/axn/bmx6/commit/93bd64e9ec96b7b91a474b446415084cdac6e32c
+- [[[ref:bmxgit:2a0d24a]]] Axel Neumann. 2015. Schedule: move keyNode_fixTimeouts() to after packet reception. https://github.com/axn/bmx6/commit/ccffed7babaa587d03371d7f93445ed3e2a0d24a
+- [[[ref:bmxgit:90c4ce1]]] Axel Neumann. 2015. Common.mk -DAVL_5XLINKED. https://github.com/axn/bmx6/commit/7e8134bf61fcc96812cd2972f19167c8b90c4ce1
+- [[[ref:bmxgit:5bf6f6d]]] Axel Neumann. 2015. Ip hna: speeding up iproute(del). https://github.com/axn/bmx6/commit/f9fb36eb0419dc94c5dee8ff6ec63bff85bf6f6d
+- [[[ref:bmxgit:b4f107a]]] Axel Neumann. 2015. Redist: cpu-profile update_tunXin6_net_adv_list(). https://github.com/axn/bmx6/commit/d7591be3a5fc591b4acb69047584bb3d0b4f107a
+- [[[ref:bmxgit:95751c4]]] Axel Neumann. 2015. Speedup redist_table_routes() -> update_tunXin6_net_adv_list(). https://github.com/axn/bmx6/commit/258b962408a75a399437606c03924425195751c4
+- [[[ref:bmxgit:f376bf9]]] Axel Neumann. 2015. Fix curr_rx_packet->i.verifiedLink=NULL during neigh_destroy(). https://github.com/axn/bmx6/commit/b485293101dae8d339fef6cbed1aba698f376bf9
+- [[[ref:bmxgit:03edbb1]]] Axel Neumann. 2015. Node key: debugging destroy_orig_node() reasons... https://github.com/axn/bmx6/commit/f8497cd282d9bb11aa9d70ee0bcce32f303edbb1
+- [[[ref:bmxgit:3f1049f]]] Axel Neumann. 2015. Control: debug_output() count all debug messages. https://github.com/axn/bmx6/commit/69e345952916bd7b420fa5d4863b3abc33f1049f
+- [[[ref:bmxgit:2b6a4a9]]] Axel Neumann. 2015. Node: refNode_destroy() do NOT del own credits. https://github.com/axn/bmx6/commit/22b67f8f1be3f4d83bc733aefbae5ad3d2b6a4a9
+- [[[ref:bmxgit:660d382]]] Axel Neumann. 2015. Msg: keyNodes_block_and_sync() during rx_packet(). https://github.com/axn/bmx6/commit/e121db468c9aeac493907937d2b92915a660d382
+- [[[ref:bmxgit:0629137]]] Axel Neumann. 2015. Metrics: use link_purge_to instead of fixed RP/TP_ADV_DELAY_RANGE=20000 within timeaware_rx/tx_probe(). https://github.com/axn/bmx6/commit/1cc7298bb04de590fe8bd48d9ff5aa0a90629137
+- [[[ref:bmxgit:ca91a6d]]] Axel Neumann. 2015. Ip table: --netlinkBuffSize=(4*266240). https://github.com/axn/bmx6/commit/96db293122f95862a607bdaa449e710e7ca91a6d
+- [[[ref:bmxgit:90ae174]]] Axel Neumann. 2015. Sec: fix opt_linkSigning() to not crash when returning to defaults. https://github.com/axn/bmx6/commit/4b21205c6873190b8e09e1dc3a4bd343b90ae174
+- [[[ref:bgpattributediscard]]] Cisco.net. 2015. BGP Attribute Filter and Enhanced Attribute Error Handling. http://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_bgp/configuration/xe-3s/irg-xe-3s-book/bgp_attribute_filter_and_enhanced_attribute_error_handling.html
+- [[[ref:bgpaspathprepending]]] Ivan Pepelnjak. 2015. AS-path prepending (technical details). http://wiki.nil.com/AS-path_prepending_%28technical_details%29
+
 
 - https://en.wikipedia.org/wiki/Mesh_networking
 - https://en.wikipedia.org/wiki/Wireless_mesh_network

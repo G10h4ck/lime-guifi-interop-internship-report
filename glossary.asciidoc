@@ -54,6 +54,8 @@
 
 - *OpenWrt*: OpenWrt is an operating system based on the Linux kernel, primarily used on embedded devices to route network traffic. All components OpenWrt ships are optimized for size, to be small enough for fitting into the limited storage and memory available in home routers.
 
+- *Peering*: TODO referring to BGP
+
 - *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
 
 - *Radio*: TODO specific meaning in Linux/OpenWrt specific context.
@@ -69,6 +71,8 @@
 - *STA*: TODO WiFi mode
 
 - *Subnet* : TODO <<ref:wkpdsubnet>>
+
+- *TCP*: TODO
 
 - *TTL*: Time to live TODO
 

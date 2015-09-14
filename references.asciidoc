@@ -14,8 +14,6 @@
 - [[[ref:birdowrt]]] OpenWrt source code. 2015. BIRD into OpenWrt routing feed. https://github.com/openwrt-routing/packages/tree/master/bird
 - [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX. http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
 - [[[ref:anycast]]] Wikipedia. 2015. Anycast. https://en.wikipedia.org/wiki/Anycast
-- [[[ref:unicast]]] Wikipedia. 2015. Unicast. https://en.wikipedia.org/wiki/Unicast
-- [[[ref:lastmile]]] Wikipedia. 2015. Last mile. https://en.wikipedia.org/wiki/Last_mile
 - [[[ref:tablepro]]] Wikipedia. 2015. Table-driven proactive routing. https://en.wikipedia.org/wiki/List_of_ad_hoc_routing_protocols#Table-driven_.28proactive.29_routing
 - [[[ref:distvect]]] Wikipedia. 2015. Distance-vector routing protocol. https://en.wikipedia.org/wiki/Distance-vector_routing_protocol
 - [[[ref:batmanadv]]] Open-mesh.org. 2015. B.A.T.M.A.N. advanced. http://www.open-mesh.org/projects/batman-adv/wiki/Wiki
@@ -31,14 +29,12 @@
 - [[[ref:99limeconfig]]] LiMe Developers. 2015. Libre-mesh code, 99-lime-config. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-system/files/etc/uci-defaults/99-lime-config
 - [[[ref:owrtlanwan]]] OpenWrt Developers. 2015. OpenWrt code, creation of default network configuration. https://github.com/openwrt-mirror/openwrt/blob/master/target/linux/ar71xx/base-files/etc/uci-defaults/02_network
 - [[[ref:hotplug]]] Linux Hotplugging Project. 2015. hotplug(8) - Linux man page. http://linux.die.net/man/8/hotplug
+. [[[ref:wkpdwlan]]] Wikipedia. 2015. Wireless LAN. https://en.wikipedia.org/wiki/Wireless_LAN
 - [[[ref:owrthotplug]]] OpenWrt Wiki. 2015. Hotplug. http://wiki.openwrt.org/doc/techref/hotplug
 - [[[ref:usbradiohook]]] LiMe Developers. 2015. Libre-mesh code, USB radio hotplug hook. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-hwd-usbradio/src/hotplug-hook.sh
-- [[[ref:wkpduml]]] Wikipedia. 2015. Unified Modeling Language. https://en.wikipedia.org/wiki/Unified_Modeling_Language
 - [[[ref:wkpdbroadcstdoimain]]] Wikipedia. 2015. Broadcast domain. https://en.wikipedia.org/wiki/Broadcast_domain
 - [[[ref:wkpdethswitch]]] Wikipedia. 2015. Network switch. https://en.wikipedia.org/wiki/Network_switch
-- [[[ref:wkpdarp]]] Wikipedia. 2015. Address Resolution Protocol. https://en.wikipedia.org/wiki/Address_Resolution_Protocol
 - [[[ref:wkpdarpspoofing]]] Wikipedia. 2015. ARP spoofing. https://en.wikipedia.org/wiki/ARP_spoofing
-- [[[ref:wkpdsubnet]]] Wikipedia. 2015. Subnetwork. https://en.wikipedia.org/wiki/Subnetwork
 - [[[ref:wkpfnat]]] Wikipedia. 2015. Network address translation. https://en.wikipedia.org/wiki/Network_address_translation
 - [[[ref:wkpdend2end]]] Wikipedia. 2015. End-to-end principle. https://en.wikipedia.org/wiki/End-to-end_principle
 - [[[ref:wkpdholepunch]]] Wikipedia. 2015. Hole punching (networking). https://en.wikipedia.org/wiki/Hole_punching_%28networking%29
@@ -99,10 +95,48 @@
 - [[[ref:bmxgit:8327e4b]]] Axel Neumann. 2015. table: less redist_table_routes debugging to syslog. https://github.com/axn/bmx6/commit/1ffda19b4accd02272e8c3b9fc6c1f0b68327e4b
 - [[[ref:bmxgit:863f58c]]] Axel Neumann. 2015. table --redistTableDelay=2200. https://github.com/axn/bmx6/commit/b6107880b5460625b7ce9359dbeac0cfe863f58c
 - [[[ref:battlemesh]]] Battlemesh Community. 2015. BattlemeshV8. http://battlemesh.org/BattleMeshV8
-
-- https://en.wikipedia.org/wiki/Mesh_networking
-- https://en.wikipedia.org/wiki/Wireless_mesh_network
-- https://en.wikipedia.org/wiki/Wireless_ad_hoc_network
-
-
-- [[[ref:missing]]] Wikipedia. 2015. Wikipedia:Verifiability. https://en.wikipedia.org/wiki/Wikipedia:Verifiability
+- [[[ref:wkdpwmn]]] Wikipedia. 2015. Wireless mesh network. https://en.wikipedia.org/wiki/Wireless_mesh_network
+- [[[ref:wkpfinternetprotocolsuite]]] Wikipedia. 2015. Internet protocol suite. https://en.wikipedia.org/wiki/Internet_protocol_suite
+// Glossary references
+- [[[ref:wkpdap]]] Wikipedia. 2015. Wireless access point. https://en.wikipedia.org/wiki/Wireless_access_point
+- [[[ref:wkpdapi]]] Wikipedia. 2015. Application programming interface. https://en.wikipedia.org/wiki/Application_programming_interface
+- [[[ref:wkpdarp]]] Wikipedia. 2015. Address Resolution Protocol. https://en.wikipedia.org/wiki/Address_Resolution_Protocol
+- [[[ref:wifiadhoc]]] Wifi Planet. 2015. Understanding Ad Hoc Mode. http://www.wi-fiplanet.com/tutorials/article.php/1451421
+- [[[ref:wkpdas]]] Wikipedia. 2015. Autonomous system (Internet). https://en.wikipedia.org/wiki/Autonomous_system_%28Internet%29
+- [[[ref:wkpdbroadcast]]] Wikipedia. 2015. Broadcasting (networking). https://en.wikipedia.org/wiki/Broadcasting_%28networking%29
+- [[[ref:wkpdbssid]]] Wikipedia. 2015. Basic service set identification (BSSID). https://en.wikipedia.org/wiki/Service_set_%28802.11_network%29#Basic_service_set_identification_.28BSSID.29
+- [[[ref:wkpdc]]] Wikipedia. 2015. C (programming language). https://en.wikipedia.org/wiki/C_%28programming_language%29
+- [[[ref:wkpdcidr]]] Wikipedia. 2015. Classless Inter-Domain Routing. https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
+- [[[ref:drupal]]] Drupal.org. 2015 Drupal - Open Source CMS. https://www.drupal.org/
+- [[[ref:rfc4213]]] The Internet Society. 2005. Basic Transition Mechanisms for IPv6 Hosts and Routers. https://tools.ietf.org/html/rfc4213
+- [[[ref:wkpdthernet]]] Wikipedia. 2015. Ethernet. https://en.wikipedia.org/wiki/Ethernet
+- [[[ref:wkpdfirmware]]] Wikipedia. 2015. Firmware. https://en.wikipedia.org/wiki/Firmware
+- [[[ref:wkpdip]]] Wikipedia. 2015. Internet Protocol. https://en.wikipedia.org/wiki/Internet_Protocol
+- [[[ref:wkpdipv4]]] Wikipedia. 2015. IPv4. https://en.wikipedia.org/wiki/IPv4
+- [[[ref:wkpdipv6]]] Wikipedia. 2015. IPv6. https://en.wikipedia.org/wiki/IPv6
+- [[[ref:wkpdlan]]] Wikipedia. 2015. Local area network. https://en.wikipedia.org/wiki/Local_area_network
+- [[[ref:lastmile]]] Wikipedia. 2015. Last mile. https://en.wikipedia.org/wiki/Last_mile
+- [[[ref:lime]]] Libre-Mesh community. 2015. Libre-Mesh. http://libre-mesh.org/
+- [[[ref:wkpdmesh]]] Wikipedia. 2015. Mesh networking. https://en.wikipedia.org/wiki/Mesh_networking
+- [[[ref:wkpdnetlink]]] Wikipedia. 2015. Netlink. https://en.wikipedia.org/wiki/Netlink
+- [[[ref:wkpdnic]]] Wikipedia. 2015. Network interface controller. https://en.wikipedia.org/wiki/Network_interface_controller.
+- [[[ref:owrt]]] OpenWrt community. 2015. OpenWrt. https://openwrt.org/
+- [[[ref:wkpdpeering]]] Wikipedia. 2015. Peering. https://en.wikipedia.org/wiki/Peering
+- [[[ref:wkpdquagga]]] Wikipedia. 2015. Quagga (software). https://en.wikipedia.org/wiki/Quagga_%28software%29
+- [[[ref:owrtwireless]]] OpenWrt Wiki. 2015. Wireless configuration. http://wiki.openwrt.org/doc/uci/wireless
+- [[[ref:wkpdrouter]]] Wikipedia. 2015. Router (computing). https://en.wikipedia.org/wiki/Router_%28computing%29
+- [[[ref:birdroutingdaemon]]] BIRD documentation. 2015. BIRD Internet Routing Daemon. http://bird.network.cz/?get_doc&f=bird-1.html
+- [[[ref:wkpdrfc]]] Wikipedia. 2015. Request for Comments. https://en.wikipedia.org/wiki/Request_for_Comments
+- [[[ref:wkpdsocket]]] Wikipedia. 2015. Network socket. https://en.wikipedia.org/wiki/Network_socket
+- [[[ref:wkpdserviceset]]] Wikipedia. 2015. Service set (802.11 network). https://en.wikipedia.org/wiki/Service_set_%28802.11_network%29
+- [[[ref:wkpdsta]]] Wikipedia. 2015. Station (networking). https://en.wikipedia.org/wiki/Station_%28networking%29
+- [[[ref:wkpdsubnet]]] Wikipedia. 2015. Subnetwork. https://en.wikipedia.org/wiki/Subnetwork
+- [[[ref:wkpdtcp]]] Wikipedia. 2015. Transmission Control Protocol. https://en.wikipedia.org/wiki/Transmission_Control_Protocol
+- [[[ref:wkpdttl]]] Wikipedia. 2015. Time to live. https://en.wikipedia.org/wiki/Time_to_live
+- [[[ref:wkpduml]]] Wikipedia. 2015. Unified Modeling Language. https://en.wikipedia.org/wiki/Unified_Modeling_Language
+- [[[ref:wkpdunicast]]] Wikipedia. 2015. Unicast. https://en.wikipedia.org/wiki/Unicast
+- [[[ref:wkpdusb]]] Wikipedia. 2015. USB. https://en.wikipedia.org/wiki/USB
+- [[[ref:wkpdvlan]]] Wikipedia. 2015. Virual LAN. https://en.wikipedia.org/wiki/Virtual_LAN
+- [[[ref:wkpdwan]]]  Wikipedia. 2015. Wide area network. https://en.wikipedia.org/wiki/Wide_area_network
+- [[[ref:wkpdwds]]] Wikipedia. 2015. Wireless distribution system. https://en.wikipedia.org/wiki/Wireless_distribution_system
+- [[[ref:wkpdwifi]]] Wikipedia. 2015. Wi-Fi. https://en.wikipedia.org/wiki/Wi-Fi

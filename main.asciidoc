@@ -49,7 +49,7 @@ BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It ori
 B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2. While usually wireless routing protocol implementations operates on L3 which means they exchange routing information by sending IP packets and bring their routing decision into effect by manipulating the kernel routing table. Batman-adv operates entirely on L2, not only the routing information is transported using raw Ethernet frames but also the data traffic is handled by batman-adv. It encapsulates and forwards all traffic until it reaches the destination, hence emulating a virtual network switch of all nodes participating. Therefore to the upper level all nodes appear to be link local and are unaware of the network's topology as well as unaffected by lower level network changes. Operating as a L2 routing protocol as there is no _L2 routing table_ to manipulate, data frames must be processed directly by batman-adv and doing it in user-space would be very inefficient, as for each packet processed it would be +read()+ and +write()+ to the kernel and back causing multiple context switching that are computationally intensive <<ref:contextswitch>>, which limits the sustainable bandwidth especially on low-end devices. To have good support for these devices as well and an overall good efficiency, batman-adv is implemented as a Linux kernel module. This way batman-adv avoid the context switching costs and only introduces a negligible packet processing overhead even under a high load. <<ref:batmanadv>>
 
 === qMp
-qMp do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6 <<ref:qmp>>, qMp already supports configuration provisioning by guifi.net map _unsolclick_ <<ref:missing>> for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user <<ref:qmpmdhd>> or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
+qMp do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6 <<ref:qmp>>, qMp already supports configuration provisioning by guifi.net map _unsolclick_ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user <<ref:qmpmdhd>> or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
 
 [[libre-mesh]]
 === Libre-Mesh
@@ -58,7 +58,7 @@ Main tool is LiMe meta-firmware: based on OpenWrt, eases the creation of communi
 To accomplish his goal LiMe meta-firmware have an highly modular design and implementation, the core of LiMe meta-firmware is the lime-system package.
 
 ==== Network Architecture
-The creation of <<batman-adv, B.A.T.M.A.N. advanced>> has fostered the debate in community networks if it is better to build the mesh network with L2 routing protocols (like batman-adv) or with L3 routing protocols (like Babel, BMX6, OLSR). LiMe developers recognize the bad and the good parts of both worlds (L2/L3) and have decided to get de best of them. While LiMe let the community choice what protocol they prefer the default distribution include both batman-adv and BMX6 operating at same time but with different objectives.
+The LiMe network architecture is a communication network of radio and cabled nodes organized in a mesh-like topology. LiMe network architecture has lot in common to wireless mesh network <<ref:wkdpwmn>> but it provide further optimization and scalability taking advantage of the layered structure of the Internet protocol suite <<ref:wkpfinternetprotocolsuite>>. The creation of <<batman-adv, B.A.T.M.A.N. advanced>> has fostered the debate in community networks if it is better to build the mesh network with L2 routing protocols (like batman-adv) or with L3 routing protocols (like Babel, BMX6, OLSR). LiMe developers recognize the bad and the good parts of both worlds (L2/L3) and have decided to get the best of them. While LiMe let the community choice what protocol they prefer to use the default distribution include both batman-adv and BMX6 operating at same time but with different objectives.
 
 ===== L2 cloud
 LiMe developers refers to L2 cloud (or just cloud) as a community network part in which the same broadcast domain is shared. A client connected to a cloud behave like if it is connected on the same Ethernet switch <<ref:wkpdethswitch>> together with all other hosts in the same cloud, all applications that take advantage of being connected to a LAN (as example: for neighbor discovery) can be used seamlessly on a cloud. As the broadcast domain is shared a client can roam without upper layer connectivity interruption across nodes of the same cloud because the assigned IP is still valid and the gateway is still ``directly'' reachable. On a cloud because all hosts share the same broadcast domain broadcast packets like ARP requests are flooded to the whole cloud <<ref:wkpdbroadcstdoimain>>, this pose limits to the scalability of a cloud, moreover sharing the same broadcast domain mean that typical L2 attacks such as ARP spoofing are possible. Those two drawbacks of operating at L2 limits de facto the dimension of a cloud. Despite LiMe developers suggests to avoid to build too big L2 clouds around the world exists community networks using LiMe with L2 clouds spreading on entire small cities without noticing critical problems.
@@ -237,7 +237,7 @@ This protocol is shipped as an optional package +lime-proto-anygw+, but is insta
 .UML diagram of lime-proto-anygw package.
 image::images/lime-proto-anygw_UML_{imgExt}[align="center"]
 
-In WiFi networks usually when a client move and get far from the AP it is associated, if it sense better signal from another AP with the same SSID it is expected to automatically ->deassociate<- from the far node and associate to the near one. When during this process upper network layers, specifically the user, doesn't experience a connection interruption it is commonly referred as roaming <<ref:missing>>. LiMe mesh networks does supports roaming at L2. In L2 roaming scenarios because the clients are usually configured via DHCP and it operates at an higher layer then roaming the client keep using the same gateway of when it associated first time without caring of it's position, this behavior may cause client packets be routed in a suboptimal way, moreover if the client keep roaming far away from the initial gateway it may experience low network performances.
+In WiFi networks usually when a client move and get far from the AP it is associated, if it sense better signal from another AP with the same SSID it is expected to automatically ->deassociate<- from the far node and associate to the near one. When during this process upper network layers, specifically the user, doesn't experience a connection interruption it is commonly referred as roaming <<ref:wkpdwlan>>. LiMe mesh networks does supports roaming at L2. In L2 roaming scenarios because the clients are usually configured via DHCP and it operates at an higher layer then roaming the client keep using the same gateway of when it associated first time without caring of it's position, this behavior may cause client packets be routed in a suboptimal way, moreover if the client keep roaming far away from the initial gateway it may experience low network performances.
 
 .Roaming without anygw.
 image::images/suboptimal_roaming_{imgExt}[align="center"]
@@ -405,10 +405,7 @@ end
 config.foreach("bgp_peer", apply_peer_template)
 ----------------------------------------------------------------------------------------------
 
-
-+lime.proto.bgp+ is responsible of configuring BGP routing specific parts like BGP peering and BIRD filters.
-
-it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
+While +lime.proto.bgp+ is responsible of configuring BGP routing specific parts like BGP peering and BIRD filters, it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new introduced callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
 
 
 === Protocol: bmx6
@@ -417,11 +414,9 @@ This package was already in charge of configuring BMX6 for L3 routing, now it al
 .UML diagram of lime-proto-bmx6 package, evidenced in green parts developed during the internship.
 image::images/lime-proto-bmx6_devel_UML_{imgExt}[align="center"]
 
-While BIRD have quite powerful route filters based on a C like language <<ref:birdfilters>>, in BMX6 +redistTable+ plugin is the mechanism of choice to learn routes. Some filter capability were already present in +redistTable+ but those were not enough for interoperability with BGP. In collaboration with BMX6 developer the +redistTable+ plugin has been extend to be capable of filtering routes by Linux kernel +proto+ number <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:863f58c>>.
+While BIRD have quite powerful route filters based on a C like language <<ref:birdfilters>>, in BMX6 +redistTable+ plugin is the mechanism of choice to learn routes. Some filter capability were already present in +redistTable+ but those were not enough for interoperability with BGP. In collaboration with BMX6 developer the +redistTable+ plugin has been extend to be capable of filtering routes by Linux kernel +proto+ number <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:863f58c>>. BMX6 routing protocols associate a metrics to describe the quality of a path to a route, BGP has not a similar concept it just know hop count, because there is no reliable way to convert BGP hop count to a comparable BMX6 metric, I have decided to take a conservative approach and try to give to BMX6 zones the false but always worse then reality information that all BGP paths are to avoid if possible. The basic idea is that if a pure BMX6 path exists it should be preferred to a path including BGP networks because BMX6 know the quality of a mesh path while it doesn't have enough information to know if a BGP path is good or maybe the worse path possible. To accomplish this self imposed requirement +redistTable+ is instructed to announce learned routes with low bandwidth.
 
-TODO: Why are routes announced with low bandwidth?
-
-.Importing BGP routes from a kernel table and announce as low bandwidth.
+.Importing BGP routes from a kernel table and announce them as low bandwidth.
 [source,bash]
 -----------------------------------------------------------
 -- Enable Routing Table Redistribution plugin
@@ -448,6 +443,7 @@ Legenda::
 	- Green arrows: Routing information flowing between kernel routing table and processes via Netlink.
 	- Yellow arrows: Routing information flowing between kernel and process via socket API.
 	- Cyan arrows: Routing information flowing between different routers via IP.
+	- Documentation addresses conform to RFC 5737 <<ref:rfc5737>>.
 
 == Experimental results
 TODO: Include collected experiments data and performance graphs

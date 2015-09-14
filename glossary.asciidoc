@@ -1,97 +1,103 @@
-- *Ad Hoc*: TODO referring to WiFi
+- *Ad Hoc*: The 802.11 standard specifies ``ad hoc'' mode, which allows the radio network interface card (NIC) to operate in what the standard refers to as an independent basic service set (IBSS) network configuration. With an IBSS, there are no access points. User devices communicate directly with each other in a peer-to-peer manner <<ref:wifiadhoc>>.
 
 - *Anycast*: Anycast is a network addressing and routing methodology in which datagrams from a single sender are routed to the topologically nearest node in a group of potential receivers, though it may be sent to several nodes, all identified by the same destination address <<ref:anycast>>.
 
-- *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided.
+- *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided <<ref:wkpdap>>.
 
-- *ARP*: TODO Address Resolution Protocol <<ref:wkpdarp>>
+- *API*: In computer programming, an application programming interface (API) is a set of routines, protocols, and tools for building software applications. An API expresses a software component in terms of its operations, inputs, outputs, and underlying types. An API defines functionalities that are independent of their respective implementations, which allows definitions and implementations to vary without compromising the interface <<ref:wkpdapi>>. 
 
-- *AS*: Within the Internet, an autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet.
+- *ARP*: The Address Resolution Protocol (ARP) is a telecommunication protocol used for resolution of network layer addresses into link layer addresses, a critical function in multiple-access networks <<ref:wkpdarp>>.
 
-- *ASN*: An autonomous system number (ASN) is a unique number to identify an autonomous system (AS) and which enables that system to exchange exterior routing information with other neighboring autonomous systems.
+- *AS*: Within the Internet, an autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the Internet <<ref:wkpdas>>.
 
-- *BGP*: Border Gateway Protocol (BGP) is a protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet.
+- *ASN*: An autonomous system number (ASN) is a unique number to identify an autonomous system (AS) and which enables that system to exchange exterior routing information with other neighboring autonomous systems <<ref:wkpdas>>.
 
-- *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols.
+- *BGP*: Border Gateway Protocol (BGP) is a protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet <<ref:bgprfc>>.
 
-- *Broadcast*: TODO
+- *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols <<ref:birdwikipedia>>.
 
-- *BSSID*: TODO https://es.wikipedia.org/wiki/BSSID
+- *Broadcast*: In computer networking, broadcasting refers to transmitting a packet that will be received by every device on the network <<ref:wkpdbroadcast>>.
 
-- *C*: TODO Referring to programming language
+- *BSSID*: In computer networking, a service set is a set consisting of all the devices associated with a wireless LAN. Basic service set identification (BSSID) is the formal name always associated with only one wireless LAN <<ref:wkpdbssid>>.
 
-- *CIDR*: TODO
+- *C*: C is a general-purpose, imperative computer programming language <<ref:wkpdc>>. 
+
+- *CIDR*: Classless Inter-Domain Routing (CIDR) is a method for allocating IP addresses and routing Internet Protocol packets. The Internet Engineering Task Force introduced CIDR in 1993 to replace the previous addressing architecture of classful network design in the Internet. Its goal was to slow the growth of routing tables on routers across the Internet, and to help slow the rapid exhaustion of IPv4 addresses <<ref:wkpdcidr>>.
 
 - *Community Network*: A community network is a computer-based system that is intended to help support geographical communities by supporting, augmenting, and extending already existing social networks.
 
-- *Drupal*: Drupal is a free and open-source web content-management framework written in PHP and distributed under the GNU General Public License.
+- *Drupal*: Drupal is a free and open-source web content-management framework written in PHP and distributed under the GNU General Public License <<ref:drupal>>.
 
-- *Dual stack*: TODO https://tools.ietf.org/html/rfc4213
+- *Dual stack*: To an Internet host being dual stack implies providing complete implementations of both versions of the Internet Protocol (IPv4 and IPv6) <<ref:rfc4213>>.
 
-- *eBGP*: Short for External Border Gateway Protocol, eBGP is the protocol used to transport information to other BGP enabled systems in different autonomous systems (AS).
+- *eBGP*: Short for External Border Gateway Protocol, eBGP is the protocol used to transport information to other BGP enabled systems in different autonomous systems (AS) <<ref:ebgpibgp>>.
 
-- *Ethernet*: TODO
+- *Ethernet*: Ethernet is a family of computer networking technologies for local area networks (LANs) <<ref:wkpdthernet>>.
 
-- *Firmware*: Firmware is a type of software that usually control low-level components of the device it is usually held in ROM. While this is the general accepted meaning of the term, in the context of embedded routing and in community networks it is common practice to call firmware the software running on the routers, while it is usually flashed like a proper firmware it is really a software providing a full operative system and higher levels tools such as web interface or command line interface.
+- *Firmware*: Firmware is a type of software that usually control low-level components of the device it is usually held in ROM. While this is the general accepted meaning of the term, in the context of embedded routing and in community networks it is common practice to call firmware the software running on the routers, while it is usually flashed like a proper firmware it is really a software providing a full operative system and higher levels tools such as web interface or command line interface <<ref:wkpdfirmware>>.
 
-- *Hotplug*: TODO
+- *Hotplug*: On Linux systems Hotplug lets you plug in new devices and use them immediately <<ref:hotplug>>.
 
-- *IP*: The Internet Protocol (IP) is the principal communications protocol in the Internet protocol suite for relaying datagrams across network boundaries. Its routing function enables inter-networking, and essentially establishes the Internet.
+- *IP*: The Internet Protocol (IP) is the principal communications protocol in the Internet protocol suite for relaying datagrams across network boundaries. Its routing function enables inter-networking, and essentially establishes the Internet <<ref:wkpdip>>.
 
-- *IPv4*: TODO https://en.wikipedia.org/wiki/IPv4
+- *IPv4*: Internet Protocol version 4 (IPv4) is the fourth version in the development of the Internet Protocol (IP) <<ref:wkpdipv4>>.
 
-- *IPv6*: TODO https://en.wikipedia.org/wiki/IPv6
+- *IPv6*: Internet Protocol version 6 (IPv6) is the most recent version of the Internet Protocol (IP) <<ref:wkpdipv6>>.
 
-- *LAN*: Local area network TODO
+- *LAN*: A local area network (LAN) is a computer network that interconnects computers within a limited area such as a residence, school, laboratory, or office building <<ref:wkpdlan>>.
 
 - *Last mile*: Last mile is the common colloquialism referring to that portion of the telecommunications network chain that physically reaches the end-user <<ref:lastmile>>.
 
-- *LiMe*: Common abbreviation for Libre-Mesh.
+- *LiMe*: Common abbreviation for Libre-Mesh <<ref:lime>>.
 
 - *Ln*: Abbreviation of layer n, it refers to Internet layers, as an example L2 refer to Ethernet the layer 2 of internet stack.
 
-- *MAC address*: TODO
+- *MAC address*: A media access control address (MAC address) is a unique identifier assigned to network interfaces for communications on the physical network segment <<ref:macaddress>>.
 
-- *NAT*: TODO Network address translation <<ref:wkpfnat>>
+- *Mesh Network*: A mesh network is a network topology in which each node relays data for the network. All mesh nodes cooperate in the distribution of data in the network <<ref:wkpdmesh>>.
 
-- *Netlink*: TODO https://en.wikipedia.org/wiki/Netlink
+- *NAT*: Network address translation (NAT) is a methodology of remapping one IP address space into another by modifying network address information in Internet Protocol (IP) datagram packet headers while they are in transit across a traffic routing device <<ref:wkpfnat>>.
 
-- *OpenWrt*: OpenWrt is an operating system based on the Linux kernel, primarily used on embedded devices to route network traffic. All components OpenWrt ships are optimized for size, to be small enough for fitting into the limited storage and memory available in home routers.
+- *Netlink*: Netlink socket family is a Linux kernel interface used for inter-process communication (IPC) between both the kernel and userspace processes, and between different userspace processes <<ref:wkpdnetlink>>.
 
-- *Peering*: TODO referring to BGP
+- *NIC*: A network interface controller (NIC) is a computer hardware component that connects a computer to a computer network <<ref:wkpdnic>>.
 
-- *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms.
+- *OpenWrt*: OpenWrt is an operating system based on the Linux kernel, primarily used on embedded devices to route network traffic. All components OpenWrt ships are optimized for size, to be small enough for fitting into the limited storage and memory available in home routers <<ref:owrt>>.
 
-- *Radio*: TODO specific meaning in Linux/OpenWrt specific context.
+- *Peering*: In computer networking, peering is a voluntary interconnection of administratively separate Internet networks for the purpose of exchanging traffic between the users of each network <<ref:wkpdpeering>>.
 
-- *Router*: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other.
+- *Quagga*: Quagga is a network routing software suite providing implementations of Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway Protocol (BGP) and IS-IS for Unix-like platforms <<ref:wkpdquagga>>.
 
-- *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding.
+- *Radio*: In OpenWrt context radio refers to the pysical part of a WiFi NIC <<ref:owrtwireless>>.
 
-- *RFC*: TODO https://en.wikipedia.org/wiki/Request_for_Comments
+- *Router*: Routers are devices which forward packets between interconnected networks in order to allow hosts not connected directly to the same local area network to communicate with each other <<ref:wkpdrouter>>.
 
-- *Socket*: https://en.wikipedia.org/wiki/Network_socket
+- *Routing Daemon*: A Routing Daemon is in UNIX terminology a non-interactive program running on background which does the dynamic part of Internet routing, that is it communicates with the other routers, calculates routing tables and sends them to the OS kernel which does the actual packet forwarding <<ref:birdroutingdaemon>>.
 
-- *SSID*: TODO
+- *RFC*: A Request for Comments (RFC) is a publication of the Internet Engineering Task Force (IETF) and the Internet Society, the principal technical development and standards-setting bodies for the Internet. An RFC is authored by engineers and computer scientists in the form of a memorandum describing methods, behaviors, research, or innovations applicable to the working of the Internet and Internet-connected systems. It is submitted either for peer review or simply to convey new concepts, information, or (occasionally) engineering humor. The IETF adopts some of the proposals published as RFCs as Internet standards <<ref:wkpdrfc>>.
 
-- *STA*: TODO WiFi mode
+- *Socket*: A network socket is an endpoint of an inter-process communication across a computer network. Today, most communication between computers is based on the Internet Protocol; therefore most network sockets are Internet sockets. A socket API is an application programming interface (API), usually provided by the operating system, that allows application programs to control and use network sockets. Internet socket APIs are usually based on the Berkeley sockets standard <<ref:wkpdsocket>>. 
 
-- *Subnet* : TODO <<ref:wkpdsubnet>>
+- *SSID*: In computer networking, a service set is a set consisting of all the devices associated with a wireless LAN. Service sets have an associated identifier, the Service Set Identifier (SSID), which consists of 32 octets that frequently contains a human readable identifier of the network <<ref:wkpdserviceset>>.
 
-- *TCP*: TODO
+- *STA*: In IEEE 802.11 (Wi-Fi) terminology, a station (STA) is a device that has the capability to use the 802.11 protocol. Generally in wireless networking terminology, a station, wireless client and node are often used interchangeably, with no strict distinction existing between these terms <<ref:wkpdsta>>.
 
-- *TTL*: Time to live TODO
+- *Subnet* : A subnetwork, or subnet, is a logical, visible subdivision of an IP network. The practice of dividing a network into two or more networks is called subnetting. Computers that belong to a subnet are addressed with a common, identical, most-significant bit-group in their IP address. This results in the logical division of an IP address into two fields, a network or routing prefix and the rest field or host identifier. The rest field is an identifier for a specific host or network interface <<ref:wkpdsubnet>>.
+
+- *TCP*: The Transmission Control Protocol (TCP) is a core protocol of the Internet Protocol Suite. TCP provides reliable, ordered, and error-checked delivery of a stream of octets between applications running on hosts communicating over an IP network <<ref:wkpdtcp>>.
+
+- *TTL*: Time to live (TTL) or hop limit is a mechanism that limits the lifespan or lifetime of data in a computer or network. TTL may be implemented as a counter or timestamp attached to or embedded in the data. Once the prescribed event count or timespan has elapsed, data is discarded. In computer networking, TTL prevents a data packet from circulating indefinitely <<ref:wkpdttl>>.
 
 - *UML*: The Unified Modeling Language (UML) is a general-purpose modeling language in the field of software engineering, which is designed to provide a standard way to visualize the design of a system <<ref:wkpduml>>.
 
-- *Unicast*: In computer networking, unicast transmission is the sending of messages to a single network destination identified by a unique address <<ref:unicast>>.
+- *Unicast*: In computer networking, unicast transmission is the sending of messages to a single network destination identified by a unique address <<ref:wkpdunicast>>.
 
-- *USB*: Universal seria bus TODO
+- *USB*: USB, short for Universal Serial Bus, is an industry standard developed in the mid-1990s that defines the cables, connectors and communications protocols used in a bus for connection, communication, and power supply between computers and electronic devices <<ref:wkpdusb>>.
 
-- *VLAN*: TODO
+- *VLAN*: A virtual LAN (VLAN) is any broadcast domain that is partitioned and isolated in a computer network at the data link layer (L2) <<ref:wkpdvlan>>.
 
-- *WAN*: Wide Area Network TODO
+- *WAN*: A wide area network (WAN) is a telecommunications network or computer network that extends over a large geographical distance <<ref:wkpdwan>>.
 
-- *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points.
+- *WDS*: A wireless distribution system (WDS) is a system enabling the wireless interconnection of access points in an IEEE 802.11 network. It allows a wireless network to be expanded using multiple access points without the traditional requirement for a wired backbone to link them. The notable advantage of WDS over other solutions is it preserves the MAC addresses of client frames across links between access points <<ref:wkpdwds>>.
 
-- *WiFi*: WiFi is a local area wireless computer networking technology that allows electronic devices to network, mainly using the 2.4 gigahertz (12 cm) UHF and 5 gigahertz (6 cm) SHF ISM radio bands.
+- *WiFi*: WiFi is a local area wireless computer networking technology that allows electronic devices to network, mainly using the 2.4 gigahertz (12 cm) UHF and 5 gigahertz (6 cm) SHF ISM radio bands <<ref:wkpdwifi>>.

@@ -9,7 +9,7 @@
 - [[[ref:linuxswitching]]] Toshiaki Makita, NTT Open Source Software Center. 2014. Virtual switching technologies and Linux bridge http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf
 - [[[ref:macaddress]]] Wikipedia. 2015. MAC Address. https://en.wikipedia.org/wiki/MAC_address
 - [[[ref:birdipvx]]] BIRD source code. 2015. BIRD FAQ. https://gitlab.labs.nic.cz/labs/bird/wikis/FAQ
-- [[[ref:birdmultitable]]] Vincent Bernat. 2015. "Network lab: site to site VPN". http://vincent.bernat.im/en/blog/2011-lab-site-to-site-vpn.html
+- [[[ref:birdmultitable]]] Vincent Bernat. 2015. Network lab: site to site VPN. http://vincent.bernat.im/en/blog/2011-lab-site-to-site-vpn.html
 - [[[ref:birdwikipedia]]] Wikipedia. 2015. Bird Internet routing daemon. https://en.wikipedia.org/wiki/Bird_Internet_routing_daemon
 - [[[ref:birdowrt]]] OpenWrt source code. 2015. BIRD into OpenWrt routing feed. https://github.com/openwrt-routing/packages/tree/master/bird
 - [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX. http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
@@ -89,9 +89,16 @@
 - [[[ref:bmxgit:0629137]]] Axel Neumann. 2015. Metrics: use link_purge_to instead of fixed RP/TP_ADV_DELAY_RANGE=20000 within timeaware_rx/tx_probe(). https://github.com/axn/bmx6/commit/1cc7298bb04de590fe8bd48d9ff5aa0a90629137
 - [[[ref:bmxgit:ca91a6d]]] Axel Neumann. 2015. Ip table: --netlinkBuffSize=(4*266240). https://github.com/axn/bmx6/commit/96db293122f95862a607bdaa449e710e7ca91a6d
 - [[[ref:bmxgit:90ae174]]] Axel Neumann. 2015. Sec: fix opt_linkSigning() to not crash when returning to defaults. https://github.com/axn/bmx6/commit/4b21205c6873190b8e09e1dc3a4bd343b90ae174
+- [[[ref:bmxgit:43873b8]]] Axel Neumann. 2015. table: allow redistTable from any table. https://github.com/axn/bmx6/commit/6b7f8690d9c679f9e14ebfed1d30f58b843873b8
 - [[[ref:bgpattributediscard]]] Cisco.net. 2015. BGP Attribute Filter and Enhanced Attribute Error Handling. http://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_bgp/configuration/xe-3s/irg-xe-3s-book/bgp_attribute_filter_and_enhanced_attribute_error_handling.html
 - [[[ref:bgpaspathprepending]]] Ivan Pepelnjak. 2015. AS-path prepending (technical details). http://wiki.nil.com/AS-path_prepending_%28technical_details%29
-
+- [[[ref:birdfilters]]] BIRD documentation. 2015. Filters. http://bird.network.cz/?get_doc&f=bird-5.html
+- [[[ref:bmxgit:1dcb463]]] Axel Neumann. 2015. --redistTable /all=1 /sys=int. https://github.com/axn/bmx6/commit/06c7bebecf94e463103bda02169fc7f931dcb463
+- [[[ref:bmxgit:52eaf13]]] Axel Neumann. 2015. ip table: fixing ERROR rtnl_rcv: No buffer space available. https://github.com/axn/bmx6/commit/f0e8c3ea176ba442031ec858266c026ef52eaf13
+- [[[ref:bmxgit:b57edbe]]] Axel Neumann. 2015. table redist: CPU optimize redist_table_routes(). https://github.com/axn/bmx6/commit/7a825c2c744309037418389a8dc8d92f5b57edbe
+- [[[ref:bmxgit:8327e4b]]] Axel Neumann. 2015. table: less redist_table_routes debugging to syslog. https://github.com/axn/bmx6/commit/1ffda19b4accd02272e8c3b9fc6c1f0b68327e4b
+- [[[ref:bmxgit:863f58c]]] Axel Neumann. 2015. table --redistTableDelay=2200. https://github.com/axn/bmx6/commit/b6107880b5460625b7ce9359dbeac0cfe863f58c
+- [[[ref:battlemesh]]] Battlemesh Community. 2015. BattlemeshV8. http://battlemesh.org/BattleMeshV8
 
 - https://en.wikipedia.org/wiki/Mesh_networking
 - https://en.wikipedia.org/wiki/Wireless_mesh_network

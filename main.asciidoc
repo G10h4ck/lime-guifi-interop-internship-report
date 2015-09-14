@@ -10,7 +10,7 @@ Interoperability between classic infrastructure and Libre-Mesh networks in Guifi
 :SpNd: supernodo
 :Nd: nodo
 
-//== Introduction
+== Introduction
 
 The biggest community network in the world is Guifi.net <<ref:cnw>> it spreads across Catalonia and beyond. IP routing on a such big community network is not a trivial task, in addition to the big size, the decentralized nature of our network encourage choice, so usually different parts of our networks uses different routing protocols. +
 In order to make those routing protocols interoperate is now mostly a manual job, various groups have developed several OpenWrt based solutions to ease networking equipment configuration, but seamless protocol interoperability is an open problem, moreover we work mostly with low cost embedded device, so little performance footprint is always a requirement. +
@@ -175,13 +175,13 @@ LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a com
 .UML diagram of lime-system package.
 image::images/lime-system_UML_{imgExt}[align="center"]
 
-===== Hardware Detection
+===== Module: hardware detection
 Hardware detection module is in charge of detecting hardware components of the router and if some of them need a special configuration in order to work according to LiMe needs generate that configuration, to accomplish its task as you cas see in <<fig:lime-system_UML>> it is modular itself and it's submodules are called +detectors+. For each +detector+ installed ( such as +lime-hwd-usbradio+ ) it execute the respective +clean()+ method that is supposed to cleanup outdated configuration and the +detect_hardware()+ method that is supposed to configure the hardware and can write specific +config+ sections in +/etc/config/lime+ to be read by others lime components if necessary.
 
-===== Wireless
+===== Module: wireless
 Wireless module detect WiFi interfaces and prepare them for usage with LiMe, to accomplish its task it reads and write to +/etc/config/lime+ and +/etc/config/wireless+, as depicted in <<fig:lime-system_UML>> it is modular itself and delegate part of the works to his submodules called +mode+. Each +mode+ must implement a method called +setup_radio(radio, args)+ that take as argument an +uci.wireless.radio+ table and optional adjuntive arguments and is in charge of configure the WiFi radio to operate as needed by LiMe.
 
-===== Network
+===== Module: network
 Network module is in charge of configuring network interfaces and routing protocols, it is a big task to accomplish in a nifty way to do it is modular too. It offers a tight API to his modules that are called +proto+ (such as +lime-proto-bgp+) while they must expose to network module a statefull interface that consists of:
 
 - +configured+ flag, it is false by default and setted to true when the +proto+ is configured.
@@ -189,13 +189,13 @@ Network module is in charge of configuring network interfaces and routing protoc
 - +setup_interface(ifname, args)+ this function is called once per each networking interface found on the router +ifname+ is the Linux name of the interface and +args+ is an array containing all related parameters found in configuration file.
 - +apply()+ usually just restart the underlying routing daemon to make the new configurations effective.
 
-===== Firewall
+===== Module: firewall
 Configure OpenWrt firewall if installed or iptables and ebtables according to LiMe needs.
 
-===== System
+===== Module: system
 Configure system general settings like host-name and other miscellaneous stuff.
 
-===== Hardware detector ground routing
+===== Hardware detector: ground-routing
 Ground routing is a node setup similar to _{MdHd}_ in the sense of splitting routing and geographic linking task into different devices. In this setup a device running LiMe is in charge of routing while other devices justs deal with physic and link layer stuff. Those devices can keep their original fabric firmware, or being flashed with a plain OpenWrt image or even run a lite version of LiMe. The name ``ground routing'' came from the habit of routing enthusiasts, to keep the L1/L2 devices on which they do not usually change the configurations on the roof (necessary to have good WiFi links) while the ``ground router'', which is the subject of their experiments, is kept inside the house, ``on the ground'', so if the configuration changes accidentally disrupt connectivity to the router, physical access is simple and there is no need to access the roof for recovery. As this functionality is not needed in default setup +lime-hwd-ground-routing+ is distributed as a separate package and is not included in the default LiMe distribution.
 
 .UML diagram of lime-hwd-ground-routing package.
@@ -203,7 +203,7 @@ image::images/lime-hwd-ground-routing_UML_{imgExt}[align="center"]
 
 When invoked by +lime.hardware_detection+, +lime.hwd.ground_routing.clean()+ clean outdated ground routing sections, then +lime.hwd.ground_routing.detect_hardware()+ creates ground routing configuration sections that eventually can include 802.11q interfaces or hardware switch configurations <<ref:owrthwswitch>><<ref:owrtswitch>>, according to node owner needs and hardware capabilities. In contrast to _{MdHd}_ and Ninix.org _Routing a terra_ that are meant for a specific routing protocol (BGP the first <<ref:mdhd>>, and OLSR the latter <<ref:nnxgr>>) LiMe Ground Routing is routing protocol agnostic, thanks to the LiMe modular structure it is focused just on preparing the L1/L2 setup on the LiMe router and then the upper layer routing modules treat L2 interfaces created by Ground Routing the same as any other L2 interface <<ref:limegr>>. This permit to LiMe networks to use any routing protocol on top of a Ground Routing setup and not being limited to a specific routing protocol, thanks to this abstraction LiMe can also ``emulate'' Ninix.org _Routing a terra_ just installing both +lime-hwd-ground-routing+ and +lime-proto-olsr+, and Guifi.net _{MdHd}_ just installing both +lime-hwd-ground-routing+ and +lime-proto-bgp+ that is part of the work done during this internship.
 
-===== Hardware detector OpenWrt wan
+===== Hardware detector: openwrt-wan
 This hardware detector is shipped as an optional package +lime-hwd-openwrt-wan+, but is installed and enabled by the default in LiMe distribution.
 
 .UML diagram of lime-hwd-openwrt-wan package.
@@ -220,7 +220,7 @@ uci_o:set_savedir("/dev/null")
 local ifname = uci_o:get("network", "wan", "ifname")
 ---------------------------------------------------------
 
-===== Hardware detector USB radio
+===== Hardware detector: usb-radio
 This hardware detector is distributed as an optional package +lime-hwd-usbradio+, it is in charge of detecting WiFi USB radio.
 
 .UML diagram of lime-hwd-usbradio package.
@@ -228,10 +228,10 @@ image::images/lime-hwd-usbradio_UML_{imgExt}[align="center"]
 
 Most consumer routers features one or more USB ports, to setup print servers or share files from an attached disk. With OpenWrt those ports are usually usable as full USB  and not only for specific tasks. Taking advantage of this community networks researcher started creating low cost multi-radio routers by plugging USB WiFi radios into those routers. Although OpenWrt configuration system doesn't recognize those USB radio automatically so the users had to configure them manually. To fill the gap between OpenWrt wireless configuration system and having USB radio automatically working +lime-hwd-usbradio+ has been developed. As OpenWrt is compatible with Hotplug system <<ref:owrthotplug>> when an USB radio is connected to the router an Hotplug event is fired <<ref:hotplug>>, +lime.hwd.usbradio+ catch that event trough a crafted Hotplug hook <<ref:usbradiohook>> and configure the USB radio taking in account his capabilities. In the long run the lack of good quality support for +adhoc+ or +ieee80211s+ WiFi modes in Linux drivers for USB radios especially for the cheaper ones has discouraged users to use them for mesh links. Currently USB radios detected by +lime-hwd-usbradio+ are mainly used in AP or STA WiFi modes.
 
-===== Protocol adhoc
+===== Protocol: adhoc
 This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> and it's enabled by default, it is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +adhoc+.
 
-===== Protocol anygw
+===== Protocol: anygw
 This protocol is shipped as an optional package +lime-proto-anygw+, but is installed and enabled by the default in LiMe distribution.
 
 .UML diagram of lime-proto-anygw package.
@@ -266,7 +266,7 @@ In this way when a client sends a packets directed outside it's cloud it gets ``
 image::images/anygw_roaming_{imgExt}[align="center"]
 
 
-===== Protocol batadv
+===== Protocol: batadv
 This protocol is shipped as an optional package +lime-proto-batadv+, but is installed and enabled by the default in LiMe distribution. It configures batman-adv to create LiMe L2 clouds, and setup 802.1ad VLAN as needed by LiMe setup.
 
 .UML diagram of package lime-proto-batadv.
@@ -274,26 +274,26 @@ image::images/lime-proto-batadv_UML_{imgExt}[align="center"]
 
 
 
-===== Protocol BMX6
+===== Protocol: bmx6
 This protocol is shipped as an optional package +lime-proto-bmx6+, but is installed and enabled by the default in LiMe distribution. It configures BMX6 for L3 routing between LiMe L3 networks and eventually with upstream connection, it also setup 802.1ad VLAN for BMX6 as needed by LiMe setup.
 
 .UML diagram of package lime-proto-bmx6.
 image::images/lime-proto-bmx6_UML_{imgExt}[align="center"]
 
-===== Protocol ieee80211s
+===== Protocol: ieee80211s
 This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> but it is not enabled by default, +lime.proto.ieee80211s+ is a relatively new born into LiMe family and the similarly used +lime.proto.adhoc+ is preferred as default configuration because it has been more tested and is well known to community networks participants. Similarly to his older brother +lime.proto.adhoc+, +lime.proto.ieee80211s+ is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +ieee80211s+.
 
 [[proto:lan]]
-===== Protocol LAN
+===== Protocol: lan
 As you can see in <<fig:lime-system_UML>> +lime.proto.lan+ is shipped as part of +lime-system+ package. LiMe LAN protocol is enabled by default and is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces into +br-lan+.
 
-===== WiFi mode adhoc
+===== WiFi mode: adhoc
 As you can see in <<fig:lime-system_UML>> +lime.mode.adhoc+ is shipped as part of +lime-system+ package. LiMe WiFi mode adhoc is enabled by default and configure WiFi interfaces in adhoc mode that are used by upper layer protocols to establish links between LiMe nodes.
 
-===== WiFi mode ap
+===== WiFi mode: ap
 As you can see in <<fig:lime-system_UML>> +lime.mode.ap+ is shipped as part of +lime-system+ package. LiMe WiFi mode ap is enabled by default and configure WiFi interfaces as an AP. Those interfaces in default configuration are used by upper layer protocols to provide access to clients, but it is possible to use them for creating links too.
 
-===== WiFi mode ieee80211s
+===== WiFi mode: ieee80211s
 As you can see in <<fig:lime-system_UML>> +lime.mode.ieee80211s+ is shipped as part of +lime-system+ package. LiMe WiFi mode ieee80211s is not enabled by default as +lime.mode.adhoc+ is generally preferred because it has been more tested over time. LiMe WiFi mode ieee80211s configure WiFi interfaces to create ieee80211s mode but with +mesh forwarding+ disabled, so ieee80211s is used only as link layer and not for packet forwarding that is delegated to upper layer protocols that take advantage of the WiFi interfaces created by +lime.mode.ieee80211s+ to establish links.
 
 == Developed tools
@@ -309,7 +309,7 @@ image::images/lime-system_devel_UML_{imgExt}[align="center"]
 The new API call +lime.proto.bgp_conf(templateVarsIPv4, templateVarsIPv6)+ is called by +<<proto:bgp, lime.proto.bgp>>+ for each +lime.proto+ that has been requested to exchange routes with BGP, this function take as parameters two tables that are both readable to read already defined template variable and writable to eventually define additional template variables to pass back to +lime.proto.bgp+ and returns a template snippet that is appended to the BIRD configuration file by +lime.proto.bgp+. <<fig:lime-proto-bgp_devel_UML>> display as an UML diagram the interaction between +lime.proto.bgp+ and +lime.proto.*+.
 
 
-==== Protocol LAN
+==== Protocol: lan
 
 As +lime.proto.lan+ does very minimal work at L3 it doesn't need much interaction with BGP to announce his subnet route. Implementing +lime.proto.lan.bgp_conf(...)+ has been quite simple as you can see in the following code snippet.
 
@@ -325,7 +325,7 @@ protocol direct {
 end
 ------------------------------------------------------------
 
-=== lime-proto-anygw
+=== Protocol: anygw
 As the interaction of +lime.proto.anygw+ with +lime.proto.bgp+ is very similar to the one of +lime.proto.lan+. The modifications necessaries have been very minimal and limited to implementing +lime.proto.anygw.bgp_conf(...)+ as you can see in the following code snippet, and in the UML diagram.
 
 [source, lua]
@@ -344,7 +344,7 @@ end
 image::images/lime-proto-anygw_devel_UML_{imgExt}[align="center"]
 
 [[proto:bgp]]
-=== lime-proto-bgp
+=== Protocol: bgp
 To accomplish the task of interoperability between Libre-Mesh networks and Guifi.net BGP infrastructure, I have created +lime.proto.bgp+ that implements the abstract class _LiMe Routing Protocol_ and is shipped as the optional package +lime-proto-bgp+.
 
 [[fig:lime-proto-bgp_devel_UML]]
@@ -406,34 +406,51 @@ config.foreach("bgp_peer", apply_peer_template)
 ----------------------------------------------------------------------------------------------
 
 
-+lime.proto.bgp+ is responsible of configuring BGP routing specific parts like BGP peering and BIRD filters. 
++lime.proto.bgp+ is responsible of configuring BGP routing specific parts like BGP peering and BIRD filters.
 
 it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
 
 
-=== lime-proto-bmx6
-TODO
+=== Protocol: bmx6
+This package was already in charge of configuring BMX6 for L3 routing, now it also generate configuration for routes exchange between BGP and BMX6 networks, although it is not much code it has required time for investigation and for experimental tuning. The problems discovered during the experimental phase wasn't intrinsic of this module code, but were mainly <<bmx6:performance, BMX6 performance bottlenecks>> exposed by the configuration generated by this module.
 
 .UML diagram of lime-proto-bmx6 package, evidenced in green parts developed during the internship.
 image::images/lime-proto-bmx6_devel_UML_{imgExt}[align="center"]
 
+While BIRD have quite powerful route filters based on a C like language <<ref:birdfilters>>, in BMX6 +redistTable+ plugin is the mechanism of choice to learn routes. Some filter capability were already present in +redistTable+ but those were not enough for interoperability with BGP. In collaboration with BMX6 developer the +redistTable+ plugin has been extend to be capable of filtering routes by Linux kernel +proto+ number <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:863f58c>>.
+
+TODO: Why are routes announced with low bandwidth?
+
 .Importing BGP routes from a kernel table and announce as low bandwidth.
 [source,bash]
---------------------------------------
-config plugin 'table'
-        option plugin 'bmx6_table.so'
+-----------------------------------------------------------
+-- Enable Routing Table Redistribution plugin
+uci:set("bmx6", "table", "plugin")
+uci:set("bmx6", "table", "plugin", "bmx6_table.so")
 
-config redistTable 'fromBird'      
-        option redistTable 'fromBird'  
-        option table '200'                        
-        option bandwidth '100'     
-        option all '1'                 
-        option sys '12'
---------------------------------------
+-- Redistribute proto bird routes
+uci:set("bmx6", "fromBird", "redistTable")
+uci:set("bmx6", "fromBird", "redistTable", "fromBird")
+uci:set("bmx6", "fromBird", "table", "200")
+uci:set("bmx6", "fromBird", "bandwidth", "100")
+uci:set("bmx6", "fromBird", "all", "1")
+uci:set("bmx6", "fromBird", "sys", "12")
+-----------------------------------------------------------
 
+Using only words to describe the overall architecture resulting from the developed code would be long and of scarce effectiveness, in <<fig:routeflow>> the active components and the flow of routing information are displayed in a simplified manner all together.
+
+[[fig:routeflow]]
+.Flow of routing information between components.
+image::images/route_flow_{imgExt}[align="center"]
+
+Legenda::
+	- Black arrows: Routing information flowing inside components of the same process.
+	- Green arrows: Routing information flowing between kernel routing table and processes via Netlink.
+	- Yellow arrows: Routing information flowing between kernel and process via socket API.
+	- Cyan arrows: Routing information flowing between different routers via IP.
 
 == Experimental results
-TODO
+TODO: Include collected experiments data and performance graphs
 
 === Interoperability use-cases
 Due to LiMe modular nature this development has many possible application that spread out of boundaries of this internship, in the following sections a brief analysis of more common use-cases on which the development has been focused is exposed.
@@ -489,7 +506,6 @@ We can observe there are two routes towards +2001:DB8:9::/64+ one learned via BG
 ---------------------------------------------------------------
 
 ==== Mesh network as transport
-*TODO: Needs further analysis + control flow schema* +
 The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a leaf <<meshdistribution, distribution network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
 
 image::images/mesh_as_transport_topology_{imgExt}[align="center"]
@@ -497,34 +513,29 @@ image::images/mesh_as_transport_topology_{imgExt}[align="center"]
 This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
 
 ==== Route count limitation
+BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 +redistTable+ plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used to incompatible changes between versions, this solution has been discussed at BattlemeshV8 <<ref:battlemesh>> has been implemented and is now in production at our offices in Barcelona.
 
-BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 ``redistTable'' plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used too incompatible changes between versions, this solution has been discussed at BattlemeshV8 and we will do further testing at our offices in Barcelona.
-
+[[bmx6:performance]]
 ==== Reducing the performance footprint
-Thanks to the work done during this internship multiple BMX6 bugs and performance bottlenecks have been discovered during experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has quickly fixed them <<ref:owrtrouting:42d1982>>-<<ref:bmxgit:90ae174>>.
-
-Default BMX6 `redistTable` configurations are not suitable to our needs in fact they make the router sloppy and with 100% CPU load every-time, doing some analysis on what was happening I found some causes:
-
-- By default `redistTable` do routes aggregation that is a CPU and memory intensive work.
-- It reacts to every single change in the routing table recalculating all aggregations.
-- Our routing table is big so calculating the ``aggregated'' version is a long work.
-- Our average device have quite limited resources (300-600Mhz MIPS CPU, 32-128MB RAM)
-
-To solve this problem I have disabled route aggregation while enabling routing table event aggregation, with event aggregation it should be even possible to enable route aggregation but further studying it's needed, and the behavior of loop avoidance in case aggregation is enabled need to be studied too.
-
+BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. After doing some analysis we discovered the causes of this awkward behavior:
+- By default +redistTable+ do routes aggregation that is a CPU and memory intensive work and in our case as Guifi.net has thousands of routes it had a big impact on the performances, this has been been solved directly into +lime-proto-bmx6+ code.
 
 [source,lua]
 ---------------------------------------------------------
--- Disable route aggregation
 uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
--- Aggregate routing tables events by 60s time slots
-uci:set("bmx6", "general", "redistTableDelay", "60000") 
 ---------------------------------------------------------
 
+- BMX6 +redistTable+ was reacting to every single change in the routing table causing lot of recalculation and propagation also of temporary changes, if a route was deleted by BIRD and then re-added in a fraction of seconds this caused BMX6 recalculating announcements and propagating both changes. To solve this more options to regulate the BMX6 behavior has been added directly in BMX6 code <<ref:bmxgit:52cfaad>><<ref:bmxgit:5e0d744>><<ref:bmxgit:2156de7>> and then configured by +lime-proto-bmx6+ only in cases where default configuration wasn't appropriated to Guifi.net needs.
+
+[source,lua]
+---------------------------------------------------------
+uci:set("bmx6", "general", "proactiveTunRoutes", "0")
+uci:set("bmx6", "general", "linkSignatureLen", "0")
+---------------------------------------------------------
 
 == Conclusions
 TODO
-
+Thanks to the work done during this internship multiple BMX6 bugs and performance bottlenecks have been discovered during experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has fixed them in upstream code <<ref:owrtrouting:42d1982>>-<<ref:bmxgit:43873b8>>.
 
 == Appendix: Code
 TODO

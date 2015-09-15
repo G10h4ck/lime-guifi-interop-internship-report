@@ -1,47 +1,60 @@
 - [[[ref:cnw]]] Wikipedia. 2015. Community network. https://en.wikipedia.org/wiki/Community_network
 - [[[ref:mdhdspnd]]] Wiki Guifi.net. 2015. Supernodos híbridos. http://es.wiki.guifi.net/wiki/Supernodos_h%C3%ADbridos
 - [[[ref:mdhd]]] Wiki Guifi.net. 2015. Modelo híbrido guifi.net. http://es.wiki.guifi.net/wiki/Modelo_h%C3%ADbrido_guifi.net
-- [[[ref:bmxan]]] Glenn Daneels. 2015. Analysis of the BMX6 routing protocol. http://bmx6.net/attachments/download/134/Thesis_AnalysisOfTheBMX6RoutingProtocol_GlennDaneels.pdf
-- [[[ref:qmp]]] Quick Mesh Project. 2015. Easy deployment of Mesh networks. http://qmp.cat/
-- [[[ref:qmpmdhd]]] Wiki Guifi.net. 2015. Node frontera amb qMp. http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp
-- [[[ref:bgprfc]]] The Internet Society. 2006. A Border Gateway Protocol 4 (BGP-4). https://tools.ietf.org/html/rfc4271
-- [[[ref:macvlan]]] Waldner, Backreference.org. 2014. Some notes on macvlan and macvtap. http://backreference.org/2014/03/20/some-notes-on-macvlanmacvtap/
-- [[[ref:linuxswitching]]] Toshiaki Makita, NTT Open Source Software Center. 2014. Virtual switching technologies and Linux bridge http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf
-- [[[ref:macaddress]]] Wikipedia. 2015. MAC Address. https://en.wikipedia.org/wiki/MAC_address
 - [[[ref:birdipvx]]] BIRD source code. 2015. BIRD FAQ. https://gitlab.labs.nic.cz/labs/bird/wikis/FAQ
 - [[[ref:birdmultitable]]] Vincent Bernat. 2015. Network lab: site to site VPN. http://vincent.bernat.im/en/blog/2011-lab-site-to-site-vpn.html
 - [[[ref:birdwikipedia]]] Wikipedia. 2015. Bird Internet routing daemon. https://en.wikipedia.org/wiki/Bird_Internet_routing_daemon
+- [[[ref:birdfilters]]] BIRD documentation. 2015. Filters. http://bird.network.cz/?get_doc&f=bird-5.html
 - [[[ref:birdowrt]]] OpenWrt source code. 2015. BIRD into OpenWrt routing feed. https://github.com/openwrt-routing/packages/tree/master/bird
 - [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX. http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
-- [[[ref:anycast]]] Wikipedia. 2015. Anycast. https://en.wikipedia.org/wiki/Anycast
+- [[[ref:bmxan]]] Glenn Daneels. 2015. Analysis of the BMX6 routing protocol. http://bmx6.net/attachments/download/134/Thesis_AnalysisOfTheBMX6RoutingProtocol_GlennDaneels.pdf
 - [[[ref:tablepro]]] Wikipedia. 2015. Table-driven proactive routing. https://en.wikipedia.org/wiki/List_of_ad_hoc_routing_protocols#Table-driven_.28proactive.29_routing
 - [[[ref:distvect]]] Wikipedia. 2015. Distance-vector routing protocol. https://en.wikipedia.org/wiki/Distance-vector_routing_protocol
-- [[[ref:batmanadv]]] Open-mesh.org. 2015. B.A.T.M.A.N. advanced. http://www.open-mesh.org/projects/batman-adv/wiki/Wiki
 - [[[ref:contextswitch]]] Wikipedia. 2015. Context switch. https://en.wikipedia.org/wiki/Context_switch
+- [[[ref:batmanadv]]] Open-mesh.org. 2015. B.A.T.M.A.N. advanced. http://www.open-mesh.org/projects/batman-adv/wiki/Wiki
+- [[[ref:qmp]]] Quick Mesh Project. 2015. Easy deployment of Mesh networks. http://qmp.cat/
+- [[[ref:qmpmdhd]]] Wiki Guifi.net. 2015. Node frontera amb qMp. http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp
+- [[[ref:wkdpwmn]]] Wikipedia. 2015. Wireless mesh network. https://en.wikipedia.org/wiki/Wireless_mesh_network
+- [[[ref:wkpfinternetprotocolsuite]]] Wikipedia. 2015. Internet protocol suite. https://en.wikipedia.org/wiki/Internet_protocol_suite
+- [[[ref:wkpdethswitch]]] Wikipedia. 2015. Network switch. https://en.wikipedia.org/wiki/Network_switch
+- [[[ref:wkpdbroadcstdoimain]]] Wikipedia. 2015. Broadcast domain. https://en.wikipedia.org/wiki/Broadcast_domain
+- [[[ref:wkpdarpspoofing]]] Wikipedia. 2015. ARP spoofing. https://en.wikipedia.org/wiki/ARP_spoofing
+- [[[ref:wkpdholepunch]]] Wikipedia. 2015. Hole punching (networking). https://en.wikipedia.org/wiki/Hole_punching_%28networking%29
+- [[[ref:wkpfnat]]] Wikipedia. 2015. Network address translation. https://en.wikipedia.org/wiki/Network_address_translation
+- [[[ref:wkpdend2end]]] Wikipedia. 2015. End-to-end principle. https://en.wikipedia.org/wiki/End-to-end_principle
+- [[[ref:rfc5737]]] The Internet Society. 2010. IPv4 Address Blocks Reserved for Documentation. https://tools.ietf.org/html/rfc5737
+- [[[ref:natperformance]]] Sarabjeet Singh Chugh. 2003. Impact of Network Address Translation on Router Performance. http://scholar.lib.vt.edu/theses/available/etd-10062003-170440/unrestricted/thesis.pdf
+- [[[ref:rfc3849]]] The Internet Society. 2004. IPv6 Address Prefix Reserved for Documentation. https://tools.ietf.org/html/rfc3849
+- [[[ref:luavspy]]] Lua Users Wiki. 2015. Lua Versus Python. http://lua-users.org/wiki/LuaVersusPython
+- [[[ref:owrthwswitch]]] OpenWrt Wiki. 2015. Ethernet Network Switch. http://wiki.openwrt.org/doc/hardware/switch
+- [[[ref:owrtswitch]]] OpenWrt Wiki. 2015. Switch Documentation. http://wiki.openwrt.org/doc/uci/network/switch
+- [[[ref:nnxgr]]] Ninux.org Wiki. 2015. Ground Routing. http://wiki.ninux.org/GroundRouting
+- [[[ref:limegr]]] Libre-Mesh Wiki. 2015. Ground Routing. http://libre-mesh.org/projects/libre-mesh/wiki/Ground_routing
+- [[[ref:owrtwdr3600]]] OpenWrt Wiki. 2015. TP-Link TL-WDR3600. http://wiki.openwrt.org/toh/tp-link/tl-wdr3600
+- [[[ref:owrtlanwan]]] OpenWrt Developers. 2015. OpenWrt code, creation of default network configuration. https://github.com/openwrt-mirror/openwrt/blob/master/target/linux/ar71xx/base-files/etc/uci-defaults/02_network
+- [[[ref:99limeconfig]]] LiMe Developers. 2015. Libre-mesh code, 99-lime-config. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-system/files/etc/uci-defaults/99-lime-config
+- [[[ref:owrthotplug]]] OpenWrt Wiki. 2015. Hotplug. http://wiki.openwrt.org/doc/techref/hotplug
+- [[[ref:hotplug]]] Linux Hotplugging Project. 2015. hotplug(8) - Linux man page. http://linux.die.net/man/8/hotplug
+- [[[ref:usbradiohook]]] LiMe Developers. 2015. Libre-mesh code, USB radio hotplug hook. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-hwd-usbradio/src/hotplug-hook.sh
+- [[[ref:wkpdwlan]]] Wikipedia. 2015. Wireless LAN. https://en.wikipedia.org/wiki/Wireless_LAN
+- [[[ref:macvlan]]] Waldner, Backreference.org. 2014. Some notes on macvlan and macvtap. http://backreference.org/2014/03/20/some-notes-on-macvlanmacvtap/
+- [[[ref:linuxswitching]]] Toshiaki Makita, NTT Open Source Software Center. 2014. Virtual switching technologies and Linux bridge http://events.linuxfoundation.org/sites/events/files/slides/LinuxConJapan2014_makita_0.pdf
+- [[[ref:macaddress]]] Wikipedia. 2015. MAC Address. https://en.wikipedia.org/wiki/MAC_address
+- [[[ref:bgpattributediscard]]] Cisco.net. 2015. BGP Attribute Filter and Enhanced Attribute Error Handling. http://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_bgp/configuration/xe-3s/irg-xe-3s-book/bgp_attribute_filter_and_enhanced_attribute_error_handling.html
+- [[[ref:bgpaspathprepending]]] Ivan Pepelnjak. 2015. AS-path prepending (technical details). http://wiki.nil.com/AS-path_prepending_%28technical_details%29
+- [[[ref:bmxgit:1dcb463]]] Axel Neumann. 2015. --redistTable /all=1 /sys=int. https://github.com/axn/bmx6/commit/06c7bebecf94e463103bda02169fc7f931dcb463
+- [[[ref:bmxgit:52eaf13]]] Axel Neumann. 2015. ip table: fixing ERROR rtnl_rcv: No buffer space available. https://github.com/axn/bmx6/commit/f0e8c3ea176ba442031ec858266c026ef52eaf13
+- [[[ref:bmxgit:b57edbe]]] Axel Neumann. 2015. table redist: CPU optimize redist_table_routes(). https://github.com/axn/bmx6/commit/7a825c2c744309037418389a8dc8d92f5b57edbe
+- [[[ref:bmxgit:8327e4b]]] Axel Neumann. 2015. table: less redist_table_routes debugging to syslog. https://github.com/axn/bmx6/commit/1ffda19b4accd02272e8c3b9fc6c1f0b68327e4b
+- [[[ref:bmxgit:863f58c]]] Axel Neumann. 2015. table --redistTableDelay=2200. https://github.com/axn/bmx6/commit/b6107880b5460625b7ce9359dbeac0cfe863f58c
 - [[[ref:routeloop]]] Wikipedia. 2015. Routing loop problem. https://en.wikipedia.org/wiki/Routing_loop_problem
 - [[[ref:wkpdbgp]]] Wikipedia. 2015. Border Gateway Protocol. https://en.wikipedia.org/wiki/Border_Gateway_Protocol
 - [[[ref:ebgpibgp]]] Juniper Networks. 2015. IBGP and EBGP. https://www.juniper.net/techpubs/software/junos-es/junos-es93/junos-es-swconfig-interfaces-and-routing/ibgp-and-ebgp.html
-- [[[ref:nnxgr]]] Ninux.org Wiki. 2015. Ground Routing. http://wiki.ninux.org/GroundRouting
-- [[[ref:limegr]]] Libre-Mesh Wiki. 2015. Ground Routing. http://libre-mesh.org/projects/libre-mesh/wiki/Ground_routing
-- [[[ref:luavspy]]] Lua Users Wiki. 2015. Lua Versus Python. http://lua-users.org/wiki/LuaVersusPython
-- [[[ref:owrtswitch]]] OpenWrt Wiki. 2015. Switch Documentation. http://wiki.openwrt.org/doc/uci/network/switch
-- [[[ref:owrthwswitch]]] OpenWrt Wiki. 2015. Ethernet Network Switch. http://wiki.openwrt.org/doc/hardware/switch
-- [[[ref:owrtwdr3600]]] OpenWrt Wiki. 2015. TP-Link TL-WDR3600. http://wiki.openwrt.org/toh/tp-link/tl-wdr3600
-- [[[ref:99limeconfig]]] LiMe Developers. 2015. Libre-mesh code, 99-lime-config. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-system/files/etc/uci-defaults/99-lime-config
-- [[[ref:owrtlanwan]]] OpenWrt Developers. 2015. OpenWrt code, creation of default network configuration. https://github.com/openwrt-mirror/openwrt/blob/master/target/linux/ar71xx/base-files/etc/uci-defaults/02_network
-- [[[ref:hotplug]]] Linux Hotplugging Project. 2015. hotplug(8) - Linux man page. http://linux.die.net/man/8/hotplug
-- [[[ref:wkpdwlan]]] Wikipedia. 2015. Wireless LAN. https://en.wikipedia.org/wiki/Wireless_LAN
-- [[[ref:owrthotplug]]] OpenWrt Wiki. 2015. Hotplug. http://wiki.openwrt.org/doc/techref/hotplug
-- [[[ref:usbradiohook]]] LiMe Developers. 2015. Libre-mesh code, USB radio hotplug hook. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-hwd-usbradio/src/hotplug-hook.sh
-- [[[ref:wkpdbroadcstdoimain]]] Wikipedia. 2015. Broadcast domain. https://en.wikipedia.org/wiki/Broadcast_domain
-- [[[ref:wkpdethswitch]]] Wikipedia. 2015. Network switch. https://en.wikipedia.org/wiki/Network_switch
-- [[[ref:wkpdarpspoofing]]] Wikipedia. 2015. ARP spoofing. https://en.wikipedia.org/wiki/ARP_spoofing
-- [[[ref:wkpfnat]]] Wikipedia. 2015. Network address translation. https://en.wikipedia.org/wiki/Network_address_translation
-- [[[ref:wkpdend2end]]] Wikipedia. 2015. End-to-end principle. https://en.wikipedia.org/wiki/End-to-end_principle
-- [[[ref:wkpdholepunch]]] Wikipedia. 2015. Hole punching (networking). https://en.wikipedia.org/wiki/Hole_punching_%28networking%29
-- [[[ref:rfc5737]]] The Internet Society. 2010. IPv4 Address Blocks Reserved for Documentation. https://tools.ietf.org/html/rfc5737
-- [[[ref:rfc3849]]] The Internet Society. 2004. IPv6 Address Prefix Reserved for Documentation. https://tools.ietf.org/html/rfc3849
-- [[[ref:natperformance]]] Sarabjeet Singh Chugh. 2003. Impact of Network Address Translation on Router Performance. http://scholar.lib.vt.edu/theses/available/etd-10062003-170440/unrestricted/thesis.pdf
+- [[[ref:battlemesh]]] Battlemesh Community. 2015. BattlemeshV8. http://battlemesh.org/BattleMeshV8
+- [[[ref:bmxgit:52cfaad]]] Axel Neumann. 2015. Table redist: filter out temporary table-route changes --redistTableInDelay --redistTableOutDelay. https://github.com/axn/bmx6/commit/59d09f44e7b9c04a9546a273fdc559e2d52cfaad
+- [[[ref:bmxgit:5e0d744]]] Axel Neumann. 2015. Hna: --proactiveTunRoutes=1. https://github.com/axn/bmx6/commit/56f1cb7a28e8eabd72c7500d4405296315e0d744
+- [[[ref:bmxgit:2156de7]]] Axel Neumann. 2015. Sec: --linkSignatureLen.... https://github.com/axn/bmx6/commit/48b8674c2a4f7ed0f01b20ab62a35ba2f2156de7
+- [[[ref:freesoftware]]] Free Software Foundation. 2015. What is free software?. http://www.gnu.org/philosophy/free-sw.en.html
 - [[[ref:owrtrouting:42d1982]]] OpenWrt source code. 2015. Update to latest bmx6-master branch. https://github.com/openwrt-routing/packages/commit/cfefe9fccae2332d147fd9bae7c72d15a42d1982
 - [[[ref:owrtrouting:eec2c3f]]] OpenWrt source code. 2015. Update to latest semtor-branch version. https://github.com/openwrt-routing/packages/commit/5bcc48d5d032dd53ae58d03014b59e879eec2c3f
 - [[[ref:owrtrouting:2ebaa92]]] OpenWrt source code. 2015. Performance fixes. https://github.com/openwrt-routing/packages/commit/70db9d7197c9b5f113b10844197a7dd8d2ebaa92
@@ -58,10 +71,8 @@
 - [[[ref:bmxgit:baf743d]]] Axel Neumann. 2015. Link: debug --link mac. https://github.com/axn/bmx6/commit/4f17779c11bc19dd3acb9265010d74ff1baf743d
 - [[[ref:bmxgit:2ae7152]]] Axel Neumann. 2015. Crypt: do NOT syslog private keys!. https://github.com/axn/bmx6/commit/b2664572a1ed6b890476d1e172c00ca772ae7152
 - [[[ref:bmxgit:81dbb0b]]] Axel Neumann. 2015. Bmx desc: less verbose description-update syslogs. https://github.com/axn/bmx6/commit/85a8f10ba865afa66816f032a2d469fd681dbb0b
-- [[[ref:bmxgit:52cfaad]]] Axel Neumann. 2015. Table redist: filter out temporary table-route changes --redistTableInDelay --redistTableOutDelay. https://github.com/axn/bmx6/commit/59d09f44e7b9c04a9546a273fdc559e2d52cfaad
 - [[[ref:bmxgit:d35b2b0]]] Axel Neumann. 2015. Table: resync_routes(). https://github.com/axn/bmx6/commit/0b115dd0826193e5010c48deaed0acfb9d35b2b0
 - [[[ref:bmxgit:76a9e0c]]] Axel Neumann. 2015. Bmx desc sec ip: fix assertion error codes. https://github.com/axn/bmx6/commit/5f8fc62f650a305035a7ca53c7304ccf076a9e0c
-- [[[ref:bmxgit:5e0d744]]] Axel Neumann. 2015. Hna: --proactiveTunRoutes=1. https://github.com/axn/bmx6/commit/56f1cb7a28e8eabd72c7500d4405296315e0d744
 - [[[ref:bmxgit:e8f0e3d]]] Axel Neumann. 2015. Prof: align --cpu output. https://github.com/axn/bmx6/commit/209ce12be0f2c608e731ce8822433d80de8f0e3d
 - [[[ref:bmxgit:5ec9901]]] Axel Neumann. 2015. Hna: cpu-profile eval_tun_bit_tree(). https://github.com/axn/bmx6/commit/ace691a520d2c1382b6710a872367771d5ec9901
 - [[[ref:bmxgit:5e990eb]]] Axel Neumann. 2015. Redist table: cpu-profile redistribution functions. https://github.com/axn/bmx6/commit/473738ed85d6b2097085d1941f62114595e990eb
@@ -69,7 +80,6 @@
 - [[[ref:bmxgit:f88d8ac]]] Axel Neumann. 2015. Link: debug descKey and pktKey in --links. https://github.com/axn/bmx6/commit/0ed1d1be34223800846baa65b0e99fd4df88d8ac
 - [[[ref:bmxgit:748e175]]] Axel Neumann. 2015. All: rename pktKey->linkKey and descKey->nodeKey and related stuff. https://github.com/axn/bmx6/commit/200465889061dd134ceb3bb3fcf864f49748e175
 - [[[ref:bmxgit:2c21549]]] Axel Neumann. 2015. Bmx content hna prof sec: align status outputs. https://github.com/axn/bmx6/commit/86f53178d5a7ac8425f9e0931aeec7eb92c21549
-- [[[ref:bmxgit:2156de7]]] Axel Neumann. 2015. Sec: --linkSignatureLen.... https://github.com/axn/bmx6/commit/48b8674c2a4f7ed0f01b20ab62a35ba2f2156de7
 - [[[ref:bmxgit:2b5da2f]]] Axel Neumann. 2015. Table let resync_routes() call filter_temporary_route_changes(NOW). https://github.com/axn/bmx6/commit/b233d81659b186e8988e19a22166de5742b5da2f
 - [[[ref:bmxgit:6b99c4c]]] Axel Neumann. 2015. Key: debugging destroy_orig_node() reasons... https://github.com/axn/bmx6/commit/b62e635c4ef5839f5deab42153b7e82936b99c4c
 - [[[ref:bmxgit:ac6e32c]]] Axel Neumann. 2015. Bmx: CRITICAL_PURGE_TIME_DRIFT 20->60. https://github.com/axn/bmx6/commit/93bd64e9ec96b7b91a474b446415084cdac6e32c
@@ -87,18 +97,6 @@
 - [[[ref:bmxgit:ca91a6d]]] Axel Neumann. 2015. Ip table: --netlinkBuffSize=(4*266240). https://github.com/axn/bmx6/commit/96db293122f95862a607bdaa449e710e7ca91a6d
 - [[[ref:bmxgit:90ae174]]] Axel Neumann. 2015. Sec: fix opt_linkSigning() to not crash when returning to defaults. https://github.com/axn/bmx6/commit/4b21205c6873190b8e09e1dc3a4bd343b90ae174
 - [[[ref:bmxgit:43873b8]]] Axel Neumann. 2015. table: allow redistTable from any table. https://github.com/axn/bmx6/commit/6b7f8690d9c679f9e14ebfed1d30f58b843873b8
-- [[[ref:bgpattributediscard]]] Cisco.net. 2015. BGP Attribute Filter and Enhanced Attribute Error Handling. http://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_bgp/configuration/xe-3s/irg-xe-3s-book/bgp_attribute_filter_and_enhanced_attribute_error_handling.html
-- [[[ref:bgpaspathprepending]]] Ivan Pepelnjak. 2015. AS-path prepending (technical details). http://wiki.nil.com/AS-path_prepending_%28technical_details%29
-- [[[ref:birdfilters]]] BIRD documentation. 2015. Filters. http://bird.network.cz/?get_doc&f=bird-5.html
-- [[[ref:bmxgit:1dcb463]]] Axel Neumann. 2015. --redistTable /all=1 /sys=int. https://github.com/axn/bmx6/commit/06c7bebecf94e463103bda02169fc7f931dcb463
-- [[[ref:bmxgit:52eaf13]]] Axel Neumann. 2015. ip table: fixing ERROR rtnl_rcv: No buffer space available. https://github.com/axn/bmx6/commit/f0e8c3ea176ba442031ec858266c026ef52eaf13
-- [[[ref:bmxgit:b57edbe]]] Axel Neumann. 2015. table redist: CPU optimize redist_table_routes(). https://github.com/axn/bmx6/commit/7a825c2c744309037418389a8dc8d92f5b57edbe
-- [[[ref:bmxgit:8327e4b]]] Axel Neumann. 2015. table: less redist_table_routes debugging to syslog. https://github.com/axn/bmx6/commit/1ffda19b4accd02272e8c3b9fc6c1f0b68327e4b
-- [[[ref:bmxgit:863f58c]]] Axel Neumann. 2015. table --redistTableDelay=2200. https://github.com/axn/bmx6/commit/b6107880b5460625b7ce9359dbeac0cfe863f58c
-- [[[ref:battlemesh]]] Battlemesh Community. 2015. BattlemeshV8. http://battlemesh.org/BattleMeshV8
-- [[[ref:wkdpwmn]]] Wikipedia. 2015. Wireless mesh network. https://en.wikipedia.org/wiki/Wireless_mesh_network
-- [[[ref:wkpfinternetprotocolsuite]]] Wikipedia. 2015. Internet protocol suite. https://en.wikipedia.org/wiki/Internet_protocol_suite
-- [[[ref:freesoftware]]] Free Software Foundation. 2015. What is free software?. http://www.gnu.org/philosophy/free-sw.en.html
 - [[[ref:limerepo]]] Libre-Mesh developers. 2015. Libre-Mesh Source Code. https://github.com/libre-mesh/
 - [[[ref:limegit:8291374]]] Gioacchino Mazzurco. 2015. lime-proto-bmx6: Simplified route exchange as BMX7 support filtering by proto. https://gitlab.com/libre-mesh/lime-packages/commit/1c24a88011ef32c1c7ba703f2d44970c48291374
 - [[[ref:limegit:47710ff]]] Gioacchino Mazzurco. 2015. lime-proto-anygw: implement bgp_conf(...). https://gitlab.com/libre-mesh/lime-packages/commit/9f7b4ef748ab7dbfb2c1498ee885cdd8247710ff
@@ -118,13 +116,15 @@
 - [[[ref:limegit:a761837]]] Gioacchino Mazzurco. 2015. add lime-proto-bgp stub. https://gitlab.com/libre-mesh/lime-packages/commit/ba6d1e087357c305aaa7201ffb6aaed7aa761837
 - [[[ref:limegit:241f15a]]] Gioacchino Mazzurco. 2015. added utils.expandVars for easier custom config file filling. https://gitlab.com/libre-mesh/lime-packages/commit/50b0296bbef50d94282c28e0d0d89b213241f15a
 - [[[ref:bmx6repo]]] BMX6 developers. 2015. BMX6 Source Code. https://github.com/axn/bmx6/
-// Glossary only references
+- [[[ref:owrtrouting]]] OpenWrt source code. 2015. OpenWrt routing feed. https://github.com/openwrt-routing/
+- [[[ref:wifiadhoc]]] Wifi Planet. 2015. Understanding Ad Hoc Mode. http://www.wi-fiplanet.com/tutorials/article.php/1451421
 - [[[ref:wkpfash]]] Wikipedia. 2015. Almquist shell. https://en.wikipedia.org/wiki/Almquist_shell
+- [[[ref:anycast]]] Wikipedia. 2015. Anycast. https://en.wikipedia.org/wiki/Anycast
 - [[[ref:wkpdap]]] Wikipedia. 2015. Wireless access point. https://en.wikipedia.org/wiki/Wireless_access_point
 - [[[ref:wkpdapi]]] Wikipedia. 2015. Application programming interface. https://en.wikipedia.org/wiki/Application_programming_interface
 - [[[ref:wkpdarp]]] Wikipedia. 2015. Address Resolution Protocol. https://en.wikipedia.org/wiki/Address_Resolution_Protocol
-- [[[ref:wifiadhoc]]] Wifi Planet. 2015. Understanding Ad Hoc Mode. http://www.wi-fiplanet.com/tutorials/article.php/1451421
 - [[[ref:wkpdas]]] Wikipedia. 2015. Autonomous system (Internet). https://en.wikipedia.org/wiki/Autonomous_system_%28Internet%29
+- [[[ref:bgprfc]]] The Internet Society. 2006. A Border Gateway Protocol 4 (BGP-4). https://tools.ietf.org/html/rfc4271
 - [[[ref:wkpdbroadcast]]] Wikipedia. 2015. Broadcasting (networking). https://en.wikipedia.org/wiki/Broadcasting_%28networking%29
 - [[[ref:wkpdbssid]]] Wikipedia. 2015. Basic service set identification (BSSID). https://en.wikipedia.org/wiki/Service_set_%28802.11_network%29#Basic_service_set_identification_.28BSSID.29
 - [[[ref:wkpdc]]] Wikipedia. 2015. C (programming language). https://en.wikipedia.org/wiki/C_%28programming_language%29
@@ -137,9 +137,9 @@
 - [[[ref:wkpdipv4]]] Wikipedia. 2015. IPv4. https://en.wikipedia.org/wiki/IPv4
 - [[[ref:wkpdipv6]]] Wikipedia. 2015. IPv6. https://en.wikipedia.org/wiki/IPv6
 - [[[ref:wkpdlan]]] Wikipedia. 2015. Local area network. https://en.wikipedia.org/wiki/Local_area_network
-- [[[ref:lua]]] Lua.org. 2015. About Lua. http://www.lua.org/about.html
 - [[[ref:lastmile]]] Wikipedia. 2015. Last mile. https://en.wikipedia.org/wiki/Last_mile
 - [[[ref:lime]]] Libre-Mesh community. 2015. Libre-Mesh. http://libre-mesh.org/
+- [[[ref:lua]]] Lua.org. 2015. About Lua. http://www.lua.org/about.html
 - [[[ref:wkpdmesh]]] Wikipedia. 2015. Mesh networking. https://en.wikipedia.org/wiki/Mesh_networking
 - [[[ref:wkpdnetlink]]] Wikipedia. 2015. Netlink. https://en.wikipedia.org/wiki/Netlink
 - [[[ref:wkpdnic]]] Wikipedia. 2015. Network interface controller. https://en.wikipedia.org/wiki/Network_interface_controller.

@@ -4,8 +4,8 @@
 - [[[ref:birdipvx]]] BIRD source code. 2015. BIRD FAQ. https://gitlab.labs.nic.cz/labs/bird/wikis/FAQ
 - [[[ref:birdmultitable]]] Vincent Bernat. 2015. Network lab: site to site VPN. http://vincent.bernat.im/en/blog/2011-lab-site-to-site-vpn.html
 - [[[ref:birdwikipedia]]] Wikipedia. 2015. Bird Internet routing daemon. https://en.wikipedia.org/wiki/Bird_Internet_routing_daemon
-- [[[ref:birdfilters]]] BIRD documentation. 2015. Filters. http://bird.network.cz/?get_doc&f=bird-5.html
 - [[[ref:birdowrt]]] OpenWrt source code. 2015. BIRD into OpenWrt routing feed. https://github.com/openwrt-routing/packages/tree/master/bird
+- [[[ref:birdfilters]]] BIRD documentation. 2015. Filters. http://bird.network.cz/?get_doc&f=bird-5.html
 - [[[ref:birdlinx]]] Preston, Tim. 2010. BIRD Route Server at LINX. http://www.uknof.org.uk/uknof15/Preston-Routeserver.pdf
 - [[[ref:bmxan]]] Glenn Daneels. 2015. Analysis of the BMX6 routing protocol. http://bmx6.net/attachments/download/134/Thesis_AnalysisOfTheBMX6RoutingProtocol_GlennDaneels.pdf
 - [[[ref:tablepro]]] Wikipedia. 2015. Table-driven proactive routing. https://en.wikipedia.org/wiki/List_of_ad_hoc_routing_protocols#Table-driven_.28proactive.29_routing

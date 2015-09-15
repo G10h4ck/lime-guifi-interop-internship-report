@@ -560,6 +560,5 @@ include::glossary.asciidoc[]
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]
 == References
-TODO: Order references +
 
 include::references.asciidoc[]

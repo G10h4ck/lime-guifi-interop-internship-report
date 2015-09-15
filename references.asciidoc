@@ -23,13 +23,14 @@
 - [[[ref:ebgpibgp]]] Juniper Networks. 2015. IBGP and EBGP. https://www.juniper.net/techpubs/software/junos-es/junos-es93/junos-es-swconfig-interfaces-and-routing/ibgp-and-ebgp.html
 - [[[ref:nnxgr]]] Ninux.org Wiki. 2015. Ground Routing. http://wiki.ninux.org/GroundRouting
 - [[[ref:limegr]]] Libre-Mesh Wiki. 2015. Ground Routing. http://libre-mesh.org/projects/libre-mesh/wiki/Ground_routing
+- [[[ref:luavspy]]] Lua Users Wiki. 2015. Lua Versus Python. http://lua-users.org/wiki/LuaVersusPython
 - [[[ref:owrtswitch]]] OpenWrt Wiki. 2015. Switch Documentation. http://wiki.openwrt.org/doc/uci/network/switch
 - [[[ref:owrthwswitch]]] OpenWrt Wiki. 2015. Ethernet Network Switch. http://wiki.openwrt.org/doc/hardware/switch
 - [[[ref:owrtwdr3600]]] OpenWrt Wiki. 2015. TP-Link TL-WDR3600. http://wiki.openwrt.org/toh/tp-link/tl-wdr3600
 - [[[ref:99limeconfig]]] LiMe Developers. 2015. Libre-mesh code, 99-lime-config. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-system/files/etc/uci-defaults/99-lime-config
 - [[[ref:owrtlanwan]]] OpenWrt Developers. 2015. OpenWrt code, creation of default network configuration. https://github.com/openwrt-mirror/openwrt/blob/master/target/linux/ar71xx/base-files/etc/uci-defaults/02_network
 - [[[ref:hotplug]]] Linux Hotplugging Project. 2015. hotplug(8) - Linux man page. http://linux.die.net/man/8/hotplug
-. [[[ref:wkpdwlan]]] Wikipedia. 2015. Wireless LAN. https://en.wikipedia.org/wiki/Wireless_LAN
+- [[[ref:wkpdwlan]]] Wikipedia. 2015. Wireless LAN. https://en.wikipedia.org/wiki/Wireless_LAN
 - [[[ref:owrthotplug]]] OpenWrt Wiki. 2015. Hotplug. http://wiki.openwrt.org/doc/techref/hotplug
 - [[[ref:usbradiohook]]] LiMe Developers. 2015. Libre-mesh code, USB radio hotplug hook. https://github.com/libre-mesh/lime-packages/blob/develop/packages/lime-hwd-usbradio/src/hotplug-hook.sh
 - [[[ref:wkpdbroadcstdoimain]]] Wikipedia. 2015. Broadcast domain. https://en.wikipedia.org/wiki/Broadcast_domain
@@ -97,7 +98,28 @@
 - [[[ref:battlemesh]]] Battlemesh Community. 2015. BattlemeshV8. http://battlemesh.org/BattleMeshV8
 - [[[ref:wkdpwmn]]] Wikipedia. 2015. Wireless mesh network. https://en.wikipedia.org/wiki/Wireless_mesh_network
 - [[[ref:wkpfinternetprotocolsuite]]] Wikipedia. 2015. Internet protocol suite. https://en.wikipedia.org/wiki/Internet_protocol_suite
-// Glossary references
+- [[[ref:freesoftware]]] Free Software Foundation. 2015. What is free software?. http://www.gnu.org/philosophy/free-sw.en.html
+- [[[ref:limerepo]]] Libre-Mesh developers. 2015. Libre-Mesh Source Code. https://github.com/libre-mesh/
+- [[[ref:limegit:8291374]]] Gioacchino Mazzurco. 2015. lime-proto-bmx6: Simplified route exchange as BMX7 support filtering by proto. https://gitlab.com/libre-mesh/lime-packages/commit/1c24a88011ef32c1c7ba703f2d44970c48291374
+- [[[ref:limegit:47710ff]]] Gioacchino Mazzurco. 2015. lime-proto-anygw: implement bgp_conf(...). https://gitlab.com/libre-mesh/lime-packages/commit/9f7b4ef748ab7dbfb2c1498ee885cdd8247710ff
+- [[[ref:limegit:283cf88]]] Gioacchino Mazzurco. 2015. Reduce bmx6 redistribution performance impact, Move bmx6 route sharing code in the right place. https://gitlab.com/libre-mesh/lime-packages/commit/01fd9d20b65562d106f08648cd348fdb2283cf88
+- [[[ref:limegit:aac488f]]] Gioacchino Mazzurco. 2015. Distribute bgp peering configuration accross lime-proto-*. https://gitlab.com/libre-mesh/lime-packages/commit/df5f6b73bd18fa6ee692fc610e14706d3aac488f
+- [[[ref:limegit:66f7594]]] Gioacchino Mazzurco. 2015. lime-proto-bgp: Import BMX6 route prepending long path. https://gitlab.com/libre-mesh/lime-packages/commit/77c3d9f0b7299c5d6bebacc799238ef5166f7594
+- [[[ref:limegit:2ba97e6]]] Gioacchino Mazzurco. 2015. lime-proto-bmx6: enable flag all and filter bird route with sys number. https://gitlab.com/libre-mesh/lime-packages/commit/dc5162554dd18350b8038448d5f0fbb322ba97e6
+- [[[ref:limegit:dc1c7a6]]] Gioacchino Mazzurco. 2015. lime-proto-bmx6: load automatically table plugin. https://gitlab.com/libre-mesh/lime-packages/commit/b210adb63e3bd55da304143c33102bc6bdc1c7a6
+- [[[ref:limegit:0359641]]] Gioacchino Mazzurco. 2015. Depends on bmx7 (experimental) instead of bmx6. https://gitlab.com/libre-mesh/lime-packages/commit/ddefa264428c2e6a60f1666c7646c4fd00359641
+- [[[ref:limegit:9052540]]] Gioacchino Mazzurco. 2015. lime-system: radio name shouldn't have dot in name so it is not necessary additional option, TEST ME BEFORE MERGE. https://gitlab.com/libre-mesh/lime-packages/commit/87d6c436726f620ea4c936da534dba8669052540
+- [[[ref:limegit:0f0dbf8]]] Gioacchino Mazzurco. 2015. lime-proto-{bgp,bmx}: added route sharing from bird to bmx6. https://gitlab.com/libre-mesh/lime-packages/commit/3d94505c04c0adb650df01a18323f0d440f0dbf8
+- [[[ref:limegit:1503324]]] Gioacchino Mazzurco. 2015. lime-proto-bgp: read configuration instead of hardcoded values. https://gitlab.com/libre-mesh/lime-packages/commit/7a3ae47b62f23e1b8beac516617f2a3461503324
+- [[[ref:limegit:7be551d]]] Gioacchino Mazzurco. 2015. lime-proto-bgp: added automatic lan subnet announcement. https://gitlab.com/libre-mesh/lime-packages/commit/a6e27ced5dc8b94ae0a7306c088ee64a37be551d
+- [[[ref:limegit:c9ea7bf]]] Gioacchino Mazzurco. 2015. lime-proto-bgp: add protocol device to bird configuration so it listen for connections. https://gitlab.com/libre-mesh/lime-packages/commit/cecfe5a39e46f34aadd65ba798be42ba3c9ea7bf
+- [[[ref:limegit:b651bfe]]] Gioacchino Mazzurco. 2015. Use named table field instead of positional for bgp_peer template. https://gitlab.com/libre-mesh/lime-packages/commit/f382c72b8b54051b7391682d4c019eeb5b651bfe
+- [[[ref:limegit:8dfb4f3]]] Gioacchino Mazzurco. 2015. utils.expandVars now support literal table index as variable names. https://gitlab.com/libre-mesh/lime-packages/commit/55b06dd09b55ba5287443ca21b61523d78dfb4f3
+- [[[ref:limegit:a761837]]] Gioacchino Mazzurco. 2015. add lime-proto-bgp stub. https://gitlab.com/libre-mesh/lime-packages/commit/ba6d1e087357c305aaa7201ffb6aaed7aa761837
+- [[[ref:limegit:241f15a]]] Gioacchino Mazzurco. 2015. added utils.expandVars for easier custom config file filling. https://gitlab.com/libre-mesh/lime-packages/commit/50b0296bbef50d94282c28e0d0d89b213241f15a
+- [[[ref:bmx6repo]]] BMX6 developers. 2015. BMX6 Source Code. https://github.com/axn/bmx6/
+// Glossary only references
+- [[[ref:wkpfash]]] Wikipedia. 2015. Almquist shell. https://en.wikipedia.org/wiki/Almquist_shell
 - [[[ref:wkpdap]]] Wikipedia. 2015. Wireless access point. https://en.wikipedia.org/wiki/Wireless_access_point
 - [[[ref:wkpdapi]]] Wikipedia. 2015. Application programming interface. https://en.wikipedia.org/wiki/Application_programming_interface
 - [[[ref:wkpdarp]]] Wikipedia. 2015. Address Resolution Protocol. https://en.wikipedia.org/wiki/Address_Resolution_Protocol
@@ -115,6 +137,7 @@
 - [[[ref:wkpdipv4]]] Wikipedia. 2015. IPv4. https://en.wikipedia.org/wiki/IPv4
 - [[[ref:wkpdipv6]]] Wikipedia. 2015. IPv6. https://en.wikipedia.org/wiki/IPv6
 - [[[ref:wkpdlan]]] Wikipedia. 2015. Local area network. https://en.wikipedia.org/wiki/Local_area_network
+- [[[ref:lua]]] Lua.org. 2015. About Lua. http://www.lua.org/about.html
 - [[[ref:lastmile]]] Wikipedia. 2015. Last mile. https://en.wikipedia.org/wiki/Last_mile
 - [[[ref:lime]]] Libre-Mesh community. 2015. Libre-Mesh. http://libre-mesh.org/
 - [[[ref:wkpdmesh]]] Wikipedia. 2015. Mesh networking. https://en.wikipedia.org/wiki/Mesh_networking

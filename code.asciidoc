@@ -1,0 +1,960 @@
+.packages/lime-proto-anygw/src/anygw.lua
+[source,lua]
+-------------------------------------------------------------------------------
+#!/usr/bin/lua
+
+local fs = require("nixio.fs")
+local network = require("lime.network")
+local libuci = require "uci"
+
+anygw = {}
+
+anygw.configured = false
+
+function anygw.configure(args)
+	if anygw.configured then return end
+	anygw.configured = true
+
+	local ipv4, ipv6 = network.primary_address()
+	
+	-- anygw macvlan interface
+	print("Adding macvlan interface to uci network...")
+	local anygw_mac = "aa:aa:aa:aa:aa:aa"
+	local anygw_ipv6 = ipv6:minhost()
+	local anygw_ipv4 = ipv4:minhost()
+	anygw_ipv6[3] = 64 -- SLAAC only works with a /64, per RFC
+	anygw_ipv4[3] = ipv4:prefix()
+
+	local pfr = network.limeIfNamePrefix
+	
+	local uci = libuci:cursor()
+	uci:set("network", pfr.."anygw_dev", "device")
+	uci:set("network", pfr.."anygw_dev", "type", "macvlan")
+	uci:set("network", pfr.."anygw_dev", "name", "anygw")
+	uci:set("network", pfr.."anygw_dev", "ifname", "@lan")
+	uci:set("network", pfr.."anygw_dev", "macaddr", anygw_mac)
+
+	uci:set("network", pfr.."anygw_if", "interface")
+	uci:set("network", pfr.."anygw_if", "proto", "static")
+	uci:set("network", pfr.."anygw_if", "ifname", "anygw")
+	uci:set("network", pfr.."anygw_if", "ip6addr", anygw_ipv6:string())
+	uci:set("network", pfr.."anygw_if", "ipaddr", anygw_ipv4:host():string())
+	uci:set("network", pfr.."anygw_if", "netmask", anygw_ipv4:mask():string())
+
+	uci:set("network", pfr.."anygw_rule6", "rule6")
+	uci:set("network", pfr.."anygw_rule6", "src", anygw_ipv6:host():string().."/128")
+	uci:set("network", pfr.."anygw_rule6", "lookup", "170") -- 0xaa in decimal
+
+	uci:set("network", pfr.."anygw_route6", "route6")
+	uci:set("network", pfr.."anygw_route6", "interface", pfr.."anygw_if")
+	uci:set("network", pfr.."anygw_route6", "target", anygw_ipv6:network():string().."/"..anygw_ipv6:prefix())
+	uci:set("network", pfr.."anygw_route6", "table", "170")
+
+	uci:set("network", pfr.."anygw_rule4", "rule")
+	uci:set("network", pfr.."anygw_rule4", "src", anygw_ipv4:host():string().."/32")
+	uci:set("network", pfr.."anygw_rule4", "lookup", "170")
+
+	uci:set("network", pfr.."anygw_route4", "route")
+	uci:set("network", pfr.."anygw_route4", "interface", pfr.."anygw_if")
+	uci:set("network", pfr.."anygw_route4", "target", anygw_ipv4:network():string())
+	uci:set("network", pfr.."anygw_route4", "netmask", anygw_ipv4:mask():string())
+	uci:set("network", pfr.."anygw_route4", "table", "170")
+	uci:save("network")
+
+	fs.mkdir("/etc/firewall.user.d")
+	fs.writefile(
+		"/etc/firewall.user.d/20-anygw-ebtables",
+		"\n" ..
+		"ebtables -D FORWARD -j DROP -d " .. anygw_mac .. "\n" ..
+		"ebtables -A FORWARD -j DROP -d " .. anygw_mac .. "\n" ..
+		"ebtables -t nat -D POSTROUTING -o bat0 -j DROP -s " .. anygw_mac .. "\n" ..
+		"ebtables -t nat -A POSTROUTING -o bat0 -j DROP -s " .. anygw_mac .. "\n"
+	)
+
+	local content = { }
+	table.insert(content, "interface=anygw")
+	table.insert(content, "except-interface=br-lan")
+	fs.writefile("/etc/dnsmasq.d/lime-proto-anygw-00-interfaces.conf", table.concat(content, "\n").."\n")
+
+	content = { }
+	table.insert(content, "dhcp-range=tag:anygw,"..anygw_ipv4:add(1):host():string()..","..ipv4:maxhost():string())
+	table.insert(content, "dhcp-option=tag:anygw,option:router,"..anygw_ipv4:host():string())
+	table.insert(content, "dhcp-option=tag:anygw,option:dns-server,"..anygw_ipv4:host():string())
+	table.insert(content, "dhcp-option=tag:anygw,option:domain-name,lan")
+	table.insert(content, "dhcp-option=tag:anygw,option:domain-search,lan")
+	table.insert(content, "dhcp-option-force=tag:anygw,option:mtu,1350")
+	table.insert(content, "dhcp-broadcast=tag:anygw")
+	table.insert(content, "address=/anygw/"..anygw_ipv4:host():string())
+	fs.writefile("/etc/dnsmasq.d/lime-proto-anygw-10-ipv4.conf", table.concat(content, "\n").."\n")
+
+	content = { }
+	table.insert(content, "enable-ra")
+	table.insert(content, "dhcp-range=tag:anygw,"..ipv6:network():string()..",ra-names")
+	table.insert(content, "dhcp-option=tag:anygw,option6:domain-search,lan")
+	table.insert(content, "dhcp-option=tag:anygw,option6:dns-server,"..anygw_ipv6:host():string())
+	table.insert(content, "address=/anygw/"..anygw_ipv6:host():string())
+	fs.writefile("/etc/dnsmasq.d/lime-proto-anygw-20-ipv6.conf", table.concat(content, "\n").."\n")
+
+	io.popen("/etc/init.d/dnsmasq enable || true"):close()
+end
+
+function anygw.setup_interface(ifname, args) end
+
+function anygw.bgp_conf(templateVarsIPv4, templateVarsIPv6)
+	local base_conf = [[
+protocol direct {
+	interface "anygw";
+}
+]]
+	return base_conf
+end
+
+return anygw
+
+-------------------------------------------------------------------------------
+
+.packages/lime-proto-bgp/Makefile
+-------------------------------------------------------------------------------
+#
+# Copyright (C) 2006-2014 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v3.
+#
+
+include $(TOPDIR)/rules.mk
+
+LIME_BUILDDATE:=$(shell date +%Y%m%d_%H%M)
+LIME_CODENAME:=bigbang
+
+GIT_COMMIT_DATE:=$(shell git log -n 1 --pretty=%ad --date=short . )
+GIT_COMMIT_TSTAMP:=$(shell git log -n 1 --pretty=%at . )
+
+PKG_NAME:=lime-proto-bgp
+PKG_VERSION=$(GIT_COMMIT_DATE)-$(GIT_COMMIT_TSTAMP)
+
+include $(INCLUDE_DIR)/package.mk
+
+define Package/$(PKG_NAME)
+  TITLE:=LiMe BGP proto support
+  CATEGORY:=LiMe
+  MAINTAINER:=Gioacchino Mazzurco <gio@diveni.re>
+  URL:=http://libre-mesh.org
+  DEPENDS:=+bird4 +bird6 +lime-system +lua
+endef
+
+define Build/Compile
+	@rm -rf ./build || true
+	@cp -r ./src ./build
+	@sed -i '/^--!.*/d' build/*.lua
+endef
+
+define Package/$(PKG_NAME)/install
+	@mkdir -p $(1)/usr/lib/lua/lime/proto || true
+	$(CP) ./build/bgp.lua $(1)/usr/lib/lua/lime/proto/
+endef
+
+$(eval $(call BuildPackage,$(PKG_NAME)))
+
+
+-------------------------------------------------------------------------------
+
+.packages/lime-proto-bgp/src/bgp.lua
+[source,lua]
+-------------------------------------------------------------------------------
+#!/usr/bin/lua
+
+local network = require("lime.network")
+local config = require("lime.config")
+local fs = require("nixio.fs")
+local utils = require("lime.utils")
+
+
+proto = {}
+
+proto.configured = false
+
+function proto.configure(args)
+	if proto.configured then return end
+	proto.configured = true
+
+	local ipv4, ipv6 = network.primary_address()
+	local localAS = args[2] or 64496
+	local bgp_exchanges = args[3]
+	if bgp_exchanges then bgp_exchanges = utils.split(bgp_exchanges,",")
+	else bgp_exchanges = {} end
+	local meshPenalty = args[4] or 8
+
+	local mp = "bgp_path.prepend("..localAS..");\n"
+	for i=1,meshPenalty do
+		mp = mp .. "\t\t\tbgp_path.prepend("..localAS..");\n"
+	end
+
+	local templateVarsIPv4 = { localIp=ipv4:host():string(),
+		localAS=localAS, acceptedNet="10.0.0.0/8", meshPenalty=mp }
+	local templateVarsIPv6 = { localIp=ipv6:host():string(),
+		localAS=localAS, acceptedNet="2000::0/3", meshPenalty=mp }
+
+	local base_template = [[
+router id $localIp;
+
+protocol device {
+	scan time 10;
+}
+
+filter toBgp {
+	if net ~ $acceptedNet then {
+		if proto ~ "kernel*" then {
+			$meshPenalty
+		}
+		accept;
+	}
+	reject;
+}
+
+filter fromBgp {
+	if net ~ $acceptedNet then accept;
+	reject;
+}
+
+protocol kernel {
+	learn;
+	scan time 20;
+	export all;
+}
+]]
+
+	for _,protocol in pairs(bgp_exchanges) do
+		local protoModule = "lime.proto."..protocol
+		if utils.isModuleAvailable(protoModule) then
+			local proto = require(protoModule)
+			local snippet = nil
+			xpcall( function() snippet = proto.bgp_conf(templateVarsIPv4, templateVarsIPv6) end,
+			       function(errmsg) print(errmsg) ; print(debug.traceback()) ; snippet = nil end)
+			if snippet then base_template = base_template .. snippet end
+		end
+	end
+
+	local bird4_config = utils.expandVars(base_template, templateVarsIPv4)
+	local bird6_config = utils.expandVars(base_template, templateVarsIPv6)
+
+	local peer_template = [[
+protocol bgp {
+	import filter fromBgp;
+	export filter toBgp;
+
+	local as $localAS;
+	neighbor $remoteIP as $remoteAS;
+}
+]]
+
+	local function apply_peer_template(s)
+		s.localAS = localAS
+		if string.find(s.remoteIP, ":", 1, true) then
+			bird6_config = bird6_config .. utils.expandVars(peer_template, s)
+		elseif string.find(s.remoteIP, ".", 1, true) then
+			bird4_config = bird4_config .. utils.expandVars(peer_template, s)
+		end
+	end
+	config.foreach("bgp_peer", apply_peer_template)
+
+	fs.writefile("/etc/bird4.conf", bird4_config)
+	fs.writefile("/etc/bird6.conf", bird6_config)
+end
+
+function proto.setup_interface(ifname, args)
+end
+
+function proto.apply()
+    os.execute("/etc/init.d/bird4 restart")
+    os.execute("/etc/init.d/bird6 restart")
+end
+
+return proto
+
+-------------------------------------------------------------------------------
+
+.packages/lime-proto-bmx6/Makefile
+-------------------------------------------------------------------------------
+#
+# Copyright (C) 2006-2014 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v3.
+#
+
+include $(TOPDIR)/rules.mk
+
+LIME_BUILDDATE:=$(shell date +%Y%m%d_%H%M)
+LIME_CODENAME:=bigbang
+
+GIT_COMMIT_DATE:=$(shell git log -n 1 --pretty=%ad --date=short . )
+GIT_COMMIT_TSTAMP:=$(shell git log -n 1 --pretty=%at . )
+
+PKG_NAME:=lime-proto-bmx6
+PKG_VERSION=$(GIT_COMMIT_DATE)-$(GIT_COMMIT_TSTAMP)
+
+include $(INCLUDE_DIR)/package.mk
+
+define Package/$(PKG_NAME)
+  TITLE:=LiMe Bmx6 proto support
+  CATEGORY:=LiMe
+  MAINTAINER:=Gioacchino Mazzurco <gio@eigenlab.org>
+  URL:=http://libre-mesh.org
+  DEPENDS:=+bmx7 +bmx7-json +bmx7-sms +bmx7-table +bmx7-uci-config +iptables +lime-system +lua +libuci-lua
+endef
+
+define Build/Compile
+	@rm -rf ./build || true
+	@cp -r ./src ./build
+	@sed -i '/^--!.*/d' build/*.lua
+endef
+
+define Package/$(PKG_NAME)/install
+	@mkdir -p $(1)/usr/lib/lua/lime/proto || true
+	$(CP) ./build/bmx6.lua $(1)/usr/lib/lua/lime/proto/
+endef
+
+$(eval $(call BuildPackage,$(PKG_NAME)))
+
+
+-------------------------------------------------------------------------------
+
+.packages/lime-proto-bmx6/src/bmx6.lua
+[source,lua]
+-------------------------------------------------------------------------------
+#!/usr/bin/lua
+
+local network = require("lime.network")
+local config = require("lime.config")
+local fs = require("nixio.fs")
+local libuci = require("uci")
+local wireless = require("lime.wireless")
+
+bmx6 = {}
+
+bmx6.configured = false
+
+function bmx6.configure(args)
+	if bmx6.configured then return end
+	bmx6.configured = true
+
+	local uci = libuci:cursor()
+	local ipv4, ipv6 = network.primary_address()
+
+	fs.writefile("/etc/config/bmx6", "")
+
+	uci:set("bmx6", "general", "bmx6")
+	uci:set("bmx6", "general", "dbgMuteTimeout", "1000000")
+
+	uci:set("bmx6", "main", "tunDev")
+	uci:set("bmx6", "main", "tunDev", "main")
+	uci:set("bmx6", "main", "tun4Address", ipv4:host():string().."/32")
+	uci:set("bmx6", "main", "tun6Address", ipv6:host():string().."/128")
+
+	-- Enable bmx6 uci config plugin
+	uci:set("bmx6", "config", "plugin")
+	uci:set("bmx6", "config", "plugin", "bmx6_config.so")
+
+	-- Enable JSON plugin to get bmx6 information in json format
+	uci:set("bmx6", "json", "plugin")
+	uci:set("bmx6", "json", "plugin", "bmx6_json.so")
+
+	-- Disable ThrowRules because they are broken in IPv6 with current Linux Kernel
+	uci:set("bmx6", "ipVersion", "ipVersion")
+	uci:set("bmx6", "ipVersion", "ipVersion", "6")
+
+	-- Search for networks in 172.16.0.0/12
+	uci:set("bmx6", "nodes", "tunOut")
+	uci:set("bmx6", "nodes", "tunOut", "nodes")
+	uci:set("bmx6", "nodes", "network", "172.16.0.0/12")
+
+	-- Search for networks in 172.16.0.0/12
+	uci:set("bmx6", "nodes", "tunOut")
+	uci:set("bmx6", "nodes", "tunOut", "dummynodes")
+	uci:set("bmx6", "nodes", "network", "192.0.2.0/24")
+
+	-- Search for networks in 10.0.0.0/8
+	uci:set("bmx6", "clouds", "tunOut")
+	uci:set("bmx6", "clouds", "tunOut", "clouds")
+	uci:set("bmx6", "clouds", "network", "10.0.0.0/8")
+
+	-- Search for internet in the mesh cloud
+	uci:set("bmx6", "inet4", "tunOut")
+	uci:set("bmx6", "inet4", "tunOut", "inet4")
+	uci:set("bmx6", "inet4", "network", "0.0.0.0/0")
+	uci:set("bmx6", "inet4", "maxPrefixLen", "0")
+
+	-- Search for internet IPv6 gateways in the mesh cloud
+	uci:set("bmx6", "inet6", "tunOut")
+	uci:set("bmx6", "inet6", "tunOut", "inet6")
+	uci:set("bmx6", "inet6", "network", "::/0")
+	uci:set("bmx6", "inet6", "maxPrefixLen", "0")
+
+	-- Search for other mesh cloud announcements that have public ipv6
+	uci:set("bmx6", "publicv6", "tunOut")
+	uci:set("bmx6", "publicv6", "tunOut", "publicv6")
+	uci:set("bmx6", "publicv6", "network", "2000::/3")
+	uci:set("bmx6", "publicv6", "maxPrefixLen", "64")
+
+	-- Announce local ipv4 cloud
+	uci:set("bmx6", "local4", "tunIn")
+	uci:set("bmx6", "local4", "tunIn", "local4")
+	uci:set("bmx6", "local4", "network", ipv4:network():string().."/"..ipv4:prefix())
+
+	-- Announce local ipv6 cloud
+	uci:set("bmx6", "local6", "tunIn")
+	uci:set("bmx6", "local6", "tunIn", "local6")
+	uci:set("bmx6", "local6", "network", ipv6:network():string().."/"..ipv6:prefix())
+
+	if config.get_bool("network", "bmx6_over_batman") then
+		for _,protoArgs in pairs(config.get("network", "protocols")) do
+			if(utils.split(protoArgs, network.protoParamsSeparator)[1] == "batadv") then bmx6.setup_interface("bat0", args) end
+		end
+	end
+
+	uci:save("bmx6")
+
+
+	uci:delete("firewall", "bmxtun")
+
+	uci:set("firewall", "bmxtun", "zone")
+	uci:set("firewall", "bmxtun", "name", "bmxtun")
+	uci:set("firewall", "bmxtun", "input", "ACCEPT")
+	uci:set("firewall", "bmxtun", "output", "ACCEPT")
+	uci:set("firewall", "bmxtun", "forward", "ACCEPT")
+	uci:set("firewall", "bmxtun", "mtu_fix", "1")
+	uci:set("firewall", "bmxtun", "device", "bmx+")
+	uci:set("firewall", "bmxtun", "family", "ipv4")
+
+	uci:save("firewall")
+end
+
+function bmx6.setup_interface(ifname, args)
+	if ifname:match("^wlan%d+_ap") then return end
+	vlanId = args[2] or 13
+	vlanProto = args[3] or "8021ad"
+	nameSuffix = args[4] or "_bmx6"
+
+	local owrtInterfaceName, linux802adIfName, owrtDeviceName = network.createVlanIface(ifname, vlanId, nameSuffix, vlanProto)
+
+	local uci = libuci:cursor()
+	uci:set("network", owrtDeviceName, "mtu", "1398")
+
+	-- BEGIN [Workaround issue 38]
+	if ifname:match("^wlan%d+") then
+		local macAddr = wireless.get_phy_mac("phy"..ifname:match("%d+"))
+		local vlanIp = { 169, 254, tonumber(macAddr[5], 16), tonumber(macAddr[6], 16) }
+		uci:set("network", owrtInterfaceName, "proto", "static")
+		uci:set("network", owrtInterfaceName, "ipaddr", table.concat(vlanIp, "."))
+		uci:set("network", owrtInterfaceName, "netmask", "255.255.255.255")
+	end
+	--- END [Workaround issue 38]
+
+	uci:save("network")
+
+	uci:set("bmx6", owrtInterfaceName, "dev")
+	uci:set("bmx6", owrtInterfaceName, "dev", linux802adIfName)
+	uci:save("bmx6")
+end
+
+function bmx6.apply()
+    os.execute("killall bmx6 ; sleep 2 ; killall -9 bmx6")
+    os.execute("bmx6")
+end
+
+function bmx6.bgp_conf(templateVarsIPv4, templateVarsIPv6)
+	local uci = libuci:cursor()
+
+	-- Enable Routing Table Redistribution plugin
+	uci:set("bmx6", "table", "plugin")
+	uci:set("bmx6", "table", "plugin", "bmx6_table.so")
+
+	-- Redistribute proto bird routes
+	uci:set("bmx6", "fromBird", "redistTable")
+	uci:set("bmx6", "fromBird", "redistTable", "fromBird")
+	uci:set("bmx6", "fromBird", "table", "254")
+	uci:set("bmx6", "fromBird", "bandwidth", "100")
+	uci:set("bmx6", "fromBird", "all", "1")
+	uci:set("bmx6", "fromBird", "sys", "12")
+
+	-- Avoid aggregation as it use lot of CPU with huge number of routes
+	uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
+
+	-- Disable proactive tunnels announcement as it use lot of CPU with
+	-- huge number of routes
+	uci:set("bmx6", "general", "proactiveTunRoutes", "0")
+
+	-- BMX6 security features are at moment not used by LiMe, disable hop
+	-- by hop links signature as it consume a lot of CPU expecially in
+	-- setups with multiples interfaces  and lot of routes like LiMe
+	uci:set("bmx6", "general", "linkSignatureLen", "0")
+
+	uci:save("bmx6")
+
+	local base_bgp_conf = [[
+protocol direct {
+	interface "bmx*";
+}
+]]
+
+	return base_bgp_conf
+end
+
+return bmx6
+
+-------------------------------------------------------------------------------
+
+
+.packages/lime-system/files/etc/config/lime
+-------------------------------------------------------------------------------
+# The options marked with "# Parametrizable with %Mn, %Nn, %H"
+# can include %Mn templates that will be substituted
+# with the n'th byte of the primary_interface MAC
+# and %Nn templates that will be replaced by the n'th network-identifier byte,
+# calculated from the hash of the ap_ssid value, so that all the nodes that
+# form a mesh cloud (share the same ap_ssid) will produce the same value
+# and %H template that will be replaced by hostname
+
+
+### System options
+
+#config lime system
+#	option hostname 'LiMeNode-%M4%M5%M6'                                   # Parametrizable with %Mn
+
+
+### Network general option
+
+#config lime network
+#	option primary_interface eth0                                          # The mac address of this device will be used in different places
+#	option bmx6_over_batman false                                          # Disables Bmx6 meshing on top of batman
+#	option main_ipv4_address '192.0.2.0/24'                                # Parametrizable with %Mn, %Nn
+#	option main_ipv6_address '2001:db8::%M5:%M6/64'                        # Parametrizable with %Mn, %Nn
+#	list protocols adhoc                                                   # List of protocols configured by LiMe
+#	list protocols lan
+#	list protocols anygw
+#	list protocols batadv:%N1                                              # Parametrizable with %Nn
+#	list protocols bmx6:13
+#	list protocols bgp:65551                                               # BGP protocol take AS number as param
+#	list resolvers 8.8.8.8                                                 # DNS servers node will use
+#	list resolvers 2001:4860:4860::8844
+
+
+### WiFi general options
+
+#config lime wifi
+#	option channel_2ghz '11'
+#	option channel_5ghz '48'
+#	list modes 'ap'
+#	list modes 'adhoc'
+#	option ap_ssid 'LiMe'
+#	option adhoc_ssid 'libre-mesh'                                         # Parametrizable with %M, %H
+#	option adhoc_bssid 'ca:fe:00:c0:ff:ee'
+#	option adhoc_mcast_rate_2ghz '24000'
+#	option adhoc_mcast_rate_5ghz '6000'
+#	option mesh_mesh_fwding '0'
+#	option mesh_mesh_id 'LiMe'
+
+
+### WiFi interface specific options ( override general option )
+
+#config wifi radio11
+#	list modes 'adhoc'
+#	option channel_2ghz '1'
+#	option channel_5ghz '48'
+#	option adhoc_mcast_rate '6000'
+#	option adhoc_ssid 'libre-mesh'
+#	option adhoc_bssid 'ca:fe:00:c0:ff:ee'
+
+#config wifi radio12
+#	list modes 'manual'                                                    # If you use manual protocol you must not specify other protocol, or your configuration will be broken!
+
+
+### Network interface specific options ( override general option )
+### Available protocols: bmx6, batadv, wan, lan, manual
+### proto:vlan_number works too ( something like bmx6:13 is supported )
+### If you use manual do not specify other protocols, may result in an unpredictable behavior/configuration (likely you loose connection to the node)
+
+#config net eth5
+#	option linux_name 'eth5'                                               # Should use this because interface name can contains dots like eth0.2 while uci section names cannot
+#	list protocols 'manual'
+
+
+### Ground routing specific sections
+### One section for each ground routing link
+
+#config hwd_gr link1
+#	option net_dev 'eth0'                                               # Plain ethernet device on top of which 802.1q vlan will be constructed
+#	option vlan '5'                                                     # Vlan id to use for this ground routing link, use little one because cheap switch doesn't supports big ids, this will bi used also as 802.1q vid
+#	option switch_dev 'switch0'                                         # If your ethernet device is connected to a switch chip you must specify it
+#	option switch_cpu_port '0'                                          # Refer to switch port map of your device on openwrt wiki to know CPU port index
+#	list switch_ports '4'                                               # List switch ports on with you want the vlan being passed
+
+
+### Proto BGP specific sections
+### One section for each BGP peer
+
+#config bgp_peer peer1
+#	option remoteIP '192.0.2.6'
+#	option remoteAS '65550'
+
+#config bgp_peer peer2
+#	option remoteIP '2001:db8::c001'
+#	option remoteAS '65549'
+
+-------------------------------------------------------------------------------
+
+
+.packages/lime-system/files/usr/lib/lua/lime/proto/lan.lua
+[source,lua]
+-------------------------------------------------------------------------------
+#!/usr/bin/lua
+
+lan = {}
+
+local network = require("lime.network")
+local libuci = require("uci")
+
+lan.configured = false
+
+function lan.configure(args)
+	if lan.configured then return end
+	lan.configured = true
+
+	local ipv4, ipv6 = network.primary_address()
+	local uci = libuci:cursor()
+	uci:set("network", "lan", "ip6addr", ipv6:string())
+	uci:set("network", "lan", "ipaddr", ipv4:host():string())
+	uci:set("network", "lan", "netmask", ipv4:mask():string())
+	uci:set("network", "lan", "proto", "static")
+	uci:set("network", "lan", "mtu", "1500")
+	uci:delete("network", "lan", "ifname")
+	uci:save("network")
+end
+
+function lan.setup_interface(ifname, args)
+	if args and args["nobridge"] then return end
+	if ifname:match("^wlan") then return end
+	if ifname:match(network.protoVlanSeparator.."%d+$") then return end
+
+	local uci = libuci:cursor()
+	local bridgedIfs = {}
+	local oldIfs = uci:get("network", "lan", "ifname") or {}
+	if type(oldIfs) == "string" then oldIfs = utils.split(oldIfs, " ") end
+	for _,iface in pairs(oldIfs) do
+		if iface ~= ifname then
+			table.insert(bridgedIfs, iface)
+		end
+	end
+	table.insert(bridgedIfs, ifname)
+	uci:set("network", "lan", "ifname", bridgedIfs)
+	uci:save("network")
+end
+
+function lan.bgp_conf(templateVarsIPv4, templateVarsIPv6)
+	local base_conf = [[
+protocol direct {
+	interface "br-lan";
+}
+]]
+	return base_conf
+end
+
+return lan
+
+-------------------------------------------------------------------------------
+
+
+.packages/lime-system/files/usr/lib/lua/lime/utils.lua
+[source,lua]
+-------------------------------------------------------------------------------
+#!/usr/bin/lua
+
+utils = {}
+
+local config = require("lime.config")
+
+
+function utils.split(string, sep)
+    local ret = {}
+    for token in string.gmatch(string, "[^"..sep.."]+") do table.insert(ret, token) end
+    return ret
+end
+
+function utils.stringStarts(string, start)
+   return (string.sub(string, 1, string.len(start)) == start)
+end
+
+function utils.stringEnds(string, _end)
+   return ( _end == '' or string.sub( string, -string.len(_end) ) == _end)
+end
+
+
+function utils.hex(x)
+    return string.format("%02x", x)
+end
+
+function utils.printf(fmt, ...)
+    print(string.format(fmt, ...))
+end
+
+function utils.isModuleAvailable(name)
+	if package.loaded[name] then 
+		return true
+	else
+		for _, searcher in ipairs(package.searchers or package.loaders) do
+			local loader = searcher(name)
+			if type(loader) == 'function' then
+				package.preload[name] = loader
+				return true
+			end
+		end
+		return false
+	end
+end
+
+function utils.applyMacTemplate16(template, mac)
+	for i=1,6,1 do template = template:gsub("%%M"..i, mac[i]) end
+	return template
+end
+
+function utils.applyMacTemplate10(template, mac)
+	for i=1,6,1 do template = template:gsub("%%M"..i, tonumber(mac[i], 16)) end
+	return template
+end
+
+function utils.applyHostnameTemplate(template)
+	local system = require("lime.system")
+	return template:gsub("%%H", system.get_hostname())
+end
+
+function utils.network_id()
+    local network_essid = config.get("wifi", "ap_ssid")
+    local netid = {}
+    local fd = io.popen('echo "' .. network_essid .. '" | md5sum')
+    if fd then
+        local md5 = fd:read("*a")
+        netid[1] = md5:match("^(..)")
+        netid[2] = md5:match("^..(..)")
+        netid[3] = md5:match("^....(..)")
+        fd:close()
+    end
+    return netid
+end
+
+function utils.applyNetTemplate16(template)
+	local netid = utils.network_id()
+	for i=1,3,1 do template = template:gsub("%%N"..i, netid[i]) end
+	return template
+end
+
+function utils.applyNetTemplate10(template)
+	local netid = utils.network_id()
+	for i=1,3,1 do template = template:gsub("%%N"..i, tonumber(netid[i], 16)) end
+	return template
+end
+
+
+--! This function is inspired to http://lua-users.org/wiki/VarExpand
+--! version: 0.0.1
+--! code: Ketmar // Avalon Group
+--! licence: public domain
+--! expand $var and ${var} in string
+--! ${var} can call Lua functions: ${string.rep(' ', 10)}
+--! `$' can be screened with `\'
+--! `...': args for $<number>
+--! if `...' is just a one table -- take it as args
+function utils.expandVars(s, ...)
+	local args = {...}
+	args = #args == 1 and type(args[1]) == "table" and args[1] or args;
+
+	--! return true if there was an expansion
+	local function DoExpand(iscode)
+		local was = false
+		local mask = iscode and "()%$(%b{})" or "()%$([%a%d_]*)"
+		local drepl = iscode and "\\$" or "\\\\$"
+		s = s:gsub(mask,
+			function(pos, code)
+				if s:sub(pos-1, pos-1) == "\\" then
+					return "$"..code
+				else
+					was = true
+					local v, err
+					if iscode then
+						code = code:sub(2, -2)
+					else
+						local n = tonumber(code)
+						if n then
+							v = args[n]
+						else
+							v = args[code]
+						end
+					end
+					if not v then
+						v, err = loadstring("return "..code)
+						if not v then error(err) end
+						v = v()
+					end
+					if v == nil then v = "" end
+					v = tostring(v):gsub("%$", drepl)
+					return v
+				end
+		end)
+		if not (iscode or was) then s = s:gsub("\\%$", "$") end
+		return was
+	end
+	repeat DoExpand(true); until not DoExpand(false)
+	return s
+end
+
+return utils
+
+-------------------------------------------------------------------------------
+
+
+.packages/lime-system/files/usr/lib/lua/lime/wireless.lua
+[source,lua]
+-------------------------------------------------------------------------------
+#!/usr/bin/lua
+
+local config = require("lime.config")
+local network = require("lime.network")
+local utils = require("lime.utils")
+local libuci = require("uci")
+local fs = require("nixio.fs")
+
+wireless = {}
+
+wireless.modeParamsSeparator=":"
+wireless.limeIfNamePrefix="lm_"
+wireless.ifnameModeSeparator="_"
+
+function wireless.get_phy_mac(phy)
+	local path = "/sys/class/ieee80211/"..phy.."/macaddress"
+	local mac = assert(fs.readfile(path), "wireless.get_phy_mac(..) failed reading: "..path):gsub("\n","")
+	return utils.split(mac, ":")
+end
+
+function wireless.clean()
+	print("Clearing wireless config...")
+	local uci = libuci:cursor()
+	uci:foreach("wireless", "wifi-iface", function(s) uci:delete("wireless", s[".name"]) end)
+	uci:save("wireless")
+end
+
+function wireless.scandevices()
+	local devices = {}
+	local uci = libuci:cursor()
+	uci:foreach("wireless", "wifi-device", function(dev) devices[dev[".name"]] = dev end)
+	return devices
+end
+
+function wireless.is5Ghz(radio)
+	local uci = libuci:cursor()
+	local hwmode = uci:get("wireless", radio, "hwmode") or "11ng"
+	if hwmode:find("a") then
+		return true
+	end
+	return false
+end
+
+wireless.availableModes = { adhoc=true, ap=true }
+function wireless.isMode(m)
+	return wireless.availableModes[m]
+end
+ 
+function wireless.createBaseWirelessIface(radio, mode, extras)
+--! checks("table", "string", "?table")
+--! checks(...) come from http://lua-users.org/wiki/LuaTypeChecking -> https://github.com/fab13n/checks
+
+	local radioName = radio[".name"]
+	local phyIndex = radioName:match("%d+")
+	local ifname = "wlan"..phyIndex..wireless.ifnameModeSeparator..mode
+	local wirelessInterfaceName = wireless.limeIfNamePrefix..ifname.."_"..radioName
+	local networkInterfaceName = network.limeIfNamePrefix..ifname
+
+	local uci = libuci:cursor()
+
+	uci:set("wireless", wirelessInterfaceName, "wifi-iface")
+	uci:set("wireless", wirelessInterfaceName, "mode", mode)
+	uci:set("wireless", wirelessInterfaceName, "device", radioName)
+	uci:set("wireless", wirelessInterfaceName, "ifname", ifname)
+	uci:set("wireless", wirelessInterfaceName, "network", networkInterfaceName)
+
+	if extras then
+		for key, value in pairs(extras) do
+			uci:set("wireless", wirelessInterfaceName, key, value)
+		end
+	end
+
+	uci:save("wireless")
+
+	return uci:get_all("wireless", wirelessInterfaceName)
+end
+
+function wireless.configure()
+	local specificRadios = {}
+	config.foreach("wifi", function(radio) specificRadios[radio[".name"]] = radio end)
+
+	local allRadios = wireless.scandevices()
+	for _,radio in pairs(allRadios) do
+		local radioName = radio[".name"]
+		local phyIndex = radioName:match("%d+")
+		if wireless.is5Ghz(radioName) then
+			freqSuffix = "_5ghz"
+			ignoredSuffix = "_2ghz"
+		else
+			freqSuffix = "_2ghz"
+			ignoredSuffix = "_5ghz"
+		end
+		local modes = config.get("wifi", "modes")
+		local options = config.get_all("wifi")
+
+		local specRadio = specificRadios[radioName]
+		if specRadio then
+			modes = specRadio["modes"]
+			options = specRadio
+		end
+
+		local uci = libuci:cursor()
+		uci:set("wireless", radioName, "disabled", 0)
+		uci:set("wireless", radioName, "channel", options["channel"..freqSuffix])
+		uci:save("wireless")
+
+		for _,modeArgs in pairs(modes) do
+			local args = utils.split(modeArgs, wireless.modeParamsSeparator)
+			local modeName = args[1]
+			
+			if modeName == "manual" then break end
+
+			local mode = require("lime.mode."..modeName)
+			local wirelessInterfaceName = mode.setup_radio(radio, args)[".name"]
+
+			local uci = libuci:cursor()
+
+			for key,value in pairs(options) do
+				local keyPrefix = utils.split(key, "_")[1]
+				local isGoodOption = ( (key ~= "modes")
+				                   and (not key:match("^%."))
+				                   and (not key:match("channel"))
+				                   and (not (wireless.isMode(keyPrefix) and keyPrefix ~= modeName))
+				                   and (not key:match(ignoredSuffix)) )
+
+				if isGoodOption then
+					local nk = key:gsub("^"..modeName.."_", ""):gsub(freqSuffix.."$", "")
+					if nk == "ssid" then
+						value = utils.applyHostnameTemplate(value)
+						value = utils.applyMacTemplate16(value, network.primary_mac())
+						value = string.sub(value, 1, 32)
+					end
+
+					uci:set("wireless", wirelessInterfaceName, nk, value)
+				end
+			end
+
+			uci:save("wireless")
+		end
+	end
+end
+
+return wireless
+
+-------------------------------------------------------------------------------

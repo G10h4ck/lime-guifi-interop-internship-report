@@ -1,5 +1,7 @@
 - *Ad Hoc*: The 802.11 standard specifies ``ad hoc'' mode, which allows the radio network interface card (NIC) to operate in what the standard refers to as an independent basic service set (IBSS) network configuration. With an IBSS, there are no access points. User devices communicate directly with each other in a peer-to-peer manner <<ref:wifiadhoc>>.
 
+- *Almquist shell*: The Almquist shell (also known as A Shell, sh and ash) is a lightweight Unix shell originally written by Kenneth Almquist in the late 1980s <<ref:wkpfash>>.
+
 - *Anycast*: Anycast is a network addressing and routing methodology in which datagrams from a single sender are routed to the topologically nearest node in a group of potential receivers, though it may be sent to several nodes, all identified by the same destination address <<ref:anycast>>.
 
 - *AP*: In computer networking, a wireless access point (AP) is a device that allows wireless devices to connect to a wired network using Wi-Fi, or related standards. The AP usually connects to a router (via a wired network) as a standalone device, but it can also be an integral component of the router itself. An AP is differentiated from a hotspot, which is the physical space where the wireless service is provided <<ref:wkpdap>>.
@@ -51,6 +53,8 @@
 - *LiMe*: Common abbreviation for Libre-Mesh <<ref:lime>>.
 
 - *Ln*: Abbreviation of layer n, it refers to Internet layers, as an example L2 refer to Ethernet the layer 2 of internet stack.
+
+- *Lua*: Lua is a lightweight multi-paradigm programming language designed as a scripting language with extensible semantics as a primary goal <<ref:lua>>.
 
 - *MAC address*: A media access control address (MAC address) is a unique identifier assigned to network interfaces for communications on the physical network segment <<ref:macaddress>>.
 

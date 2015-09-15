@@ -23,7 +23,7 @@ Testing of the new features in real environment and protocols parameters adjusti
 === BGP
 BGP (acronym of Border Gateway Protocol) is a standard routing protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet. BGP makes routing decisions based on paths, network policies, or rule-sets configured by a network administrator that is involved in making core routing decisions, because it needs information of each route reachability path to make decisions BGP is usually classified as a path vector protocol. Version 4 of BGP has been in use on the Internet since 1994, it's mayor improvement in respect to older version that are obsolete and unused on the Internet is the support for classless inter-domain routing (CIDR) and routes aggregation. +
 BGP may be used for routing within an AS. In this application it is referred to as Internal BGP, or iBGP. In contrast, the Internet application of the protocol may be referred to as Exterior Border Gateway Protocol, External BGP, or eBGP. +
-As BGP doesn't perform any type of neighbor discovery, peers are established by manual configuration. For each peer router a connection through TCP port 179 must be established, after the connection is established BGP daemons synchronize with peers by sending the whole routing information they have to peers, after this initial sync only updates are transmitted to peers.
+As BGP doesn't perform any type of neighbor discovery, peering are setup by manual configuration. For each peer router a connection through TCP port 179 must be established, after the connection is established BGP daemons synchronize with peers by sending the whole routing information they have to peers, after this initial sync only updates are transmitted to peers.
 
 === Guifi.net
 Guifi.net networks uses different routing protocols such as BGP, OSPF, OLSR, BMX6, BATMAN-adv, Babel and more.
@@ -36,9 +36,12 @@ As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ a
 While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new technology better suited for wireless community have emerged exposing many limitations of this model.
 
 === BIRD
+TODO: Introduce BIRD powerful filters.+
+
 BIRD is an open source implementation of multiple Internet routing protocols in form of a daemon for Unix like systems. It is distributed under the GNU General Public License. BIRD supports IPv4 or IPv6 as separate daemons <<ref:birdipvx>>, multiple routing tables <<ref:birdmultitable>>, and BGP, RIP and OSPF routing protocols, as well as statically defined routes. Its design differs significantly from the better known routing daemons, GNU Zebra and Quagga <<ref:birdwikipedia>>. Currently BIRD is included in many Linux distributions <<ref:birdwikipedia>> in particular into OpenWrt <<ref:birdowrt>>. +
 
 BIRD is used in several Internet exchanges as a route server <<ref:birdwikipedia>>, where it replaced Quagga because of its scalability issues <<ref:birdlinx>>.
+
 
 
 === BMX6
@@ -46,7 +49,7 @@ BMX6 is an open-source, mesh routing protocol, developed by Axel Neumann. It ori
 
 [[batman-adv]]
 === B.A.T.M.A.N. advanced
-B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2. While usually wireless routing protocol implementations operates on L3 which means they exchange routing information by sending IP packets and bring their routing decision into effect by manipulating the kernel routing table. Batman-adv operates entirely on L2, not only the routing information is transported using raw Ethernet frames but also the data traffic is handled by batman-adv. It encapsulates and forwards all traffic until it reaches the destination, hence emulating a virtual network switch of all nodes participating. Therefore to the upper level all nodes appear to be link local and are unaware of the network's topology as well as unaffected by lower level network changes. Operating as a L2 routing protocol as there is no _L2 routing table_ to manipulate, data frames must be processed directly by batman-adv and doing it in user-space would be very inefficient, as for each packet processed it would be +read()+ and +write()+ to the kernel and back causing multiple context switching that are computationally intensive <<ref:contextswitch>>, which limits the sustainable bandwidth especially on low-end devices. To have good support for these devices as well and an overall good efficiency, batman-adv is implemented as a Linux kernel module. This way batman-adv avoid the context switching costs and only introduces a negligible packet processing overhead even under a high load. <<ref:batmanadv>>
+B.A.T.M.A.N. advanced (often referenced as batman-adv) is an implementation of the B.A.T.M.A.N. routing protocol in form of a Linux kernel module operating on layer 2. While usually wireless routing protocol implementations operates on L3 which means they exchange routing information by sending IP packets and bring their routing decision into effect by manipulating the kernel routing table. Batman-adv operates entirely on L2, not only the routing information is transported using raw Ethernet frames but also the data traffic is handled by batman-adv. It encapsulates and forwards all traffic until it reaches the destination, hence emulating a virtual network switch of all nodes participating. Therefore to the upper level all nodes appear to be link local and are unaware of the network's topology as well as unaffected by lower level network changes. Operating as a L2 routing protocol as there is no _L2 routing table_ to manipulate, data frames must be processed directly by batman-adv and doing it in user-space would be very inefficient, as for each packet processed it would be +read()+ and +write()+ to the kernel and back causing multiple context switching that are computationally costly <<ref:contextswitch>>, which limits the sustainable bandwidth especially on low-end devices. To have good support for these devices as well and an overall good efficiency, batman-adv is implemented as a Linux kernel module. This way batman-adv avoid the context switching costs and only introduces a negligible packet processing overhead even under a high load. <<ref:batmanadv>>
 
 === qMp
 qMp do facilitate the creation of roaming enabled mesh networks, it is based on OpenWrt and BMX6 <<ref:qmp>>, qMp already supports configuration provisioning by guifi.net map _unsolclick_ for mesh parameters adjusting but it leave the interoperability with <<modelohibrido, {MdHd}>> mostly to manual static configuration done by the user <<ref:qmpmdhd>> or in rare cases to manually configured Quagga-BMX6 module that is unreliable, resource intensive and requires manual configuration. Moreover qMp is designed around BMX6, in a way that to add support for another routing protocol would imply a big refactoring of qMp code.
@@ -85,7 +88,7 @@ image::images/L3_network_nat_{imgExt}[align="center"]
 Legenda::
 - Blue lines: Mesh links between routers.
 - Purple directed lines: Upper layer connections.
-- Smart-phone 192.0.2.4: It can open connection non to other hosts like 198.51.100.3, but cannot receive connections because they get frustrated by NAT on his router.
+- Smart-phone 192.0.2.4: It can open connections towards non _natted_ hosts like 198.51.100.3, but cannot receive connections because they get frustrated by NAT on his router.
 - Smart-phone 198.51.100.3: It can receive connections from all hosts. It can open connections to all hosts but the the one towards the other smart-phone get frustrated by NAT.
 - Server 203.0.113.34: Same as smart-phone 198.51.100.3.
 - Documentation addresses conform to RFC 5737 <<ref:rfc5737>>.
@@ -169,7 +172,7 @@ Legenda::
 	- Grey lines: L3 links between ``frontier'' routers.
 
 ==== Software Architecture
-LiMe meta-firmware is structured as a set of OpenWrt packages, it provides a command line tool +lime-config+ that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their +clean()+ and +configure()+ methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole:
+LiMe meta-firmware is structured as a set of OpenWrt packages, it is licensed under the GNU General Public License v3 and written in Lua programming language in a simile-object-oriented style, the choice of Lua is not a matter of tastes but of convenience, many of OpenWrt libraries are written in Lua or provides binding to it, moreover Lua interpreter fits in few kilobytes <<ref:luavspy>> that is very important working with embedded devices, while it is particularly suitable for scripting it offer elegant multi-paradigm without making it bloated or unreadable. LiMe joint effort is not the first time multiple communities try to join forces to create a common firmware but the modular structure and the usage of Lua have determined its success adapting to different wireless communities needs without loose code readability, in contrast to previous efforts that where not modular or tended to have mostly unreadable code written for Almquist shell and other ones that tried to use C but ended up writing more code to deal with memory management then for the original objective, LiMe meta-firmware as of today offer more than thirty OpenWrt packages structured and written in a comprehensible manner. LiMe meta-firmware provides a command line tool +lime-config+ that when invoked simply delegate the work of updating the configurations to installed LiMe modules by calling their +clean()+ and +configure()+ methods, LiMe minimal installation already ships necessary modules but the architecture is meant to be extensible so more modules can be added if needed. LiMe modules are often modular themselves, an UML scheme may help the comprehension of LiMe architecture as a whole.
 
 [[fig:lime-system_UML]]
 .UML diagram of lime-system package.
@@ -196,7 +199,7 @@ Configure OpenWrt firewall if installed or iptables and ebtables according to Li
 Configure system general settings like host-name and other miscellaneous stuff.
 
 ===== Hardware detector: ground-routing
-Ground routing is a node setup similar to _{MdHd}_ in the sense of splitting routing and geographic linking task into different devices. In this setup a device running LiMe is in charge of routing while other devices justs deal with physic and link layer stuff. Those devices can keep their original fabric firmware, or being flashed with a plain OpenWrt image or even run a lite version of LiMe. The name ``ground routing'' came from the habit of routing enthusiasts, to keep the L1/L2 devices on which they do not usually change the configurations on the roof (necessary to have good WiFi links) while the ``ground router'', which is the subject of their experiments, is kept inside the house, ``on the ground'', so if the configuration changes accidentally disrupt connectivity to the router, physical access is simple and there is no need to access the roof for recovery. As this functionality is not needed in default setup +lime-hwd-ground-routing+ is distributed as a separate package and is not included in the default LiMe distribution.
+Ground routing is a node setup similar to _{MdHd}_ in the sense of splitting routing and geographic linking task into different devices. In this setup a device running LiMe is in charge of routing while other devices justs deal with physic and link layer stuff. Those devices can keep their original fabric firmware, or being flashed with a plain OpenWrt image or even run a stripped version of LiMe. The name ``ground routing'' came from the habit of routing enthusiasts, to keep the L1/L2 devices on which they do not usually change the configurations on the roof (necessary to have good WiFi links) while the ``ground router'', which is the subject of their experiments, is kept inside the house, ``on the ground'', so if the configuration changes accidentally disrupt connectivity to the router, physical access is simple and there is no need to access the roof for recovery. As this functionality is not needed in default setup +lime-hwd-ground-routing+ is distributed as a separate package and is not included in the default LiMe distribution.
 
 .UML diagram of lime-hwd-ground-routing package.
 image::images/lime-hwd-ground-routing_UML_{imgExt}[align="center"]
@@ -237,7 +240,7 @@ This protocol is shipped as an optional package +lime-proto-anygw+, but is insta
 .UML diagram of lime-proto-anygw package.
 image::images/lime-proto-anygw_UML_{imgExt}[align="center"]
 
-In WiFi networks usually when a client move and get far from the AP it is associated, if it sense better signal from another AP with the same SSID it is expected to automatically ->deassociate<- from the far node and associate to the near one. When during this process upper network layers, specifically the user, doesn't experience a connection interruption it is commonly referred as roaming <<ref:wkpdwlan>>. LiMe mesh networks does supports roaming at L2. In L2 roaming scenarios because the clients are usually configured via DHCP and it operates at an higher layer then roaming the client keep using the same gateway of when it associated first time without caring of it's position, this behavior may cause client packets be routed in a suboptimal way, moreover if the client keep roaming far away from the initial gateway it may experience low network performances.
+In WiFi networks usually when a client move and get far from the AP it is associated, if it sense better signal from another AP with the same SSID it is expected to automatically disassociate from the far node and associate to the near one. When during this process upper network layers, specifically the user, doesn't experience a connection interruption it is commonly referred as roaming <<ref:wkpdwlan>>. LiMe mesh networks does supports roaming at L2. In L2 roaming scenarios, because the clients are usually configured via DHCP and it operates at an higher layer then roaming, the client keep using the same gateway of when it associated first time without caring of it's position, this behavior may cause client's packets be routed in a suboptimal way, moreover if the client keep roaming far away from the initial gateway it may experience low network performances.
 
 .Roaming without anygw.
 image::images/suboptimal_roaming_{imgExt}[align="center"]
@@ -248,7 +251,7 @@ Legenda::
 - Green dot dashed line: Client packets routed at L2
 
 
-To avoid this unwanted behavior +lime-proto-anygw+ offer a light implementation of anycast gateway. Anygw builds the virtual Ethernet interface +anygw+ on top of <<proto:lan, LAN protocol>> clients access interface +br-lan+ using the Linux kernel module +macvlan+ <<ref:macvlan>><<ref:linuxswitching>>. When anycast gateway is enabled the first address of the mesh network subnet is reserved for anycast gateway operation, together with the IP also a crafted locally administered but valid *unicast* <<ref:macaddress>> MAC address is used, all anycast gateways on a LiMe L2 cloud share the same IP and MAC address.
+To avoid this unwanted behavior +lime-proto-anygw+ offer a light implementation of anycast gateway. Anygw builds the virtual Ethernet interface +anygw+ on top of <<proto:lan, LAN protocol>> client's access interface +br-lan+ using the Linux kernel module +macvlan+ <<ref:macvlan>><<ref:linuxswitching>>. When anycast gateway is enabled the first address of the mesh network subnet is reserved for anycast gateway operation, together with the IP also a crafted locally administered but valid *unicast* MAC address <<ref:macaddress>> is used, all anycast gateways on a LiMe L2 cloud share the same IP and MAC address.
 
 .+anygw+ addresses generation.
 [source, lua]
@@ -285,16 +288,16 @@ This protocol is shipped as part of +lime-system+ package as you can see in <<fi
 
 [[proto:lan]]
 ===== Protocol: lan
-As you can see in <<fig:lime-system_UML>> +lime.proto.lan+ is shipped as part of +lime-system+ package. LiMe LAN protocol is enabled by default and is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interface meant to give access to clients like wireless AP interfaces and Ethernet interfaces into +br-lan+.
+As you can see in <<fig:lime-system_UML>> +lime.proto.lan+ is shipped as part of +lime-system+ package. LiMe LAN protocol is enabled by default and is meant to configure the network local to the node, in the default configuration it is also in charge of giving access to the mesh network at layer 2 to clients next to the node. It configure the node main IPv4 and IPv6 and bridge all network interfaces meant to give access to clients like wireless AP interfaces and Ethernet interfaces into +br-lan+.
 
 ===== WiFi mode: adhoc
-As you can see in <<fig:lime-system_UML>> +lime.mode.adhoc+ is shipped as part of +lime-system+ package. LiMe WiFi mode adhoc is enabled by default and configure WiFi interfaces in adhoc mode that are used by upper layer protocols to establish links between LiMe nodes.
+As you can see in <<fig:lime-system_UML>> +lime.mode.adhoc+ is shipped as part of +lime-system+ package. LiMe WiFi mode adhoc is enabled by default and configures WiFi interfaces in adhoc mode that are used by upper layer protocols to establish links between LiMe nodes.
 
 ===== WiFi mode: ap
-As you can see in <<fig:lime-system_UML>> +lime.mode.ap+ is shipped as part of +lime-system+ package. LiMe WiFi mode ap is enabled by default and configure WiFi interfaces as an AP. Those interfaces in default configuration are used by upper layer protocols to provide access to clients, but it is possible to use them for creating links too.
+As you can see in <<fig:lime-system_UML>> +lime.mode.ap+ is shipped as part of +lime-system+ package. LiMe WiFi mode ap is enabled by default and configures WiFi interfaces as an AP. Those interfaces in default configuration are used by upper layer protocols to provide access to clients, but it is possible to use them for creating links too.
 
 ===== WiFi mode: ieee80211s
-As you can see in <<fig:lime-system_UML>> +lime.mode.ieee80211s+ is shipped as part of +lime-system+ package. LiMe WiFi mode ieee80211s is not enabled by default as +lime.mode.adhoc+ is generally preferred because it has been more tested over time. LiMe WiFi mode ieee80211s configure WiFi interfaces to create ieee80211s mode but with +mesh forwarding+ disabled, so ieee80211s is used only as link layer and not for packet forwarding that is delegated to upper layer protocols that take advantage of the WiFi interfaces created by +lime.mode.ieee80211s+ to establish links.
+As you can see in <<fig:lime-system_UML>> +lime.mode.ieee80211s+ is shipped as part of +lime-system+ package. LiMe WiFi mode ieee80211s is not enabled by default as +lime.mode.adhoc+ is generally preferred because it has been more tested over time. LiMe WiFi mode ieee80211s configures WiFi interfaces in ieee80211s mode but with +mesh forwarding+ disabled, so ieee80211s is used only as link layer and not for packet forwarding that is delegated to upper layer protocols that take advantage of the WiFi interfaces created by +lime.mode.ieee80211s+ to establish links.
 
 == Developed tools
 
@@ -365,7 +368,7 @@ protocol kernel {
 ]]
 -----------------------------
 
-Mesh routing protocols do usually have metrics to describe the quality of a path to a route, but BGP has not a similar concept, although it is possible to associate multiples attributes to BGP routes those aren't treated in an uniform way by different vendors implementations and in eBGP are often discarded or ignored <<ref:bgpattributediscard>>. Because there is no reliable way to convert _mesh quality_ of path to a comparable BGP attribute, I decided to take a conservative approach and try to give to BGP zones the false but always worse then reality information that all mesh paths are to avoid if possible. The basic idea is that if a pure BGP path exists it should be preferred to a path including mesh networks because BGP can at least hop on a pure BGP network but cannot understand if a mesh path is good or maybe the worse path possible. In eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending <<ref:bgpaspathprepending>> and it's of common usages in situation where someone want to share a route but artificially lowering the preference.
+Mesh routing protocols do usually have metrics to describe the quality of a path to a route, but BGP has not a similar concept, although it is possible to associate multiples attributes to BGP routes those aren't treated in an uniform way by different vendors implementations and in eBGP are often discarded or ignored <<ref:bgpattributediscard>>. Because there is no reliable way to convert _mesh quality_ of path to a comparable BGP attribute, I decided to take a conservative approach and try to give to BGP zones the false but always worse then reality information that all mesh paths are to avoid if possible. The basic idea is that if a pure BGP path exists it should be preferred to a path including mesh networks because BGP can at least count hops on a pure BGP network but cannot understand if a mesh path is good or maybe the worse path possible. In eBGP setups (like Guifi.net) the most reliable way to share a route with low preference is to artificially enlarge it's AS path, this technique is called AS-path-prepending <<ref:bgpaspathprepending>> and it's of common usages in situation where someone want to share a route but artificially lowering the preference.
 
 .Snippet of lime-proto-bgp code showing how mesh paths are avoided if possible.
 [source,lua]
@@ -378,7 +381,7 @@ for i=1,meshPenalty do
 end
 -----------------------------------------------------------------
 
-As in BGP direct interaction with network devices is almost absent it doesn't need any configuration for each interface so +lime.proto.bgp.setup_interface(ifname, args)+ is an empty method, this may seems a simplification but come with a not so hidden cost. BGP doesn't offer any mechanism of node discovering so for each BGP peer peering configuration must be generated by LiMe.
+As in BGP direct interaction with network devices is almost absent it doesn't need any configuration for each interface so +lime.proto.bgp.setup_interface(ifname, args)+ is an empty method, this may seems a cheep simplification but come with a not so cheap hidden cost, BGP doesn't offer any mechanism of node discovering so for each BGP peer peering configuration must be generated by LiMe.
 
 
 .Snippet of lime-proto-bgp code showing how peering configuration is generated for each BGP peer.
@@ -405,7 +408,7 @@ end
 config.foreach("bgp_peer", apply_peer_template)
 ----------------------------------------------------------------------------------------------
 
-While +lime.proto.bgp+ is responsible of configuring BGP routing specific parts like BGP peering and BIRD filters, it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new introduced callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
+While +lime.proto.bgp+ is directly responsible of configuring BGP routing specific parts like BGP peering and BIRD filters, it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new introduced callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
 
 
 === Protocol: bmx6
@@ -414,7 +417,7 @@ This package was already in charge of configuring BMX6 for L3 routing, now it al
 .UML diagram of lime-proto-bmx6 package, evidenced in green parts developed during the internship.
 image::images/lime-proto-bmx6_devel_UML_{imgExt}[align="center"]
 
-While BIRD have quite powerful route filters based on a C like language <<ref:birdfilters>>, in BMX6 +redistTable+ plugin is the mechanism of choice to learn routes. Some filter capability were already present in +redistTable+ but those were not enough for interoperability with BGP. In collaboration with BMX6 developer the +redistTable+ plugin has been extend to be capable of filtering routes by Linux kernel +proto+ number <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:863f58c>>. BMX6 routing protocols associate a metrics to describe the quality of a path to a route, BGP has not a similar concept it just know hop count, because there is no reliable way to convert BGP hop count to a comparable BMX6 metric, I have decided to take a conservative approach and try to give to BMX6 zones the false but always worse then reality information that all BGP paths are to avoid if possible. The basic idea is that if a pure BMX6 path exists it should be preferred to a path including BGP networks because BMX6 know the quality of a mesh path while it doesn't have enough information to know if a BGP path is good or maybe the worse path possible. To accomplish this self imposed requirement +redistTable+ is instructed to announce learned routes with low bandwidth.
+While BIRD has quite powerful route filters based on a C like language <<ref:birdfilters>>, in BMX6 +redistTable+ plugin is the mechanism of choice to learn routes. Some filter capability were already present in +redistTable+ but those were not enough for interoperability with BGP. In collaboration with BMX6 developer the +redistTable+ plugin has been extend to be capable of filtering routes by Linux kernel +proto+ number <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:863f58c>>. BMX6 routing protocols associate a metric to describe the quality of a path to a route, BGP has not a similar concept it just know hop count, because there is no reliable way to convert BGP hop count to a comparable BMX6 metric, I have decided to take a conservative approach and try to give to BMX6 zones the false but always worse then reality information that all BGP paths are to avoid if possible. The basic idea is that if a pure BMX6 path exists it should be preferred to a path including BGP networks because BMX6 know the quality of a mesh path while it doesn't have enough information to know if a BGP path is good or maybe the worse path possible. To accomplish this self imposed requirement +redistTable+ is instructed to announce learned routes with low bandwidth.
 
 .Importing BGP routes from a kernel table and announce them as low bandwidth.
 [source,bash]
@@ -446,7 +449,7 @@ Legenda::
 	- Documentation addresses conform to RFC 5737 <<ref:rfc5737>>.
 
 == Experimental results
-TODO: Include collected experiments data and performance graphs
+TODO: Include collected experiments data and performance graphs+
 
 === Interoperability use-cases
 Due to LiMe modular nature this development has many possible application that spread out of boundaries of this internship, in the following sections a brief analysis of more common use-cases on which the development has been focused is exposed.
@@ -455,6 +458,7 @@ Due to LiMe modular nature this development has many possible application that s
 ==== Mesh network as distribution
 In this scenario a BGP backbone is used as transport network while the mesh network is used as last mile distribution.
 
+.Simple exchange topology of a LiMe network used as last mile distribution.
 image::images/simple_exchange_topology_{imgExt}[align="center"]
 
 Legenda::
@@ -475,10 +479,12 @@ All those limitations are solved using the software developed during this intern
 ==== Mesh network with multiple exchanges
 This scenario is very common in high population density zones, small neighborhood community mesh network grow beyond the district boundaries gaining geographical proximity to multiple backbone nodes, as the number of user usually grow too as the network expand having just an exchange point become a bottleneck, in this case having multiple exchange point can improve the access bandwidth to upstream networks.
 
+.Multiple exchange between classic Guifi.net infrastructure and LiMe network example topology.
 image::images/multiple_exchanges_topology_{imgExt}[align="center"]
 
 This scenario in not practically manageable with past technology, the more exchange points are added the trickier it gets to manually write a configuration that works stably. During the internship an automatic solution has been developed although it hasn't been trivial, the usual Guifi.net eBGP setup is not enough as it causes routing loop <<ref:routeloop>> in this situation. When an host like +2001:DB8:9::4+ from the LiMe network send a packet to an host like +2001:DB8:1::3+ into BGP network the packet make his way to the destination without problems. Unfortunately is not the same when +2001:DB8:1::3+ send a packet to his friend +2001:DB8:9::4+. The packet is correctly routed toward the exchange +BGPx2+ but there because routes learned via BGP are preferred it's sent back to +BGP4+ expecting it have a better path for those packets. +BGP4+ again thinks that +BGPx2+ is the best next hop to reach +2001:DB8:9::4+ and forward the packet to +BGPx2+ and so on till the packet TTL is exhausted and one of the routers discard it.
 
+.Routing loop discarding packets in naive eBGP multiple exchange setup.
 image::images/multiple_exchanges_ebgp_loop_{imgExt}[align="center"]
 
 Legenda::
@@ -493,13 +499,14 @@ But what in detail causes this unwanted behavior? We can find the answer is in +
 2001:DB8:9::/64 dev bmxOut_BMX1 proto static metric 1024
 ---------------------------------------------------------------
 
-We can observe there are two routes towards +2001:DB8:9::/64+ one learned via BGP (the +proto bird+ ones) that have lower metric and one learned by BMX6 (the ones associated to +dev bmx*+) that have higher metric, thus the BIRD routes are always preferred. One could think that the problem could be fixed just by giving to BMX6 more preference but this tentative would just fail because it solves the loop in the BGP->BMX6 direction but it creates the exact opposite loop in BMX6->BGP direction. To solve this problem the classic way to solve this problem on BGP networks usually is adopt the iBGP setup. In a iBGP setup routers share the same ASN so the exchanges can recognize internal routes when they learn them form other eBGP routers and avoid adding them to the kernel routing table. To adopt iBGP solve the problem but with an unbearable cost for an auto-organized mesh network that is that each iBGP router must be configured to establish peering connections to each other router in a setup called _full-mesh_ where every router speaks to all other routers directly <<ref:wkpdbgp>>. At this point, no other solutions then iBGP has been found. I started investigating how iBGP works internally and I discovered that the _full-mesh_ peering is needed because every iBGP router need share the same routing information with all other iBGP routers <<ref:ebgpibgp>>. In our case as BMX6 is a proactive distance-vector routing daemon it already spreads all routes to all routes so I supposed that in our case the iBGP _full-mesh_ setup may be avoided, and empirical tests proved this supposition true. In fact loop is avoided and every host of both BGP and BMX6 networks can successfully reach every host of the whole Guifi.net (both BMX6 and BGP parts).
+We can observe there are two routes towards +2001:DB8:9::/64+ one learned via BGP (the +proto bird+ ones) that have lower metric and one learned by BMX6 (the ones associated to +dev bmx*+) that have higher metric, thus the BIRD routes are always preferred. One could think that the problem could be fixed just by giving to BMX6 more preference but this tentative would just fail because it solves the loop in the BGP->BMX6 direction but it creates the exact opposite loop in BMX6->BGP direction. The classic way to solve this problem on BGP networks usually is to adopt the iBGP setup. In a iBGP setup routers share the same ASN so the exchanges can recognize internal routes when they learn them form other eBGP routers and avoid re-adding them to the kernel routing table. To adopt iBGP solve the problem but with an unbearable cost for an auto-organized mesh network that is that each iBGP router must be configured to establish peering connections to each other router in a setup called _full-mesh_ where every router speaks to all other routers directly <<ref:wkpdbgp>>. At this point, no other solutions then iBGP has been found. I started investigating how iBGP works internally and I discovered that the _full-mesh_ peering is needed because every iBGP router need share the same routing information with all other iBGP routers <<ref:ebgpibgp>>. In our case as BMX6 is a proactive distance-vector routing daemon it already spreads all routes to all routes so I supposed that in our case the iBGP _full-mesh_ setup may be avoided, and empirical tests proved this supposition true. In fact loop is avoided and every host of both BGP and BMX6 networks can successfully reach every host of the whole Guifi.net (both BMX6 and BGP parts).
 
----------------------------------------------------------------
+.Relevant snippet of the resulting routing table using the ``smart'' iBGP-like setup.
+-------------------------------------------------------------------------------------
 2001:DB8:1::/64 via $BGP4 proto bird metric 0
 2001:DB8:1::/64 dev bmxOut_BGPx1 proto static metric 1024
 2001:DB8:9::/64 dev bmxOut_BMX1 proto static metric 1024
----------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
 ==== Mesh network as transport
 The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a leaf <<meshdistribution, distribution network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
@@ -508,12 +515,13 @@ image::images/mesh_as_transport_topology_{imgExt}[align="center"]
 
 This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
 
-==== Route count limitation
-BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 +redistTable+ plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem next BMX6 version node description will be structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used to incompatible changes between versions, this solution has been discussed at BattlemeshV8 <<ref:battlemesh>> has been implemented and is now in production at our offices in Barcelona.
+==== Solving the route count limitation
+BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 +redistTable+ plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem the new version of BMX6 version node description is structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used to incompatible changes between versions, this solution has been discussed at BattlemeshV8 <<ref:battlemesh>> with BMX6 developer which has implemented it and is now in production at our offices in Barcelona.
 
 [[bmx6:performance]]
 ==== Reducing the performance footprint
-BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. After doing some analysis we discovered the causes of this awkward behavior:
+BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load do not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. After doing some analysis we discovered the causes of this awkward behavior:
+
 - By default +redistTable+ do routes aggregation that is a CPU and memory intensive work and in our case as Guifi.net has thousands of routes it had a big impact on the performances, this has been been solved directly into +lime-proto-bmx6+ code.
 
 [source,lua]
@@ -521,7 +529,7 @@ BMX6 +redistTable+ as it was before this internship was not suitable to our need
 uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
 ---------------------------------------------------------
 
-- BMX6 +redistTable+ was reacting to every single change in the routing table causing lot of recalculation and propagation also of temporary changes, if a route was deleted by BIRD and then re-added in a fraction of seconds this caused BMX6 recalculating announcements and propagating both changes. To solve this more options to regulate the BMX6 behavior has been added directly in BMX6 code <<ref:bmxgit:52cfaad>><<ref:bmxgit:5e0d744>><<ref:bmxgit:2156de7>> and then configured by +lime-proto-bmx6+ only in cases where default configuration wasn't appropriated to Guifi.net needs.
+- BMX6 +redistTable+ was reacting to every single change in the routing table causing lot of recalculation and propagation also of temporary changes, if a route was deleted by BIRD and then re-added in a fraction of a second this caused BMX6 recalculating announcements and propagating both changes. To solve this more options to regulate the BMX6 behavior has been added directly in BMX6 code <<ref:bmxgit:52cfaad>><<ref:bmxgit:5e0d744>><<ref:bmxgit:2156de7>> and then configured by +lime-proto-bmx6+ only in cases where default configuration wasn't appropriated to Guifi.net needs.
 
 [source,lua]
 ---------------------------------------------------------
@@ -529,12 +537,15 @@ uci:set("bmx6", "general", "proactiveTunRoutes", "0")
 uci:set("bmx6", "general", "linkSignatureLen", "0")
 ---------------------------------------------------------
 
-== Conclusions
-TODO
-Thanks to the work done during this internship multiple BMX6 bugs and performance bottlenecks have been discovered during experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has fixed them in upstream code <<ref:owrtrouting:42d1982>>-<<ref:bmxgit:43873b8>>.
+== Conclusions and future developments
+TODO: This section should be expanded. +
+
+To achieve Libre-Mesh seamlessly inter-operate with Guifi.net _{MdHd}_ has opened new horizons for the Guifi.net growth, building mesh zones doesn't mean anymore to be relegated to last mile distribution, but to build at same time affordable and auto-configuring Guifi.net carrier networks and doing it with completely free as in freedom software <<ref:freesoftware>>. The possibility of using free software have big impact, as an example till today Guifi.net has experienced difficulty even to support IPv6 on carrier links because of proprietary routers required costly licenses upgrade to enable IPv6 support on their software, while this will never happen with a free as in freedom router, but this fact doesn't mean only IPv6 support. LiMe networks requires significantly less human intervention then _{MdHd}_ based networks, as node installation will require less technical work, lot of skilled Guifi.net enthusiasts and professionals will have more time to install more nodes or to do more non automatable work like research, this will probably foster even more Guifi.net growth. LiMe decentralized network model does allow more independence from centralized configuration provisioning tools that are in contrast with the idea of a non-hierarchic collaborative network managed directly by the its users like Guifi.net try to be. This works has also benefited other projects aside of LiMe, multiple BMX6 bugs and performance bottlenecks have been discovered during the experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has fixed them in upstream code <<ref:owrtrouting:42d1982>>-<<ref:bmxgit:43873b8>>, mesh networks in general now benefit of a maturer software stressfully tested with real world huge routing table.
 
 == Appendix: Code
-TODO
+All the code code written for Libre-Mesh has been published on its public repository <<ref:limerepo>> in references you can find the list of specific commits <<ref:limegit:8291374>>-<<ref:limegit:241f15a>>. All needed modification of BMX6 are already published on its public repository <<ref:bmx6repo>>, in references you can find the list of specific commits <<ref:owrtrouting:42d1982>>-<<ref:bmxgit:43873b8>>, <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:863f58c>>. The following reported source code is from the files changed into Libre-Mesh packages.
+
+include::code.asciidoc[]
 
 == Appendix: License
 This work is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License. +
@@ -552,5 +563,6 @@ include::glossary.asciidoc[]
 // Specify the section template avoid "References" being threated as a special section title (see User Guide 5.4.1) that cause an xmllint error
 [sect1]
 == References
+TODO: Order references +
 
 include::references.asciidoc[]

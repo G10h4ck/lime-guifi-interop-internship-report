@@ -33,15 +33,12 @@ This solution imply lot of manual work and a central provisioning server that kn
 [[modelohibrido]]
 ==== {MdHd}
 As of _{MdHd}_ community network nodes can belong to two categories: _{SpNd}s_ and _{Nd}s_, in this model _{Nd}s_ are not really nodes of the network as they do not do routing for other nodes of Guifi.net and just attach to a _{SpNd}s_, while _{SpNd}s_ do route <<ref:mdhdspnd>>. In _{SpNd}s_ usually a _Mikrotik routerboard_ is used as router while externals WiFi AP are configured as plain WDS bridge <<ref:mdhd>>, if two _{SpNd}s_ are connected by a WiFi link the router of each node see the router of the other node as if it was directly connected with an Ethernet cable. On top of the routers of each node BGP routing protocol is running, on each node connected BGP peering have to be established, each _{SpNd}_ has his own unique private ASN assigned by the Guifi.net Drupal based network map, in this setup each _{SpNd}_ of Guifi.net act as an AS with typical eBGP information exchange mode. +
-While BPG seems the more appropriate routing protocol for a neutral internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as chosing WiFi path with more bandwidth availabe or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new technology better suited for wireless community have emerged exposing many limitations of this model.
+While BPG seems the more appropriate routing protocol for a neutral Internet exchange point, wireless community networks have completely different needs that BGP cannot satisfy such as choosing WiFi path with more bandwidth available or automatic link establishment. _{MdHd}_ has helped Guifi.net to grow but over time new technology better suited for wireless community have emerged exposing many limitations of this model.
 
 === BIRD
-TODO: Introduce BIRD powerful filters.+
-
 BIRD is an open source implementation of multiple Internet routing protocols in form of a daemon for Unix like systems. It is distributed under the GNU General Public License. BIRD supports IPv4 or IPv6 as separate daemons <<ref:birdipvx>>, multiple routing tables <<ref:birdmultitable>>, and BGP, RIP and OSPF routing protocols, as well as statically defined routes. Its design differs significantly from the better known routing daemons, GNU Zebra and Quagga <<ref:birdwikipedia>>. Currently BIRD is included in many Linux distributions <<ref:birdwikipedia>> in particular into OpenWrt <<ref:birdowrt>>. +
-
-BIRD is used in several Internet exchanges as a route server <<ref:birdwikipedia>>, where it replaced Quagga because of its scalability issues <<ref:birdlinx>>.
-
+BIRD provide very powerful route filtering framework including a simple C like programming language. There are two objects in this language: filters and functions. Filters are interpreted by BIRD core when a route is being passed between protocols and routing tables. The filter language contains control structures such as +if+ and +case+, but it allows no loops. Filter gets the route, can read and write its attributes as needed and at the end, decides whether to pass the changed route through or whether to reject it. BIRD functions are meant to avoid code repetition. Functions can have parameters and they can define local variables. Recursion is not allowed. <<ref:birdfilters>> +
+BIRD is notorious for his good performances and for his lightweight design because of this it is used in several Internet exchanges as a route server <<ref:birdwikipedia>>, where it replaced Quagga because of its scalability issues <<ref:birdlinx>>.
 
 
 === BMX6

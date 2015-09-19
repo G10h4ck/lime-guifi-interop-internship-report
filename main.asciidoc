@@ -458,11 +458,12 @@ In this scenario a BGP backbone is used as transport network while the mesh netw
 image::images/simple_exchange_topology_{imgExt}[align="center"]
 
 Legenda::
-- Black routers: Routers running LiMe with pure mesh setup.
-- Red routers: Guifi.net routers configured as of _{MdHd}_.
-- Blue straight lines: Cabled mesh links.
-- Blue curvy dashed lines: WiFi mesh links.
-- Yellow straight lines: Guifi.net links as of _{MdHd}_.
+	- Black and red routers: Routers running LiMe doing routing exchange between BGP and BMX6
+	- Black routers: Routers running LiMe with pure mesh setup.
+	- Red routers: Guifi.net routers configured as of _{MdHd}_.
+	- Blue straight lines: Cabled mesh links.
+	- Blue curvy dashed lines: WiFi mesh links.
+	- Yellow straight lines: Guifi.net links as of _{MdHd}_.
 
 This use case is someway workable also with the pasts solution but with strong drawbacks:
 
@@ -507,6 +508,7 @@ We can observe there are two routes towards +2001:DB8:9::/64+ one learned via BG
 ==== Mesh network as transport
 The most important technical factor that slowed down LiMe adoption into Guifi.net is that the majority of preexistent network infrastructure is built following the _{MdHd}_ so when someone decide to extend Guifi.net infrastructure need to be compatible with _{MdHd}_, without the development done during this internship the only possible interoperability setup was having the mesh as a leaf <<meshdistribution, distribution network>>, while now it is possible to build Guifi.net backbone with LiMe being compatible both with mesh and BGP networks, it is even possible to use LiMe to fill the gap between isolated BGP network islands.
 
+.Mesh used as transport between two isolated BGP networks.
 image::images/mesh_as_transport_topology_{imgExt}[align="center"]
 
 This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
@@ -516,24 +518,64 @@ BMX6 store distribute routes in a shared structure called ``node description'' f
 
 [[bmx6:performance]]
 ==== Reducing the performance footprint
-BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load do not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. After doing some analysis we discovered the causes of this awkward behavior:
+BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load do not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. In those condition to analyze performances wasn't possible. After some performances fixes in upstream BMX6 code I have been able to see BMX6 running stably. So after setup the performance testbed <<fig:performacetestbed>> with multiple connections to both BGP based portion of Guifi.net and Libre-Mesh based portion of Guifi.net I have proceeded optimizing performance tweaking BMX6 configurations.
 
-image::images/routes_load_memory+128:0:0_{imgExt}[align="center"]
+[[fig:performacetestbed]]
+.Performance analysis testbed.
+image::images/performance_testbed_{imgExt}[align="center"]
 
-- By default +redistTable+ do routes aggregation that is a CPU and memory intensive work and in our case as Guifi.net has thousands of routes it had a big impact on the performances, this has been been solved directly into +lime-proto-bmx6+ code.
+Legenda::
+	- Black routers: Routers running LiMe with pure mesh setup.
+	- Black and red routers: Routers running LiMe doing routing exchange between BGP and BMX6
+	- Red routers: Guifi.net routers configured as of _{MdHd}_.
+	- Blue straight lines: Cabled mesh links.
+	- Blue curvy dashed lines: WiFi mesh links.
+	- Yellow straight lines: Guifi.net links as of _{MdHd}_.
+	- Server and smart-phone pinging each other.
+
+===== Default configuration
+Even if BMX6 run stably its performance impact in the default configuration is not acceptable, as we can observe in <<fig:performance0:1:896>> the system load on BGP&#8596;BMX6 exchanges too often exceed 1, and when it is under it still use more then half system resources living too few CPU time for other tasks such as packet forwarding.
+
+[[fig:performance0:1:896]]
+.Performance graph of default configuration.
+image::images/routes_load_memory+0:1:896_{imgExt}[align="center"]
+
+
+===== Route aggregation
+By default +redistTable+ do routes aggregation that is a CPU and memory intensive work and in our case as Guifi.net has thousands of routes it may have a big impact on the performances, disabling route aggregation is done directly into +lime-proto-bmx6+ code.
 
 [source,lua]
 ---------------------------------------------------------
 uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
 ---------------------------------------------------------
 
-- BMX6 +redistTable+ was reacting to every single change in the routing table causing lot of recalculation and propagation also of temporary changes, if a route was deleted by BIRD and then re-added in a fraction of a second this caused BMX6 recalculating announcements and propagating both changes. To solve this more options to regulate the BMX6 behavior has been added directly in BMX6 code <<ref:bmxgit:52cfaad>><<ref:bmxgit:5e0d744>><<ref:bmxgit:2156de7>> and then configured by +lime-proto-bmx6+ only in cases where default configuration wasn't appropriated to Guifi.net needs.
+[[fig:performance128:1:896]]
+.Performance graph without route aggregation.
+image::images/routes_load_memory+128:1:896_{imgExt}[align="center"]
+
+===== Proactive tunnels
+BMX6 +redistTable+ was reacting to every single change in the routing table causing lot of recalculation and propagation also of temporary changes, if a route was deleted by BIRD and then re-added in a fraction of a second this caused BMX6 recalculating announcements and propagating both changes. To solve this more options to regulate the BMX6 behavior has been added directly in BMX6 code <<ref:bmxgit:52cfaad>><<ref:bmxgit:5e0d744>> and then configured by +lime-proto-bmx6+ only in cases where default configuration wasn't appropriated to Guifi.net needs.
 
 [source,lua]
 ---------------------------------------------------------
 uci:set("bmx6", "general", "proactiveTunRoutes", "0")
+---------------------------------------------------------
+
+[[fig:performance128:0:896]]
+.Performance graph with route aggregation and proactive tunnels disabled.
+image::images/routes_load_memory+128:0:896_{imgExt}[align="center"]
+
+===== Link Signature
+<<ref:bmxgit:2156de7>>
+
+[source,lua]
+---------------------------------------------------------
 uci:set("bmx6", "general", "linkSignatureLen", "0")
 ---------------------------------------------------------
+
+[[fig:performance128:0:0]]
+.Performance graph with route aggregation, proactive tunnels and link signature disabled.
+image::images/routes_load_memory+128:0:0_{imgExt}[align="center"]
 
 == Conclusions and future developments
 TODO: This section should be expanded. +

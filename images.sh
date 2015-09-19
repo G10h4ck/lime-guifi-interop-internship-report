@@ -20,6 +20,8 @@ mkdir -p images
 grep -h ^image:: *.asciidoc | while read IMAGE_LINE ; do
 	GRAPHNAME="${IMAGE_LINE%%_{*}"
 	GRAPHNAME="${GRAPHNAME##*/}"
+	GRAPHPARAMS="${GRAPHNAME##*+}"
+	GRAPHNAME="${GRAPHNAME%%+*}"
 	FILE="$(ls graphics/${GRAPHNAME}.* | head -n 1)"
 	GRAPHTYPE="${FILE##*.}"
 
@@ -31,6 +33,12 @@ grep -h ^image:: *.asciidoc | while read IMAGE_LINE ; do
 			inkscape --without-gui --export-area-drawing ${INKSCAPE_SIZE} \
 				--export-png=images/${GRAPHNAME}${SUFFIX} \
 				images/${GRAPHNAME}.svg
+			;;
+		"gp")
+			gnuplot -e "datafile=\"graphics/data_${GRAPHNAME}.${GRAPHPARAMS}.dat\";" ${FILE} > images/${GRAPHNAME}.${GRAPHPARAMS}.svg
+			inkscape --without-gui --export-area-drawing ${INKSCAPE_SIZE} \
+				--export-png=images/${GRAPHNAME}+${GRAPHPARAMS}${SUFFIX} \
+				images/${GRAPHNAME}.${GRAPHPARAMS}.svg
 			;;
 		"png")
 			cp ${FILE} images/${GRAPHNAME}${SUFFIX}

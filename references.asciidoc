@@ -13,6 +13,7 @@
 - [[[ref:contextswitch]]] Wikipedia. 2015. Context switch. https://en.wikipedia.org/wiki/Context_switch
 - [[[ref:batmanadv]]] Open-mesh.org. 2015. B.A.T.M.A.N. advanced. http://www.open-mesh.org/projects/batman-adv/wiki/Wiki
 - [[[ref:qmp]]] Quick Mesh Project. 2015. Easy deployment of Mesh networks. http://qmp.cat/
+- [[[ref:qmpunsolclick]]] Jorge L. Florit. 2014. Integration of MANET/Mesh networks with qMp in the Guifi.net community. http://dev.qmp.cat/attachments/download/143/PFC_qMp-Guifi.pdf
 - [[[ref:qmpmdhd]]] Wiki Guifi.net. 2015. Node frontera amb qMp. http://ca.wiki.guifi.net/wiki/Node_frontera_amb_qMp
 - [[[ref:wkdpwmn]]] Wikipedia. 2015. Wireless mesh network. https://en.wikipedia.org/wiki/Wireless_mesh_network
 - [[[ref:wkpfinternetprotocolsuite]]] Wikipedia. 2015. Internet protocol suite. https://en.wikipedia.org/wiki/Internet_protocol_suite
@@ -47,6 +48,7 @@
 - [[[ref:bmxgit:b57edbe]]] Axel Neumann. 2015. table redist: CPU optimize redist_table_routes(). https://github.com/axn/bmx6/commit/7a825c2c744309037418389a8dc8d92f5b57edbe
 - [[[ref:bmxgit:8327e4b]]] Axel Neumann. 2015. table: less redist_table_routes debugging to syslog. https://github.com/axn/bmx6/commit/1ffda19b4accd02272e8c3b9fc6c1f0b68327e4b
 - [[[ref:bmxgit:863f58c]]] Axel Neumann. 2015. table --redistTableDelay=2200. https://github.com/axn/bmx6/commit/b6107880b5460625b7ce9359dbeac0cfe863f58c
+- [[[ref:bmxgit:ca9c380]]] Axel Neumann. 2015. hna redist table quagga ip: export, redistribute, and import tunnel routes using --proto --advProto --setProto subparameters. https://github.com/axn/bmx6/commit/36feab16656cb3b3dd9af8346c3bf6f98ca9c380
 - [[[ref:routeloop]]] Wikipedia. 2015. Routing loop problem. https://en.wikipedia.org/wiki/Routing_loop_problem
 - [[[ref:wkpdbgp]]] Wikipedia. 2015. Border Gateway Protocol. https://en.wikipedia.org/wiki/Border_Gateway_Protocol
 - [[[ref:ebgpibgp]]] Juniper Networks. 2015. IBGP and EBGP. https://www.juniper.net/techpubs/software/junos-es/junos-es93/junos-es-swconfig-interfaces-and-routing/ibgp-and-ebgp.html

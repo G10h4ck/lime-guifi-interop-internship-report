@@ -445,7 +445,6 @@ Legenda::
 	- Documentation addresses conform to RFC 5737 <<ref:rfc5737>>.
 
 == Experimental results
-TODO: Include collected experiments data and performance graphs+
 
 === Interoperability use-cases
 Due to LiMe modular nature this development has many possible application that spread out of boundaries of this internship, in the following sections a brief analysis of more common use-cases on which the development and experimentation has been focused is exposed.
@@ -570,24 +569,26 @@ While this behavior depends on network conditions too, in <<fig:performance128:0
 image::images/routes_load_memory+128:0:896_{imgExt}[align="center"]
 
 ==== Link Signature
-<<ref:bmxgit:2156de7>>
+Another aspect that may impact performances are the trusted networking features of BMX6 based on cryptography, those features, as examples, permits to filter out spoofed routing informations or to prefer paths made only of trusted nodes <<ref:bmxhotmesh>><<ref:bmxcryptopresentation>>. While those features are enable by default there was no option to disable them and Guifi.net LiMe setup doesn't take advantage of them so an option to permit to tweak them has been introduced in BMX6 <<ref:bmxgit:2156de7>>, and disabled in +lime-proto-bmx6+ code.
 
 [source,lua]
 ---------------------------------------------------------
 uci:set("bmx6", "general", "linkSignatureLen", "0")
 ---------------------------------------------------------
 
+As we can observe in <<fig:performance128:0:0>> this change caused a consistent CPU usage reduction, lowering system load to usual values even if the routing table is quite big.
+
 [[fig:performance128:0:0]]
-.Performance graph with route aggregation, proactive tunnels and link signature disabled.
+.Performance graph with route aggregation, proactive tunnels and link signature all disabled.
 image::images/routes_load_memory+128:0:0_{imgExt}[align="center"]
 
 == Conclusions and future developments
 TODO: This section should be expanded. +
 
-To achieve Libre-Mesh seamlessly inter-operate with Guifi.net _{MdHd}_ has opened new horizons for the Guifi.net growth, building mesh zones doesn't mean anymore to be relegated to last mile distribution, but to build at same time affordable and auto-configuring Guifi.net carrier networks and doing it with completely free as in freedom software <<ref:freesoftware>>. The possibility of using free software have big impact, as an example till today Guifi.net has experienced difficulty even to support IPv6 on carrier links because of proprietary routers required costly licenses upgrade to enable IPv6 support on their software, while this will never happen with a free as in freedom router, but this fact doesn't mean only IPv6 support. LiMe networks requires significantly less human intervention then _{MdHd}_ based networks, as node installation will require less technical work, lot of skilled Guifi.net enthusiasts and professionals will have more time to install more nodes or to do more non automatable work like research, this will probably foster even more Guifi.net growth. LiMe decentralized network model does allow more independence from centralized configuration provisioning tools that are in contrast with the idea of a non-hierarchic collaborative network managed directly by the its users like Guifi.net try to be. This works has also benefited other projects aside of LiMe, multiple BMX6 bugs and performance bottlenecks have been discovered during the experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has fixed them in upstream code <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:ca9c380>> <<ref:bmxgit:52cfaad>>-<<ref:bmxgit:2156de7>> <<ref:bmxgit:170a847>>-<<ref:bmxgit:43873b8>> mesh networks in general now benefit of a maturer software stressfully tested with real world huge routing table.
+To achieve Libre-Mesh seamlessly inter-operate with Guifi.net _{MdHd}_ has opened new horizons for the Guifi.net growth, building mesh zones doesn't mean anymore to be relegated to last mile distribution, but to build at same time affordable and auto-configuring Guifi.net carrier networks and doing it with completely free as in freedom software <<ref:freesoftware>>. The possibility of using free software have big impact, as an example till today Guifi.net has experienced difficulty even to support IPv6 on carrier links because of proprietary routers required costly licenses upgrade to enable IPv6 support on their software, while this will never happen with a free as in freedom router, but this fact doesn't mean only IPv6 support. LiMe networks requires significantly less human intervention then _{MdHd}_ based networks, as node installation will require less technical work, lot of skilled Guifi.net enthusiasts and professionals will have more time to install more nodes or to do more non automatable work like research, this will probably foster even more Guifi.net growth. LiMe decentralized network model does allow more independence from centralized configuration provisioning tools that are in contrast with the idea of a non-hierarchic collaborative network managed directly by the its users like Guifi.net try to be. This works has also benefited other projects aside of LiMe, multiple BMX6 bugs and performance bottlenecks have been discovered during the experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has fixed them in upstream code <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:ca9c380>> <<ref:bmxgit:52cfaad>> <<ref:bmxgit:5e0d744>> <<ref:bmxgit:2156de7>> <<ref:bmxgit:170a847>>-<<ref:bmxgit:43873b8>> mesh networks in general now benefit of a maturer software stressfully tested with real world huge routing table.
 
 == Appendix: Code
-All the code code written for Libre-Mesh has been published on its public repository <<ref:limerepo>> in references you can find the list of specific commits <<ref:limegit:8291374>>-<<ref:limegit:241f15a>>. All needed modification of BMX6 are already published on its public repository <<ref:bmx6repo>>, in references you can find the list of specific commits <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:ca9c380>> <<ref:bmxgit:52cfaad>>-<<ref:bmxgit:2156de7>> <<ref:bmxgit:170a847>>-<<ref:bmxgit:43873b8>> and on OpendWrt routing feed <<ref:owrtrouting>> in specific commits <<ref:owrtrouting:42d1982>>-<<ref:owrtrouting:2ebaa92>>. The following reported source code is from the files changed into Libre-Mesh packages.
+All the code code written for Libre-Mesh has been published on its public repository <<ref:limerepo>> in references you can find the list of specific commits <<ref:limegit:8291374>>-<<ref:limegit:241f15a>>. All needed modification of BMX6 are already published on its public repository <<ref:bmx6repo>>, in references you can find the list of specific commits <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:ca9c380>> <<ref:bmxgit:52cfaad>> <<ref:bmxgit:5e0d744>> <<ref:bmxgit:2156de7>> <<ref:bmxgit:170a847>>-<<ref:bmxgit:43873b8>> and on OpendWrt routing feed <<ref:owrtrouting>> in specific commits <<ref:owrtrouting:42d1982>>-<<ref:owrtrouting:2ebaa92>>. The following reported source code is from the files changed into Libre-Mesh packages.
 
 include::code.asciidoc[]
 

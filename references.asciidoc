@@ -55,6 +55,8 @@
 - [[[ref:battlemesh]]] Battlemesh Community. 2015. BattlemeshV8. http://battlemesh.org/BattleMeshV8
 - [[[ref:bmxgit:52cfaad]]] Axel Neumann. 2015. Table redist: filter out temporary table-route changes --redistTableInDelay --redistTableOutDelay. https://github.com/axn/bmx6/commit/59d09f44e7b9c04a9546a273fdc559e2d52cfaad
 - [[[ref:bmxgit:5e0d744]]] Axel Neumann. 2015. Hna: --proactiveTunRoutes=1. https://github.com/axn/bmx6/commit/56f1cb7a28e8eabd72c7500d4405296315e0d744
+- [[[ref:bmxhotmesh]]] Axel Neumann, Leandro Navarro, Roger Baig, Pau Escrich. 2012. http://bmx6.net/attachments/download/108/CNBuB2012_BMX6.pdf
+- [[[ref:bmxcryptopresentation]]] Axel Neumann. 2013. Advances of BMX6 Mesh Routing Protocol. http://bmx6.net/attachments/download/137/is4cwn2013-bmx6.pdf
 - [[[ref:bmxgit:2156de7]]] Axel Neumann. 2015. Sec: --linkSignatureLen.... https://github.com/axn/bmx6/commit/48b8674c2a4f7ed0f01b20ab62a35ba2f2156de7
 - [[[ref:freesoftware]]] Free Software Foundation. 2015. What is free software?. http://www.gnu.org/philosophy/free-sw.en.html
 - [[[ref:owrtrouting:42d1982]]] OpenWrt source code. 2015. Update to latest bmx6-master branch. https://github.com/openwrt-routing/packages/commit/cfefe9fccae2332d147fd9bae7c72d15a42d1982

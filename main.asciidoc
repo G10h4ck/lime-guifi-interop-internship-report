@@ -513,11 +513,11 @@ image::images/mesh_as_transport_topology_{imgExt}[align="center"]
 
 This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, giving the possibility to Guifi.net to jump into another phase of horizontal growth with less dependency from manual configuration work, skilled people will have time to work on more interesting and not repetitive configuration tasks, with consequent work quality improvement, costs reduction and increased network accessibility for the masses.
 
-==== Solving the route count limitation
+=== Solving the route count limitation
 BMX6 store distribute routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to resolve this problem was to enable route aggregation in BMX6 +redistTable+ plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem the new version of BMX6 version node description is structured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the draw back is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used to incompatible changes between versions, this solution has been discussed at BattlemeshV8 <<ref:battlemesh>> with BMX6 developer which has implemented it and is now in production at our offices in Barcelona.
 
 [[bmx6:performance]]
-==== Reducing the performance footprint
+=== Reducing the performance footprint
 BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load do not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. In those condition to analyze performances wasn't possible. After some performances fixes in upstream BMX6 code I have been able to see BMX6 running stably. So after setup the performance testbed <<fig:performacetestbed>> with multiple connections to both BGP based portion of Guifi.net and Libre-Mesh based portion of Guifi.net I have proceeded optimizing performance tweaking BMX6 configurations.
 
 [[fig:performacetestbed]]
@@ -533,7 +533,7 @@ Legenda::
 	- Yellow straight lines: Guifi.net links as of _{MdHd}_.
 	- Server and smart-phone pinging each other.
 
-===== Default configuration
+==== Default configuration
 Even if BMX6 run stably its performance impact in the default configuration is not acceptable, as we can observe in <<fig:performance0:1:896>> the system load on BGP&#8596;BMX6 exchanges too often exceed 1, and when it is under it still use more then half system resources living too few CPU time for other tasks such as packet forwarding.
 
 [[fig:performance0:1:896]]
@@ -541,7 +541,7 @@ Even if BMX6 run stably its performance impact in the default configuration is n
 image::images/routes_load_memory+0:1:896_{imgExt}[align="center"]
 
 
-===== Route aggregation
+==== Route aggregation
 By default +redistTable+ do routes aggregation that is a CPU and memory intensive work and in our case as Guifi.net has thousands of routes it may have a big impact on the performances, disabling route aggregation is done directly into +lime-proto-bmx6+ code.
 
 [source,lua]
@@ -553,7 +553,7 @@ uci:set("bmx6", "fromBird", "aggregatePrefixLen", "128")
 .Performance graph without route aggregation.
 image::images/routes_load_memory+128:1:896_{imgExt}[align="center"]
 
-===== Proactive tunnels
+==== Proactive tunnels
 BMX6 +redistTable+ was reacting to every single change in the routing table causing lot of recalculation and propagation also of temporary changes, if a route was deleted by BIRD and then re-added in a fraction of a second this caused BMX6 recalculating announcements and propagating both changes. To solve this more options to regulate the BMX6 behavior has been added directly in BMX6 code <<ref:bmxgit:52cfaad>><<ref:bmxgit:5e0d744>> and then configured by +lime-proto-bmx6+ only in cases where default configuration wasn't appropriated to Guifi.net needs.
 
 [source,lua]
@@ -565,7 +565,7 @@ uci:set("bmx6", "general", "proactiveTunRoutes", "0")
 .Performance graph with route aggregation and proactive tunnels disabled.
 image::images/routes_load_memory+128:0:896_{imgExt}[align="center"]
 
-===== Link Signature
+==== Link Signature
 <<ref:bmxgit:2156de7>>
 
 [source,lua]

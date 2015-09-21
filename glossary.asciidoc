@@ -98,6 +98,8 @@
 
 - *USB*: USB, short for Universal Serial Bus, is an industry standard developed in the mid-1990s that defines the cables, connectors and communications protocols used in a bus for connection, communication, and power supply between computers and electronic devices <<ref:wkpdusb>>.
 
+- *Vendor lock-in*: Vendor lock-in makes a customer dependent on a vendor for products and services, unable to use another vendor without substantial switching costs. <<ref:wikivendorlockin>>
+
 - *VLAN*: A virtual LAN (VLAN) is any broadcast domain that is partitioned and isolated in a computer network at the data link layer (L2) <<ref:wkpdvlan>>.
 
 - *WAN*: A wide area network (WAN) is a telecommunications network or computer network that extends over a large geographical distance <<ref:wkpdwan>>.

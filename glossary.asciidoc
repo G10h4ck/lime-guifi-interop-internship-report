@@ -14,6 +14,8 @@
 
 - *ASN*: An autonomous system number (ASN) is a unique number to identify an autonomous system (AS) and which enables that system to exchange exterior routing information with other neighboring autonomous systems <<ref:wkpdas>>.
 
+- *Babel*: The Babel routing protocol is a distance-vector routing protocol for Internet Protocol packet-switched networks that is designed to be robust and efficient on both wireless mesh networks and wired networks <<ref:wkpdbabel>>.
+
 - *BGP*: Border Gateway Protocol (BGP) is a protocol designed to exchange routing and reachability information between autonomous systems (AS) on the Internet <<ref:bgprfc>>.
 
 - *BIRD*: BIRD Internet Routing Daemon is a network routing software providing implementations of Border Gateway Protocol (BGP), Open Shortest Path First (OSPF) and others routing protocols <<ref:birdwikipedia>>.
@@ -66,7 +68,11 @@
 
 - *NIC*: A network interface controller (NIC) is a computer hardware component that connects a computer to a computer network <<ref:wkpdnic>>.
 
+- *OLSR*: The Optimized Link State Routing Protocol (OLSR) is an IP routing protocol optimized for mobile ad hoc networks, which can also be used on other wireless ad hoc networks <<ref:olsr>>.
+
 - *OpenWrt*: OpenWrt is an operating system based on the Linux kernel, primarily used on embedded devices to route network traffic. All components OpenWrt ships are optimized for size, to be small enough for fitting into the limited storage and memory available in home routers <<ref:owrt>>.
+
+- *OSPF*: Open Shortest Path First (OSPF) is a routing protocol for Internet Protocol (IP) networks. It uses a link state routing algorithm and falls into the group of interior routing protocols, operating within a single autonomous system (AS) <<ref:wkpdospf>>.
 
 - *Peering*: In computer networking, peering is a voluntary interconnection of administratively separate Internet networks for the purpose of exchanging traffic between the users of each network <<ref:wkpdpeering>>.
 

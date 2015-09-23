@@ -128,6 +128,7 @@
 - [[[ref:wkpdapi]]] Wikipedia. 2015. Application programming interface. https://en.wikipedia.org/wiki/Application_programming_interface
 - [[[ref:wkpdarp]]] Wikipedia. 2015. Address Resolution Protocol. https://en.wikipedia.org/wiki/Address_Resolution_Protocol
 - [[[ref:wkpdas]]] Wikipedia. 2015. Autonomous system (Internet). https://en.wikipedia.org/wiki/Autonomous_system_%28Internet%29
+- [[[ref:wkpdbabel]]] Wikipedia. 2015. Babel (protocol). https://en.wikipedia.org/wiki/Babel_%28protocol%29
 - [[[ref:bgprfc]]] The Internet Society. 2006. A Border Gateway Protocol 4 (BGP-4). https://tools.ietf.org/html/rfc4271
 - [[[ref:wkpdbroadcast]]] Wikipedia. 2015. Broadcasting (networking). https://en.wikipedia.org/wiki/Broadcasting_%28networking%29
 - [[[ref:wkpdbssid]]] Wikipedia. 2015. Basic service set identification (BSSID). https://en.wikipedia.org/wiki/Service_set_%28802.11_network%29#Basic_service_set_identification_.28BSSID.29
@@ -146,8 +147,10 @@
 - [[[ref:lua]]] Lua.org. 2015. About Lua. http://www.lua.org/about.html
 - [[[ref:wkpdmesh]]] Wikipedia. 2015. Mesh networking. https://en.wikipedia.org/wiki/Mesh_networking
 - [[[ref:wkpdnetlink]]] Wikipedia. 2015. Netlink. https://en.wikipedia.org/wiki/Netlink
-- [[[ref:wkpdnic]]] Wikipedia. 2015. Network interface controller. https://en.wikipedia.org/wiki/Network_interface_controller.
+- [[[ref:wkpdnic]]] Wikipedia. 2015. Network interface controller. https://en.wikipedia.org/wiki/Network_interface_controller
+- [[[ref:olsr]]] OLSR community. 2015. OLSR Web Site. http://www.olsr.org
 - [[[ref:owrt]]] OpenWrt community. 2015. OpenWrt. https://openwrt.org/
+- [[[ref:wkpdospf]]] Wikipedia. 2015. Open Shortest Path First. https://en.wikipedia.org/wiki/Open_Shortest_Path_First
 - [[[ref:wkpdpeering]]] Wikipedia. 2015. Peering. https://en.wikipedia.org/wiki/Peering
 - [[[ref:wkpdquagga]]] Wikipedia. 2015. Quagga (software). https://en.wikipedia.org/wiki/Quagga_%28software%29
 - [[[ref:owrtwireless]]] OpenWrt Wiki. 2015. Wireless configuration. http://wiki.openwrt.org/doc/uci/wireless

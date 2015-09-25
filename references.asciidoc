@@ -167,7 +167,7 @@
 - [[[ref:wkpdunicast]]] Wikipedia. 2015. Unicast. https://en.wikipedia.org/wiki/Unicast
 - [[[ref:wkpdusb]]] Wikipedia. 2015. USB. https://en.wikipedia.org/wiki/USB
 - [[[ref:wikivendorlockin]]] Wikipedia. 2015. Vendor lock-in. https://en.wikipedia.org/wiki/Vendor_lock-in
-- [[[ref:wkpdvlan]]] Wikipedia. 2015. Virual LAN. https://en.wikipedia.org/wiki/Virtual_LAN
+- [[[ref:wkpdvlan]]] Wikipedia. 2015. Virtual LAN. https://en.wikipedia.org/wiki/Virtual_LAN
 - [[[ref:wkpdwan]]]  Wikipedia. 2015. Wide area network. https://en.wikipedia.org/wiki/Wide_area_network
 - [[[ref:wkpdwds]]] Wikipedia. 2015. Wireless distribution system. https://en.wikipedia.org/wiki/Wireless_distribution_system
 - [[[ref:wkpdwifi]]] Wikipedia. 2015. Wi-Fi. https://en.wikipedia.org/wiki/Wi-Fi

@@ -59,6 +59,8 @@ To accomplish his goal LiMe meta-firmware have an highly modular design and impl
 ==== Network Architecture
 The LiMe network architecture is a communication network of radio and cabled nodes organized in a mesh-like topology. LiMe network architecture has lot in common to wireless mesh network <<ref:wkdpwmn>> but it provide further optimization and scalability taking advantage of the layered structure of the Internet protocol suite <<ref:wkpfinternetprotocolsuite>>. The creation of <<batman-adv, B.A.T.M.A.N. advanced>> has fostered the debate in community networks if it is better to build the mesh network with L2 routing protocols (like batman-adv) or with L3 routing protocols (like Babel, BMX6, OLSR). LiMe developers recognize the bad and the good parts of both worlds (L2/L3) and have decided to get the best of them. While LiMe let the community choice what protocol they prefer to use the default distribution include both batman-adv and BMX6 operating at same time but with different objectives.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 ===== L2 cloud
 LiMe developers refers to L2 cloud (or just cloud) as a community network part in which the same broadcast domain is shared. A client connected to a cloud behave like if it is connected on the same Ethernet switch <<ref:wkpdethswitch>> together with all other hosts in the same cloud, all applications that take advantage of being connected to a LAN (as example: for neighbor discovery) can be used seamlessly on a cloud. As the broadcast domain is shared a client can roam without upper layer connectivity interruption across nodes of the same cloud because the assigned IP is still valid and the gateway is still ``directly'' reachable. On a cloud because all hosts share the same broadcast domain broadcast packets like ARP requests are flooded to the whole cloud <<ref:wkpdbroadcstdoimain>>, this pose limits to the scalability of a cloud, moreover sharing the same broadcast domain mean that typical L2 attacks such as ARP spoofing are possible <<ref:wkpdarpspoofing>>. Those two drawbacks of operating at L2 limits de facto the dimension of a cloud. Despite LiMe developers suggests to avoid to build too big L2 clouds around the world exists community networks using LiMe with L2 clouds spreading on entire small cities without noticing critical problems.
 
@@ -69,6 +71,8 @@ Legenda::
 - Black routers: LiMe router that offer WiFi connectivity.
 - Blue lines: Mesh links between routers.
 - Persons with smartphone: Visitors accessing ``Guia Multimèdia del Jardí Botànic'' geolocalization capable web application via the WiFi connectivity provided by Libre-Mesh.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ===== L3 network
 LiMe developers refers to L3 network (or just network) as a community network part that may contain multiple broadcast domain and in which packet routing between them is done at L3. From the start LiMe has been bred with IPv6 as L3 reference protocol in mind but as of today important applications and a big part of Internet still rely on IPv4 support so LiMe does support both of them implementing a complete dual stack setup. Each broadcast domain must use one or more unique subnets that doesn't overlap with subnets used in other broadcast domains of the same network. Another key concept of LiMe is to build horizontal networks in which there is no discrimination between clients and servers. On a LiMe network every host connected can at same time offer services or be client of services offered by other hosts, because of that bandwidth offered to hosts is symmetric and NAT usage is banned.
@@ -100,6 +104,8 @@ Legenda::
 - Purple directed lines: Upper layer connections. All hosts con open and receive connections each others.
 - Documentation addresses conform to RFC 3849 <<ref:rfc3849>>.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 ===== Completing the puzzle
 While in LiMe L1 isn't used for packet forwarding, L2 clouds show their limits as they grow oversize and L3 networks feel an unnecessary complication when they shrink too much. LiMe try to take the best from all of them. LiMe developers suggests to extends L2 clouds till the zone keep having homogeneous requirements, so it can be handled with common policies, moreover the probability to suffer a L2 cloud split must remain low enough, another factor to keep in mind is that if a L2 cloud grow too much broadcast packets will start to be significants bandwidth consumers and this is usually unwanted. Typical suggested L2 clouds can spread across areas like a school, a public garden or a small village. L2 clouds doesn't have mechanisms to connect each other by them self, at this point L3 network start to play his main role, to connect L2 cloud neighborhood each other. While hosts from different cloud can connect each others, as the broadcast domain is split broadcast traffic doesn't propagate. L3 networks moreover can afford splits and rejoins seamlessly. All of this that can seems some kind of ``network magics'' is actually done automatically by LiMe and in a quite understandable way thanks to its modular network and software architecture. +
 Let's dive into it from the ground up: +
@@ -114,6 +120,8 @@ Legenda::
 	- Black routers: LiMe routers on multiple clouds.
 	- Blue lines: L1 links between routers.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 L1 + L2::
 	Each cloud run L2 routing protocol (by default batman-adv) on top of a different 802.1ad VLAN, so although at L1 different clouds can overlap and connect each other there is no visibility from batman-adv point of view, this creates different broadcast domains also for hosts connected to different clouds.
 
@@ -127,6 +135,8 @@ Legenda::
 	- Orange lines: L2 links of cloud 4.
 	- Fuchsia lines: L2 links of cloud 9.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 L1 + L3::
 	All nodes run the L3 routing protocol (by default BMX6) on the same 802.1ad VLAN, so where there is a L1 link a L3 link exists too. This permits different clouds to automatically connect each other.
 
@@ -137,6 +147,8 @@ Legenda::
 	- Black routers: LiMe routers on multiple clouds.
 	- Blue lines: L1 links between routers.
 	- Grey lines: L3 links between routers.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 L1 + L2 + L3::
 	Joining all pieces together we obtain what usually a community network using LiMe looks like. A bunch of roaming enabled clouds that route internal traffic at L2 and use L3 for communication outside the cloud.
@@ -152,6 +164,8 @@ Legenda::
 	- Orange lines: L2 links of cloud 4.
 	- Fuchsia lines: L2 links of cloud 9.
 	- Grey lines: L3 links between routers.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 L1 + L2 + L3 over L2::
 	A further yet unexplored setup is to automatically enable L3 routing only on nodes that connects multiple cloud and take advantage of the L2 cloud to exchange L3 information instead of use all L1 links, intuitively this could improve scalability but at least a prototype implementation and some empirical data is needed before feasibility could be evaluated.
@@ -194,6 +208,8 @@ Configure OpenWrt firewall if installed or iptables and ebtables according to Li
 ===== Module: system
 Configure system general settings like host-name and other miscellaneous stuff.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 ===== Hardware detector: ground-routing
 Ground routing is a node setup similar to _{MdHd}_ in the sense of splitting routing and geographic linking task into different devices. In this setup a device running LiMe is in charge of routing while other devices justs deal with physic and link layer stuff. Those devices can keep their original fabric firmware, or being flashed with a plain OpenWrt image or even run a stripped version of LiMe. The name ``ground routing'' came from the habit of routing enthusiasts, to keep the L1/L2 devices on which they do not usually change the configurations on the roof (necessary to have good WiFi links) while the ``ground router'', which is the subject of their experiments, is kept inside the house, ``on the ground'', so if the configuration changes accidentally disrupt connectivity to the router, physical access is simple and there is no need to access the roof for recovery. As this functionality is not needed in default setup +lime-hwd-ground-routing+ is distributed as a separate package and is not included in the default LiMe distribution.
 
@@ -201,6 +217,8 @@ Ground routing is a node setup similar to _{MdHd}_ in the sense of splitting rou
 image::images/lime-hwd-ground-routing_UML_{imgExt}[align="center"]
 
 When invoked by +lime.hardware_detection+, +lime.hwd.ground_routing.clean()+ clean outdated ground routing sections, then +lime.hwd.ground_routing.detect_hardware()+ creates ground routing configuration sections that eventually can include 802.11q interfaces or hardware switch configurations <<ref:owrthwswitch>><<ref:owrtswitch>>, according to node owner needs and hardware capabilities. In contrast to _{MdHd}_ and Ninix.org _Routing a terra_ that are meant for a specific routing protocol (BGP the first <<ref:mdhd>>, and OLSR the latter <<ref:nnxgr>>) LiMe Ground Routing is routing protocol agnostic, thanks to the LiMe modular structure it is focused just on preparing the L1/L2 setup on the LiMe router and then the upper layer routing modules treat L2 interfaces created by Ground Routing the same as any other L2 interface <<ref:limegr>>. This permit to LiMe networks to use any routing protocol on top of a Ground Routing setup and not being limited to a specific routing protocol, thanks to this abstraction LiMe can also ``emulate'' Ninix.org _Routing a terra_ just installing both +lime-hwd-ground-routing+ and +lime-proto-olsr+, and Guifi.net _{MdHd}_ just installing both +lime-hwd-ground-routing+ and +lime-proto-bgp+ that is part of the work done during this internship.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ===== Hardware detector: openwrt-wan
 This hardware detector is shipped as an optional package +lime-hwd-openwrt-wan+, but is installed and enabled by the default in LiMe distribution.
@@ -219,6 +237,8 @@ uci_o:set_savedir("/dev/null")
 local ifname = uci_o:get("network", "wan", "ifname")
 ---------------------------------------------------------
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 ===== Hardware detector: usb-radio
 This hardware detector is distributed as an optional package +lime-hwd-usbradio+, it is in charge of detecting WiFi USB radio.
 
@@ -229,6 +249,8 @@ Most consumer routers features one or more USB ports, to setup print servers or 
 
 ===== Protocol: adhoc
 This protocol is shipped as part of +lime-system+ package as you can see in <<fig:lime-system_UML>> and it's enabled by default, it is charge of just generating the network configuration that bring up L2 interfaces corresponding to L1 radio interfaces configured as of _LiMe WiFi Mode_ +adhoc+.
+
+// Breaking page here do stuff even worser.
 
 ===== Protocol: anygw
 This protocol is shipped as an optional package +lime-proto-anygw+, but is installed and enabled by the default in LiMe distribution.
@@ -264,6 +286,12 @@ In this way when a client sends a packets directed outside it's cloud it gets ``
 .Roaming with anygw.
 image::images/anygw_roaming_{imgExt}[align="center"]
 
+Legenda::
+- Blue dashed lines: Mesh links
+- Purple dot dashed line: Client packets routed at L3
+- Green dot dashed line: Client packets routed at L2
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ===== Protocol: batadv
 This protocol is shipped as an optional package +lime-proto-batadv+, but is installed and enabled by the default in LiMe distribution. It configures batman-adv to create LiMe L2 clouds, and setup 802.1ad VLAN as needed by LiMe setup.
@@ -271,7 +299,7 @@ This protocol is shipped as an optional package +lime-proto-batadv+, but is inst
 .UML diagram of package lime-proto-batadv.
 image::images/lime-proto-batadv_UML_{imgExt}[align="center"]
 
-
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 ===== Protocol: bmx6
 This protocol is shipped as an optional package +lime-proto-bmx6+, but is installed and enabled by the default in LiMe distribution. It configures BMX6 for L3 routing between LiMe L3 networks and eventually with upstream connection, it also setup 802.1ad VLAN for BMX6 as needed by LiMe setup.
@@ -294,6 +322,8 @@ As you can see in <<fig:lime-system_UML>> +lime.mode.ap+ is shipped as part of +
 
 ===== WiFi mode: ieee80211s
 As you can see in <<fig:lime-system_UML>> +lime.mode.ieee80211s+ is shipped as part of +lime-system+ package. LiMe WiFi mode ieee80211s is not enabled by default as +lime.mode.adhoc+ is generally preferred because it has been more tested over time. LiMe WiFi mode ieee80211s configures WiFi interfaces in ieee80211s mode but with +mesh forwarding+ disabled, so ieee80211s is used only as link layer and not for packet forwarding that is delegated to upper layer protocols that take advantage of the WiFi interfaces created by +lime.mode.ieee80211s+ to establish links.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 == Developed tools
 
@@ -341,6 +371,8 @@ end
 
 .UML diagram of lime-proto-anygw package, evidenced in green parts developed during the internship.
 image::images/lime-proto-anygw_devel_UML_{imgExt}[align="center"]
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 [[proto:bgp]]
 === Protocol: bgp
@@ -406,6 +438,7 @@ config.foreach("bgp_peer", apply_peer_template)
 
 While +lime.proto.bgp+ is directly responsible of configuring BGP routing specific parts like BGP peering and BIRD filters, it delegates through the LiMe modularization pattern to the others _LiMe Routing Protocol_ the specific configuration needed to make possible to automatize the inter-operation between each specific +lime.proto+ and BGP, this has been accomplished calling for each of them the new introduced callback +<<lime:proto:bgp_conf, lime.proto.bgp_conf(...)>>+ and collecting the returned snippets into BIRD configuration file.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 === Protocol: bmx6
 This package was already in charge of configuring BMX6 for L3 routing, now it also generate configuration for routes exchange between BGP and BMX6 networks, although it is not much code it has required time for investigation and for experimental tuning. The problems discovered during the experimental phase wasn't intrinsic of this module code, but were mainly <<bmx6:performance, BMX6 performance bottlenecks>> exposed by the configuration generated by this module.
@@ -442,6 +475,8 @@ Legenda::
 	- Yellow arrows: Routing information flowing between kernel and process via socket API.
 	- Cyan arrows: Routing information flowing between different routers via IP.
 	- Documentation addresses conform to RFC 5737 <<ref:rfc5737>>.
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 [[experimentalresults]]
 == Experimental results
@@ -515,6 +550,8 @@ This will certain encourage LiMe adoption and maybe finally obsolete _{MdHd}_, g
 === Solving the route count limitation
 BMX6 store distributed routes in a shared structure called ``node description'' for performance reasons the size of this structure is limited and it's not enough to contain the whole Guifi.net BGP routing table, a first approach to solve this problem was to enable route aggregation in BMX6 +redistTable+ plug-in, but despite the high CPU usage the size of the table was reduced only by half and that was not enough to fit inside a ``node description'', moreover the high CPU load caused timeouts in communication between BMX6 and Linux kernel causing BMX6 to crash. To solve this problem in the new version of BMX6 the ``node description'' has been restructured like a linked list so the node description can contain a pointer to another structure if just one is not enough to store all the needed informations, the only drawback is that this is not compatible with past versions of BMX6 but it doesn't represents a blocking problem because BMX6 users are used to incompatible changes between versions, this solution has been discussed at BattlemeshV8 <<ref:battlemesh>> with BMX6 developer which has implemented it and is now in production at our offices in Barcelona.
 
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 [[bmx6:performance]]
 === Reducing the performance footprint
 BMX6 +redistTable+ as it was before this internship was not suitable to our needs in fact because it was not ready to handle a big routing table it was using 100% CPU all the time. The high CPU load do not only was stressing our little routers but causing them to have high response time and that was interpreted by other routers as if the link was performing really bad, this caused routers loose connectivity each others. In those condition to further analyze performances wasn't possible. After some performances fixes in upstream BMX6 code I have been able to see BMX6 running stably. So after setup the performance testbed <<fig:performacetestbed>> with multiple connections to both BGP based portion of Guifi.net and Libre-Mesh based portion of Guifi.net I have proceeded optimizing performance tweaking BMX6 configurations.
@@ -532,6 +569,8 @@ Legenda::
 	- Yellow straight lines: Guifi.net links as of _{MdHd}_.
 	- Server and smart-phone pinging each other.
 
+// Breaking page here do stuff even worser.
+
 ==== Default configuration
 Even if BMX6 run stably its performance impact in the default configuration is not acceptable, as we can observe in <<fig:performance0:1:896>> the system load on BGP&#8596;BMX6 exchanges too often exceed 1, and when it is under it still use more then half system resources living too few CPU time for other tasks such as packet forwarding.
 
@@ -539,6 +578,7 @@ Even if BMX6 run stably its performance impact in the default configuration is n
 .Performance graph of default configuration.
 image::images/routes_load_memory+0:1:896_{imgExt}[align="center"]
 
+// Breaking page here do stuff even worser.
 
 ==== Route aggregation
 By default +redistTable+ do routes aggregation that is a CPU and memory intensive work. In our case as Guifi.net has thousands of routes it may have a big impact on the performances, disabling route aggregation is done directly into +lime-proto-bmx6+ code.
@@ -581,6 +621,8 @@ As we can observe in <<fig:performance128:0:0>> this change caused a consistent 
 [[fig:performance128:0:0]]
 .Performance graph with route aggregation, proactive tunnels and link signature all disabled.
 image::images/routes_load_memory+128:0:0_{imgExt}[align="center"]
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 == Conclusions and future developments
 During this internship, seamless interoperability between classic infrastructure and Libre-Mesh networks in Guifi.net has been achieved with satisfactory results. For Guifi.net, that at time of writing counts more then 10 years of activity and nearly 30000 active nodes, this potentially opens new horizons of sustainable growth. Building networks inside Guifi.net with Libre-Mesh doesn't mean anymore to be relegated to last mile distribution, but to build at same time affordable and auto-configuring Guifi.net carrier networks and doing it with completely free as in freedom software <<ref:freesoftware>>. The possibility of using free software have big impact, as an example till today Guifi.net has experienced difficulty even to support IPv6 on carrier links because of proprietary routers requiring costly licenses upgrade to enable IPv6 support on their software, or alternatively to completely renew the infrastructure resulting in an awkward situation well known as collective vendor lock-in. This will never happen with free as in freedom routers, but this fact doesn't mean only IPv6 support. Being a free software solution, combined with the fact that LiMe architecture is modular guarantees an high level of future-proofness. Community participants can eventually extend and modify the software and improve it to satisfy unforeseen needs without high costs. LiMe networks requires significantly less human intervention then _{MdHd}_ based networks, as node installation will require less work, lot of skilled Guifi.net enthusiasts and professionals will have more time to install more nodes or to do more non automatable work like research, development and community networks promotion, this will probably foster even more Guifi.net growth. LiMe decentralized network model does allow more independence from centralized configuration provisioning tools, that are in contrast with the idea of a non-hierarchic collaborative network managed directly by its users, like Guifi.net try to be. This works has also benefited other projects aside of LiMe and Guifi.net, multiple BMX6 bugs and performance bottlenecks have been discovered during the experimental phase and isolated in collaboration with BMX6 main developer Axel Neumann who has fixed them in upstream code <<ref:bmxgit:1dcb463>>-<<ref:bmxgit:ca9c380>> <<ref:bmxgit:52cfaad>> <<ref:bmxgit:5e0d744>> <<ref:bmxgit:2156de7>> <<ref:bmxgit:170a847>>-<<ref:bmxgit:43873b8>>. Mesh networks in general now benefits of a maturer software stressfully tested with real world huge routing table. Last but not least interoperability between BGP and BMX6  have been achieved in a very modular way, it doesn't really depends on specific features of the second protocol, so future implementations of route exchange with other protocols like Babel or OLSRv2 will require minimal effort and will benefit of same loop avoidance guarantees explored during this work, making easy to handle even more complex exchange topologies footnote:[In respect to the ones analyzed in the scope of this work, see <<experimentalresults>> for more information.], with multiple different protocols and multiple independents peers.

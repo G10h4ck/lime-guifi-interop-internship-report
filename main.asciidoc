@@ -80,7 +80,7 @@ LiMe developers refers to L3 network (or just network) as a community network pa
 Some of NAT drawbacks::
 - In presence of NAT direct connection between hosts is difficult, to open a connection special techniques are required <<ref:wkpdholepunch>>.
 - NAT break the end-to-end principle <<ref:wkpfnat>><<ref:wkpdend2end>>.
-- NAT based network are unfair because the _natted_ host lose the opportunity to be a server (listening for incoming connections), and the non _natted_ automatically acquire a the privilege of listening for connection that isn't fairly distributed to all hosts anymore.
+- NAT based network are unfair because the _natted_ host lose the opportunity to be a server (listening for incoming connections), and the non _natted_ automatically acquire the privilege of listening for connections that isn't fairly distributed to all hosts anymore.
 
 .Connection tentative frustrated by NAT in an IPv4 network.
 image::images/L3_network_nat_{imgExt}[align="center"]
